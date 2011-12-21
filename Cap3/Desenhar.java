@@ -9,14 +9,14 @@ public class Desenhar
 {
 	private String funcao = "Classe responsável por fazer o desenho";
 	private Double versao = 0.0;
-	static Dialogo interacao = new Dialogo();
+	private static Dialogo interacao = new Dialogo();
 	public static void main( String args[])
 	{
 		Desenho desenha = new Desenho();
 		JFrame aplicacao = new JFrame();
 		
 		aplicacao.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		desenha.opcaoDeDesenho = interacao.lerInt("Programa para desenhar:\n 1.Linha\n 2.Retangulo\n 3.Oval");
+		desenha.opcaoDeDesenho = interacao.lerInt("Programa para desenhar:\n 1.Linha\n 2.Retangulo\n 3.Oval\n 4.Smile");
 		aplicacao.add(desenha);
 		aplicacao.setSize(500,500);
 		aplicacao.setVisible(true);

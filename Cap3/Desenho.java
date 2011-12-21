@@ -5,6 +5,7 @@
  */
 
 import java.awt.Graphics;
+import java.awt.Color;
 import javax.swing.JPanel;
 
 public class Desenho extends JPanel
@@ -24,9 +25,7 @@ public class Desenho extends JPanel
    {
       // chama paintComponent para assegurar que o painel é exibido corretamente
       super.paintComponent( g );
-      
-      int width = getWidth(); // largura total
-      int height = getHeight(); // altura total
+
 
       switch( opcaoDeDesenho )
       {
@@ -71,7 +70,33 @@ public class Desenho extends JPanel
       			g.drawOval(10+i*10, 10+i*10, 50+i*10, 50+i*10);
       		}
       		break;
+      	case 4:
       		
+      		/*
+      		 * g.setColor() é o método que dá cor ao desenho que se se
+      		 * 		vai fazer. ela recebe como parâmetro as cores RGB
+      		 * 		setColor(int R, int G, int B) sendo
+      		 * 			0 => ( R || G || B ) <= 255
+      		 * 		para se dar to e a cada cor. Porém pode se usar cores
+      		 * 		especificas como Color.WHITE, Color.GARY...
+      		 */
+      		
+      		//Desenho do rosto
+      		g.setColor( Color.YELLOW );
+      		g.fillOval(10, 10, 200, 200);
+      		
+      		//Desenho dos olhos
+      		g.setColor( Color.BLACK);
+      		g.fillOval(55, 65, 30, 30);
+      		g.fillOval(135, 65, 30, 30);
+      		
+      		//Desenho da boca
+      		g.fillOval(50, 110, 120, 60);
+      		
+      		//retoca a boca para criar um sorriso
+      		g.setColor( Color.YELLOW);
+      		g.fillRect(50, 110, 120, 30);
+      		g.fillOval(50, 120, 120, 40);
       }
      
 
