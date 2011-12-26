@@ -1,0 +1,31 @@
+Versão 0.4
+	Implementação
+		Inserido informações pelo .project
+		NumAleatorio
+		Desenho agora faz um smile
+	Modificações
+		Correções no Desenho
+
+Versão 0.3
+	Obs.: Nada feito
+
+Versão 0.2
+	Implementações
+		Criação das Classes:
+			Desenhar
+			Desenho
+	Modificações
+		Livro
+		LivroDeTeste
+
+Versão 0.1
+	Implementações
+		Criação das Classes:
+			Somar
+			Welcome
+			WelcomeDialogo
+			Livro ( Agora curso)
+			LivroDeTeste (Agora Curso de Teste)
+
+Versão 0.0
+	Configuração dos primeiros arquivos para o projeto Javeco
