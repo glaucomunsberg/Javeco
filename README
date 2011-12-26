@@ -1,3 +1,11 @@
+Versão 0.5
+	Implementações
+		Dialogo - Classe responsável pelas mensagems e leitura de valores
+	Modificações
+		Troca do nome das classes:
+			Livro para Curso
+			LivroTeste para CursoTeste
+
 Versão 0.4
 	Implementação
 		Inserido informações pelo .project
