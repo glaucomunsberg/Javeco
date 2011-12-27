@@ -1,3 +1,7 @@
+Versão 0.7
+	Implementacao
+		ColetorDeLixo - Classe criada para demonstrar o coletor de lixo e as "static"
+		Lixo - Objeto para ser manipulado por ColetorDeLixo
 Versão 0.6
 	Implementação
 		Time  - Classe para a data ss/mm/hh dd/MM/AAAA
