@@ -3,7 +3,7 @@ public class CursoDeTeste
 {
 	public static void main( String args[])
 	{
-		Curso meuCurso = new Curso(null,0, null); //Estancia o objeto meuLivro baseado na classe Livro
+		Curso meuCurso = new Curso(null,0, null, null); //Estancia o objeto meuLivro baseado na classe Livro
 		Dialogo interacao = new Dialogo(); //Cria objeto que será usado para leitura
 		String cursoName;
 		int numAlunos;
@@ -25,7 +25,6 @@ public class CursoDeTeste
 		{
 			meuCurso.setNumeroDeAlunos(numAlunos);
 		}
-		meuCurso.mensagem();
 		
 		String sobreNotas = String.format("A maior nota é : %d.\nA menor nota é: %d.\nA média é : %.2f", meuCurso.getMaiorNota(), meuCurso.getMenorNota(), meuCurso.getMedia());
 		interacao.mensagem(sobreNotas);
