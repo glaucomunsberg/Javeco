@@ -4,42 +4,42 @@
  * @author glaucoroberto
  *
  */
+//import java.text.SimpleDateFormat; //Data de forma simples
 
 public class Curso 
 {
 	private String cursoNome; // contém o nome do curso
 	private int numAlunos;
-	private String initCurso;
-	private String endCurso;
 	private String objetivo;
+	
 	
 	int gradeNotas[];
 	String gradeNomes[];
 	
 	Dialogo interacao = new Dialogo();
-
+	Time inicioCurso = new Time();
+	Time finalCurso = new Time();
+	
 	public Curso( String nome, int alunos,int gradeArray[], String nomes[])
 	{
 		cursoNome = nome; 
 		numAlunos = alunos;
 		gradeNotas = gradeArray; //Array com notas
 		gradeNomes = nomes;
-		initCurso = "ss:mm:hh AAAA";
-		endCurso = "ss:mm:hh AAAA";
-		System.out.println("Objeto Curso inicializado");
-
+		System.out.printf("Criado o objeto Curso %s\n", inicioCurso.getHoraAtual());
 	}
 
 	public void setNomeCurso(String nome)
 	{
+		// Insere o nome do curso
 		cursoNome = nome;
-		System.out.println("Nome do Curso modificado");
+		System.out.printf("Modificado o nome do curso %s\n", inicioCurso.getHoraAtual());
 	}
 	
 	public void setObjetivo( String novoObjetivo)
 	{
 		this.objetivo = novoObjetivo;
-		System.out.println("Objetivo do Curso modificado");
+		System.out.printf("Modificado o objetivo do curso %s\n", inicioCurso.getHoraAtual());
 	}
 	
 	public String getObjetivo()
@@ -49,24 +49,25 @@ public class Curso
 	
 	public String getInicioCurso()
 	{
-		return initCurso;
+		
+		return inicioCurso.getDate();
 	}
 
-	public void setInicioCurso( String novoNome)
+	public void setInicioCurso( String novoInicio)
 	{
-		initCurso = novoNome;
-		System.out.println("Data de início do curso modificado");
+		inicioCurso.setTimeOfString(novoInicio);
+		System.out.printf("Modificado o início do curso %s\n", inicioCurso.getHoraAtual());
 	}
 
 	public String getFinalCurso()
 	{
-		return endCurso;
+		return finalCurso.getDate();
 	}
 
 	public void setFinalCurso(String novoFim)
 	{
-		endCurso = novoFim;
-		System.out.println("Data de fim do curso modificado");
+		
+		finalCurso.setTimeOfString(novoFim);
 	}
 
 	public String getNomeCurso()
@@ -78,7 +79,7 @@ public class Curso
 	public void setNumeroDeAlunos(int valor)
 	{
 		numAlunos = valor;
-		System.out.println("Numero de alunos modificados");
+		System.out.printf("Modificado o Número de alunos %s\n", inicioCurso.getHoraAtual());
 	}
 
 	public int getNumeroDeAlunos()
@@ -89,7 +90,7 @@ public class Curso
 	public void setNotas( int Array[])
 	{
 		gradeNotas = Array;
-		System.out.println("Todas as notas forma modificadas");
+		System.out.printf("Modificado todas as notas %s\n", inicioCurso.getHoraAtual());
 	}
 
 	public int getMenorNota()
@@ -151,8 +152,8 @@ public class Curso
 		{
 			if( posicao <= gradeNotas.length )
 			{
+				System.out.printf("Modificada a nota %d por %d. %s\n", gradeNotas[posicao],valor, inicioCurso.getHoraAtual());
 				gradeNotas[posicao] = valor;
-				System.out.printf("Valor %d inserido na posição %d.\n",posicao,valor);
 			}
 		}
 	}
@@ -160,7 +161,7 @@ public class Curso
 	public void setNomes( String novosNomes[] )
 	{
 		gradeNomes = novosNomes;
-		System.out.println("Todos os nomes forma modificados");
+		System.out.printf("Modificado todas os nomes %s\n", inicioCurso.getHoraAtual());
 	}
 	
 	public String getNomes()
@@ -184,15 +185,10 @@ public class Curso
 		}
 		else
 		{
-			System.out.println("Não foi foi retornado nenhum nome.");
+			System.out.printf("Atenção! Não foi foi retornado nenhum nome %s\n", inicioCurso.getHoraAtual());
 			return null;
 		}
 	}
-	public void mensagem()
-	{
-		// Imprime o nome do curso
-		String oQueSeraImprimido = String.format("Bem-Vindo ao curso de \'%s\'. Ele possui %d alunos.", getNomeCurso(), getNumeroDeAlunos() );
-		interacao.mensagem(oQueSeraImprimido);
-	}
+
 
 }

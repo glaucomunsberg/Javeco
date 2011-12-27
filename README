@@ -1,7 +1,10 @@
 Versão 0.6
+	Implementação
+		Time  - Classe para a data ss/mm/hh dd/MM/AAAA
 	Modificações
 		Curso - Adiciona o retorno de erros e mensagens de alerta através do console
-
+		Curso - Modificação do tipo de Data para Time
+		
 Versão 0.5
 	Implementações
 		Dialogo - Classe responsável pelas mensagems e leitura de valores

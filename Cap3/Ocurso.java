@@ -5,10 +5,13 @@
  * @author glaucoroberto
  *
  */
+
+
 public class Ocurso
 {
 	static Curso meuCurso = new Curso(null,0, null, null); 		//Estancia o objeto meuLivro baseado na classe Livro
-	static Dialogo interacao = new Dialogo(); 					//Cria objeto que será usado para leitura
+	static Dialogo interacao = new Dialogo();					//Cria objeto que será usado para leitura
+	
 	
 	static int opcao;											//Identificador responsável pelo controle das escolhas do menu e submenu
 	static String texto;										//Receberá sempre as strings que serão impressas na tela ou retornará o valor
@@ -16,11 +19,10 @@ public class Ocurso
 	static int gradeDeNotas[] = {1, 2, 4, 5, 6, 7, 8, 9, 10};
 	static String gradeDeNomes[] = {"fulano0", "fulano1", "fulano2", "fulano3", "fulano4", "fulano5", "fulano6", "fulano7", "fulano8"};
 	
-	public static void main()
+	public static void main(String args[])
 	{
 		meuCurso.setNotas(gradeDeNotas);						//Insere as notas de modo indireta
 		meuCurso.setNomes(gradeDeNomes);						//Insere os nomes de modo indireta
-		
 		interacao.mensagem("Bem-vindo!\n Esse é o programa responsável pela manipulação de informações de um curso.");
 		
 		do
@@ -50,6 +52,7 @@ public class Ocurso
 			}
 			
 		}while( opcao != 0);
+		System.exit(0);
 
 	}
 	
@@ -68,7 +71,7 @@ public class Ocurso
 						//Sai do submenu
 						break;
 				case 1:
-						texto = String.format("Nome do Curso: %s\nObjetivo do Curso: %s", meuCurso.getNomeCurso(), meuCurso.getObjetivo());
+						texto = String.format(" Nome do Curso: %s\nObjetivo do Curso: %s\nInício do curso: %s\nFinal do Curso: %s", meuCurso.getNomeCurso(), meuCurso.getObjetivo(), meuCurso.getInicioCurso(), meuCurso.getFinalCurso());
 						interacao.mensagem(texto);
 						break;
 				case 2:
@@ -164,13 +167,14 @@ public class Ocurso
 						do
 						{
 							
-							texto = String.format(" Início do Curso: %s\nFim do Curso: %s\n 1- Mudar Inicio do curso\n 2- Mudar fim do curso\n 3-Sair", meuCurso.getInicioCurso(), meuCurso.getFinalCurso());
+							texto = String.format(" Início do Curso: %s\nFim do Curso: %s\n 1- Mudar Inicio do curso\n 2- Mudar fim do curso\n 0-Sair", meuCurso.getInicioCurso(), meuCurso.getFinalCurso());
 							mudar = interacao.lerInt(texto);
 							
 							if( mudar == 1)
 							{
 								texto = String.format(" Início do Curso: %s\nNovo valor é:", meuCurso.getInicioCurso());
 								texto = interacao.lerString(texto);
+								texto = "00/00/00/"+texto;
 								if( texto != null )
 								{
 									meuCurso.setInicioCurso(texto);
@@ -184,6 +188,7 @@ public class Ocurso
 							{
 								texto = String.format(" O fim do curso é: %s\nNovo valor é:", meuCurso.getFinalCurso());
 								texto = interacao.lerString(texto);
+								texto = "00/00/00/"+texto;
 								if( texto != null )
 								{
 									meuCurso.setFinalCurso(texto);
@@ -195,6 +200,7 @@ public class Ocurso
 							}
 						
 						}while( mudar != 0);
+						break;
 				default:
 						interacao.mensagem("Ooops! Você não deveria estar aqui õ.O");
 			}

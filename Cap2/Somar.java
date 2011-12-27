@@ -6,7 +6,6 @@
  */
 
 import java.util.Scanner; // Importa a classe responsável pela leitura na tela
-
 public class Somar
 {
 	public static void main( String args[] )
