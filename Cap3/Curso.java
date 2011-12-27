@@ -176,6 +176,7 @@ public class Curso
 		}
 		else
 		{
+			System.out.println("Atenção! Não foi foi retornado nenhum nome.");
 			return null;
 		}
 	}

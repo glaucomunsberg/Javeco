@@ -1,6 +1,12 @@
+Versão 0.6
+	Modificações
+		Curso - Adiciona o retorno de erros e mensagens de alerta através do console
+
 Versão 0.5
 	Implementações
 		Dialogo - Classe responsável pelas mensagems e leitura de valores
+		PassagemParametros - Classe para a comunição por passagem de parametros
+		Ocurso - Classe para testes mais elaborados da classe Curso
 	Modificações
 		Troca do nome das classes:
 			Livro para Curso
