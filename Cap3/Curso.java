@@ -26,18 +26,20 @@ public class Curso
 		gradeNomes = nomes;
 		initCurso = "ss:mm:hh AAAA";
 		endCurso = "ss:mm:hh AAAA";
+		System.out.println("Objeto Curso inicializado");
 
 	}
 
 	public void setNomeCurso(String nome)
 	{
-		// Insere o nome do curso
 		cursoNome = nome;
+		System.out.println("Nome do Curso modificado");
 	}
 	
 	public void setObjetivo( String novoObjetivo)
 	{
 		this.objetivo = novoObjetivo;
+		System.out.println("Objetivo do Curso modificado");
 	}
 	
 	public String getObjetivo()
@@ -53,6 +55,7 @@ public class Curso
 	public void setInicioCurso( String novoNome)
 	{
 		initCurso = novoNome;
+		System.out.println("Data de início do curso modificado");
 	}
 
 	public String getFinalCurso()
@@ -63,6 +66,7 @@ public class Curso
 	public void setFinalCurso(String novoFim)
 	{
 		endCurso = novoFim;
+		System.out.println("Data de fim do curso modificado");
 	}
 
 	public String getNomeCurso()
@@ -74,6 +78,7 @@ public class Curso
 	public void setNumeroDeAlunos(int valor)
 	{
 		numAlunos = valor;
+		System.out.println("Numero de alunos modificados");
 	}
 
 	public int getNumeroDeAlunos()
@@ -84,6 +89,7 @@ public class Curso
 	public void setNotas( int Array[])
 	{
 		gradeNotas = Array;
+		System.out.println("Todas as notas forma modificadas");
 	}
 
 	public int getMenorNota()
@@ -146,6 +152,7 @@ public class Curso
 			if( posicao <= gradeNotas.length )
 			{
 				gradeNotas[posicao] = valor;
+				System.out.printf("Valor %d inserido na posição %d.\n",posicao,valor);
 			}
 		}
 	}
@@ -153,6 +160,7 @@ public class Curso
 	public void setNomes( String novosNomes[] )
 	{
 		gradeNomes = novosNomes;
+		System.out.println("Todos os nomes forma modificados");
 	}
 	
 	public String getNomes()
@@ -176,7 +184,7 @@ public class Curso
 		}
 		else
 		{
-			System.out.println("Atenção! Não foi foi retornado nenhum nome.");
+			System.out.println("Não foi foi retornado nenhum nome.");
 			return null;
 		}
 	}
