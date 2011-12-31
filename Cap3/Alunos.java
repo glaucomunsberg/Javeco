@@ -7,7 +7,6 @@ public class Alunos
 	protected boolean AlunoIncializado = false;
 	
 	public enum Status { ATIVO, DESVINCULADO}
-	Pessoas pessoa = new Pessoas();
 	private Status situacao;
 	
 	public Alunos()
@@ -19,12 +18,9 @@ public class Alunos
 		}
 	}
 	
-	public Alunos(String nome, String sobreNome, int idade, int CPF, int matricula, int AlunoSitucao)
+	public Alunos( int matricula, int AlunoSitucao)
 	{
-		pessoa.setNome(sobreNome);
-		pessoa.setSobreNome(sobreNome);
-		pessoa.setIdade(idade);
-		pessoa.setCPF(CPF);
+
 		if( AlunoIncializado == false)
 		{
 			AlunoIncializado = true;
@@ -43,41 +39,7 @@ public class Alunos
 		}
 		this.matricula = matricula;
 	}
-	
-	public String getNomeCompletoAluno()
-	{
-		return pessoa.getNomeCompleto();
-	}
-	
-	public String getNomeAluno()
-	{
-		return pessoa.getNome();
-	}
-	
-	public void setInformacoesAluno(String nome, String sobreNome, int idade, int CPF)
-	{
-		if( nome != null)
-		{
-			pessoa.setNome(nome);
-		}
-		if( sobreNome != null)
-		{
-			pessoa.setSobreNome(sobreNome);
-		}
-		if( CPF != 0 || CPF != pessoa.getCPF() )
-		{
-			pessoa.setCPF(CPF);
-		}
-		if( (idade > 0  || idade < 150) && idade != pessoa.getIdade() )
-		{
-			pessoa.setIdade(idade);
-		}
-	}
-	
-	public int getIdadeAluno()
-	{
-		return pessoa.getIdade();
-	}
+
 	
 	public void setNumeroDeMatricula( int matricula)
 	{

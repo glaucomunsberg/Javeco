@@ -11,7 +11,16 @@ public class Pessoas
 	private String sobreNome;
 	private int idade;
 	private int CPF;
+	
 	protected boolean jaInicializado = false;
+	
+	public enum Tipo {
+		ALUNO, ADMINISTADOR
+	}
+	
+	public Alunos aluno;
+	public Administrador administrador;
+	Tipo classe;
 	
 	Pessoas()
 	{
@@ -23,12 +32,22 @@ public class Pessoas
 		}
 		
 	}
-	Pessoas(String nome, String sobreNome, int idade, int CPF)
+	Pessoas(String nome, String sobreNome, int idade, int CPF, int tipo)
 	{
 		this.nome = nome;
 		this.sobreNome = sobreNome;
 		this.idade = idade;
 		this.CPF = CPF;
+		if( tipo == 0)
+		{
+			classe = Tipo.ALUNO;
+			aluno = new Alunos();
+		}
+		else
+		{
+			classe = Tipo.ADMINISTADOR;
+			administrador = new Administrador();
+		}
 		
 		if( jaInicializado == false)
 		{
@@ -36,6 +55,14 @@ public class Pessoas
 			numeroDePessoas++;
 		}
 		
+	}
+	
+	public void setInformacoesPessoas(String nome, String sobreNome, int idade, int CPF)
+	{
+		this.nome = nome;
+		this.sobreNome = sobreNome;
+		this.idade = idade;
+		this.CPF = CPF;
 	}
 	
 	public String getNome()
@@ -81,5 +108,28 @@ public class Pessoas
 	public int getPessoas()
 	{
 		return numeroDePessoas;
+	}
+	public String getTipo()
+	{
+		if(classe == Tipo.ADMINISTADOR)
+		{
+			return "ADMINISTRADOR";
+		}
+		else
+		{
+			return "ALUNO";
+		}
+	}
+	public void setTipo(String novoTipo)
+	{
+		if(novoTipo == "ADMINISTRADOR")
+		{
+			classe = Tipo.ADMINISTADOR;
+		}
+		else
+		{
+
+			classe = Tipo.ALUNO;
+		}
 	}
 }

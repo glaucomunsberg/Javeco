@@ -9,12 +9,7 @@ public class Usuarios
 	protected boolean usuarioInicializado = false;
 	static public int numUsuarios = 0;
 	
-	
-	public enum Tipo {
-		ALUNO, ADMINISTADOR
-	}
-	protected Tipo classe;
-	Alunos usuario = new Alunos();
+	Pessoas usuario = new Pessoas();
 	Dialogo interacao = new Dialogo();
 	
 	public void Usuario()
@@ -28,7 +23,7 @@ public class Usuarios
 		}
 	}
 	
-	public void Usuario(String user, int senha, int tipo)
+	public void Usuario(String user, int senha, String tipo)
 	{
 		this.senha = senha;
 		this.user = user;
@@ -38,14 +33,8 @@ public class Usuarios
 			usuarioInicializado = true;
 			numUsuarios++;
 		}
-		if( tipo == 0)
-		{
-			classe = Tipo.ADMINISTADOR;
-		}
-		else
-		{
-			classe = Tipo.ALUNO;
-		}
+		usuario.setTipo(tipo);
+
 		firt = false;
 	}
 	
@@ -118,17 +107,13 @@ public class Usuarios
 		int senhaComparacao = interacao.lerInt("Para inserir as informacações é confirmar a sua senha:");
 		if( senhaComparacao == getSenha())
 		{
-			usuario.setInformacoesAluno(nome, sobreNome, idade, CPF);
-			if( classe == Tipo.ALUNO )
+			usuario.setInformacoesPessoas(nome, sobreNome, idade, CPF);
+			if( usuario.getTipo() == "ALUNO" )
 			{
-				if( usuario.getMatricula() != 0 && usuario.getMatricula() != matricula )
+				if( usuario.aluno.getMatricula() == matricula )
 				{
-					usuario.setMatricula(matricula);
+					usuario.aluno.setMatricula(matricula);
 				}
-			}
-			else
-			{
-				interacao.mensagem("Senha igual ou igual a zero.");
 			}
 
 		}
