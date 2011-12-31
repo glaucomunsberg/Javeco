@@ -1,3 +1,12 @@
+Versão 0.8
+	Implementacao
+		Pessoas - Informacações restritas ao pessoal
+		Alunos  - Informacações coorespondente ao aluno
+		usuario - Usuário do sistema
+	Modificações
+		Curso   - Várias para acomodar o novo modo de validacao
+		OCurso  - Várias modificações para suportar o usuário
+ 
 Versão 0.7
 	Implementacao
 		ColetorDeLixo - Classe criada para demonstrar o coletor de lixo e as "static"

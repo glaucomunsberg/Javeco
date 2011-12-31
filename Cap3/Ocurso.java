@@ -29,7 +29,7 @@ public class Ocurso
 		{
 			do
 			{
-				opcao = interacao.lerInt(" 1. Ver informações\n 2. Inserir/Modificar Informações\n 3. Informações Gerais\n 0. Sair");
+				opcao = interacao.lerInt(" 1. Administrar Curso\n 2. Administrar Alunos\n 0. Sair");
 
 			}while( opcao < 0 || opcao > 3);
 			
@@ -39,10 +39,10 @@ public class Ocurso
 						opcao = interacao.lerInt("Você realmente deseja sair?!\n 0- Sim\n 1- Não");
 						break;
 				case 1:
-						informacoes();
+						admCurso();
 						break;
 				case 2:
-						modificar();
+						admAlunos();
 						break;
 				case 3:
 						informacaoesGerias();
@@ -56,13 +56,14 @@ public class Ocurso
 
 	}
 	
-	static private void informacoes()
+	private static void admCurso()
 	{
+		int subMenu;
 		do
 		{
 			do
 			{
-				opcao = interacao.lerInt("1. Informações do curso\n2. Informações de Alunos e notas\n 0. Sair");	
+				opcao = interacao.lerInt("1. Ver Informações do curso\n2. Modificar informações do curso\n 0. Sair");	
 			}while(opcao < 0 || opcao > 2);
 			
 			switch(opcao)
@@ -75,8 +76,64 @@ public class Ocurso
 						interacao.mensagem(texto);
 						break;
 				case 2:
-						texto = String.format(" Linta de alunos:\n %s Número de alunos: %d\nNúmero de Notas: %d\nMédia das notas é: %.2f\nMaior nota é: %d\nMenor nota é: %d", meuCurso.getNomes(), meuCurso.getNumeroDeAlunos(), meuCurso.getNumeroDeNotas(), meuCurso.getMedia(), meuCurso.getMaiorNota(), meuCurso.getMenorNota());
-						interacao.mensagem(texto);
+						subMenu = interacao.lerInt(" 1. Mudar nome do curso\n2. Mudar Objetivo do curso\n3. Mudar Início do curso\n4. Mudar Fim do curso");
+						switch(subMenu)
+						{
+							case 0:
+									break;
+							case 1:
+									texto = String.format(" Curso %s.\n Novo nome:", meuCurso.getNomeCurso());
+									texto = interacao.lerString(texto);
+									if( texto == null)
+									{
+										interacao.mensagem("O nome não será alterado.");
+									}
+									else
+									{
+										meuCurso.setNomeCurso(texto);
+									}
+									break;
+							case 2:
+									texto = String.format(" Atenção!\nO objetivo do curso é: %s\n\nVocê trocará permanentemente o objetivo do curso.\n Novo objetivo:", meuCurso.getObjetivo());
+									texto = interacao.lerString(texto);
+									if( texto == null)
+									{
+										interacao.mensagem("O objetivo não será alterado.");
+									}
+									else
+									{
+										meuCurso.setObjetivo(texto);
+									}
+									break;
+							case 3:
+									texto = String.format(" Início do Curso: %s\nNovo valor é:", meuCurso.getInicioCurso());
+									texto = interacao.lerString(texto);
+									if( texto != null )
+									{
+										texto = "00/00/00/"+texto;
+										meuCurso.setInicioCurso(texto);
+									}
+									else
+									{
+										interacao.mensagem("O valor não foi modificado");
+									}
+									break;
+							case 4:
+									texto = String.format(" O fim do curso é: %s\nNovo valor é:", meuCurso.getFinalCurso());
+									texto = interacao.lerString(texto);
+									texto = "00/00/00/"+texto;
+									if( texto != null )
+									{
+										meuCurso.setFinalCurso(texto);
+									}
+									else
+									{
+										interacao.mensagem("O valor não foi modificado");
+									}
+									break;
+							default:
+								interacao.mensagem("Ooops! Você não deveria estar aqui õ.O");
+						}
 						break;
 				default:
 						interacao.mensagem("Ooops! Você não deveria estar aqui õ.O");
@@ -88,44 +145,32 @@ public class Ocurso
 		
 	}
 	
-	static private void modificar()
+	static private void admAlunos()
 	{
+		int alunoEscolhido;
 		do
 		{
 			do
 			{
-				opcao = interacao.lerInt(" 1. Modificar nome do curso\n 2. Mudar Objetivo do curso\n 3. Modificar numero de alunos\n 4. Modificar Nota\n 5. Início e fim do curso\n 0. Sair");
-			}while( opcao < 0 || opcao > 5);
+				opcao = interacao.lerInt(" 1. Ver informações do aluno\n 2. Editar informações dos Alunos\n 0. Sair");
+			}while( opcao < 0 || opcao > 2);
 			
 			switch( opcao )
 			{
 				case 0:
-						//Sai do programa
 						break;
 				case 1:
-						texto = String.format(" Atenção!\nO nome do curso é: %s\n\nVocê trocará permanentemente o nome do curso.\n Novo nome:", meuCurso.getNomeCurso());
-						texto = interacao.lerString(texto);
-						if( texto == null)
-						{
-							interacao.mensagem("O nome não será alterado.");
-						}
-						else
-						{
-							meuCurso.setNomeCurso(texto);
-						}
+						texto = String.format(" São %s alunos inscritos no curso %s.\n De %s até %s.", meuCurso.getNumeroDeAlunos(), meuCurso.getNomeCurso(), meuCurso.getInicioCurso(), meuCurso.getFinalCurso());
 						break;
 				case 2:
-						texto = String.format(" Atenção!\nO objetivo do curso é: %s\n\nVocê trocará permanentemente o objetivo do curso.\n Novo objetivo:", meuCurso.getObjetivo());
-						texto = interacao.lerString(texto);
-						if( texto == null)
+						texto = String.format(" Alunos:\n %s \n Escolha aluno para gerenciar:");
+						do
 						{
-							interacao.mensagem("O objetivo não será alterado.");
-						}
-						else
-						{
-							meuCurso.setObjetivo(texto);
-						}
-						break;
+							alunoEscolhido = interacao.lerInt(texto);
+						}while( alunoEscolhido < 0 && alunoEscolhido > meuCurso.getNumeroDeAlunos());
+						
+						
+						
 				case 3:
 						int aux;
 						texto = String.format(" Atenção!\nO Numero de alunos é de: %d\n\nVocê trocará permanentemente o numero de alunos.\n Quantos alunos são:", meuCurso.getNumeroDeAlunos());
@@ -161,45 +206,6 @@ public class Ocurso
 							valor = interacao.lerInt(texto);
 						}while( valor < 0);
 						meuCurso.setNota(posicao, valor);
-						break;
-				case 5:
-						int mudar;
-						do
-						{
-							
-							texto = String.format(" Início do Curso: %s\nFim do Curso: %s\n 1- Mudar Inicio do curso\n 2- Mudar fim do curso\n 0-Sair", meuCurso.getInicioCurso(), meuCurso.getFinalCurso());
-							mudar = interacao.lerInt(texto);
-							
-							if( mudar == 1)
-							{
-								texto = String.format(" Início do Curso: %s\nNovo valor é:", meuCurso.getInicioCurso());
-								texto = interacao.lerString(texto);
-								texto = "00/00/00/"+texto;
-								if( texto != null )
-								{
-									meuCurso.setInicioCurso(texto);
-								}
-								else
-								{
-									interacao.mensagem("O valor não foi modificado");
-								}
-							}
-							if( mudar == 2)
-							{
-								texto = String.format(" O fim do curso é: %s\nNovo valor é:", meuCurso.getFinalCurso());
-								texto = interacao.lerString(texto);
-								texto = "00/00/00/"+texto;
-								if( texto != null )
-								{
-									meuCurso.setFinalCurso(texto);
-								}
-								else
-								{
-									interacao.mensagem("O valor não foi modificado");
-								}
-							}
-						
-						}while( mudar != 0);
 						break;
 				default:
 						interacao.mensagem("Ooops! Você não deveria estar aqui õ.O");

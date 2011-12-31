@@ -11,16 +11,13 @@ public class Curso
 	private String cursoNome; // contém o nome do curso
 	private int numAlunos;
 	private String objetivo;
-	
-	
-	int gradeNotas[];
-	String gradeNomes[];
+
 	
 	Dialogo interacao = new Dialogo();
 	Time inicioCurso = new Time();
 	Time finalCurso = new Time();
 	
-	public Curso( String nome, int alunos,int gradeArray[], String nomes[])
+	public Curso( String nome, int alunos,int numAlunos, String nomes[])
 	{
 		cursoNome = nome; 
 		numAlunos = alunos;
