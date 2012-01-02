@@ -49,8 +49,8 @@ public class Usuarios
 	}
 	protected String getUser()
 	{
-		int senhaComparacao = interacao.lerInt("Digite sua senha por segurança:");
-		if ( senhaComparacao == getSenha())
+		boolean validacao = validadorSenha();
+		if ( validacao )
 		{
 			return this.user;
 		}
@@ -80,20 +80,9 @@ public class Usuarios
 		
 		if( abortar != true)
 		{
-			String nomeComparacao = interacao.lerString("Digite o nome de usuário:");
-			int senhaComparacao = interacao.lerInt("Digite a senha do usuário:");
-			boolean validacaoUser = false;
-			boolean validacaoSenha = false;
-			if( nomeComparacao == getUserPeloSistema() )
-			{
-				validacaoUser = true;
-			}
-			if( senhaComparacao == getSenha() )
-			{
-				validacaoSenha = true;
-			}
+			boolean validacao = validador();
 			
-			if( validacaoSenha && validacaoUser )
+			if( validacao )
 			{
 				this.senha = senha;
 				this.user = user;
@@ -102,10 +91,10 @@ public class Usuarios
 		}
 	}
 	
-	private void setInformacaos( String nome, String sobreNome, int idade, int matricula, int CPF)
+	private void setInformacaos( String nome, String sobreNome, int idade, int matricula, int CPF, String setor, String funcao)
 	{
-		int senhaComparacao = interacao.lerInt("Para inserir as informacações é confirmar a sua senha:");
-		if( senhaComparacao == getSenha())
+		boolean validacao = validadorSenha();
+		if( validacao )
 		{
 			usuario.setInformacoesPessoas(nome, sobreNome, idade, CPF);
 			if( usuario.getTipo() == "ALUNO" )
@@ -115,11 +104,56 @@ public class Usuarios
 					usuario.aluno.setMatricula(matricula);
 				}
 			}
+			else
+			{
+				if( funcao != null)
+				{
+					usuario.administrador.setFuncao(funcao);
+				}
+				if( setor != null)
+				{
+					usuario.administrador.setSetor(setor);
+				}
+				
+			}
 
 		}
 		else
 		{
 			interacao.mensagem("Senha errada!");
 		}
+	}
+	public boolean validador()
+	{
+		boolean validacao = false;
+		boolean validacaoSenha = false;
+		boolean validacaoUser = false;
+		validacaoSenha = validadorSenha();
+		validacaoUser = validadorUsuario();
+		if( validacaoSenha && validacaoUser )
+		{
+			validacao = true;
+		}
+		return validacao;
+	}
+	public boolean validadorSenha()
+	{
+		boolean validacao = false;
+		int senhaComparacao = interacao.lerInt(" Validação de usuário:\nDigite sua senha:" );
+		if( senhaComparacao == getSenha())
+		{
+			validacao = true;
+		}
+		return validacao;
+	}
+	public boolean validadorUsuario()
+	{
+		boolean validacao = false;
+		String userComparacao = interacao.lerString(" Validação de usuário:\nDigite usuário:" );
+		if( userComparacao == getUserPeloSistema())
+		{
+			validacao = true;
+		}
+		return validacao;
 	}
 }

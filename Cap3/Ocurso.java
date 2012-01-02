@@ -9,7 +9,7 @@
 
 public class Ocurso
 {
-	static Curso meuCurso = new Curso(null,0, null, null); 		//Estancia o objeto meuLivro baseado na classe Livro
+	static Curso meuCurso = new Curso(); 		//Estancia o objeto meuLivro baseado na classe Livro
 	static Dialogo interacao = new Dialogo();					//Cria objeto que será usado para leitura
 	
 	
@@ -168,7 +168,6 @@ public class Ocurso
 						{
 							alunoEscolhido = interacao.lerInt(texto);
 						}while( alunoEscolhido < 0 && alunoEscolhido > meuCurso.getNumeroDeAlunos());
-						
 						
 						
 				case 3:

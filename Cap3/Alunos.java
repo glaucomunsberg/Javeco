@@ -16,6 +16,7 @@ public class Alunos
 			AlunoIncializado = true;
 			numeroDeAlunos++;
 		}
+		System.out.printf("Objeto Alunos criado.\n");
 	}
 	
 	public Alunos( int matricula, int AlunoSitucao)
@@ -38,12 +39,14 @@ public class Alunos
 			situacao = Status.DESVINCULADO;
 		}
 		this.matricula = matricula;
+		System.out.printf("Objeto criado com dados.\n");
 	}
 
 	
 	public void setNumeroDeMatricula( int matricula)
 	{
 		this.matricula = matricula;
+		System.out.printf("Aluno teve sua num. de matricula modificado.\n");
 	}
 	
 	public int getNumeroDeMatricula()

@@ -21,8 +21,8 @@ public class Curso
 	{
 		cursoNome = nome; 
 		numAlunos = alunos;
-		gradeNotas = gradeArray; //Array com notas
-		gradeNomes = nomes;
+		//gradeNotas = gradeArray; //Array com notas
+		//gradeNomes = nomes;
 		System.out.printf("Criado o objeto Curso %s\n", inicioCurso.getHoraAtual());
 	}
 

@@ -30,8 +30,10 @@ public class Pessoas
 			numeroDePessoas++;
 			
 		}
+		System.out.printf("Objeto pessoas inicializado.\n");
 		
 	}
+	
 	Pessoas(String nome, String sobreNome, int idade, int CPF, int tipo)
 	{
 		this.nome = nome;
@@ -54,7 +56,7 @@ public class Pessoas
 			jaInicializado = true;
 			numeroDePessoas++;
 		}
-		
+		System.out.printf("Objeto Pessoa inicializado com dados.\n");
 	}
 	
 	public void setInformacoesPessoas(String nome, String sobreNome, int idade, int CPF)
@@ -63,6 +65,7 @@ public class Pessoas
 		this.sobreNome = sobreNome;
 		this.idade = idade;
 		this.CPF = CPF;
+		System.out.printf("Informacações da pessoa foram alteradas.\n", this.nome);
 	}
 	
 	public String getNome()
@@ -79,16 +82,19 @@ public class Pessoas
 	public void setNome(String nome)
 	{
 		this.nome = nome;
+		System.out.printf("Nome da pessoa foi modificado.\n");
 	}
 	
 	public void setSobreNome( String sobreNome)
 	{
 		this.sobreNome = sobreNome;
+		System.out.printf("SobreNome da pessoa foi modificado.\n");
 	}
 	
 	public void setIdade(int idade)
 	{
 		this.idade = idade;
+		System.out.printf("Idade da pessoa foi modificada.\n");
 	}
 	
 	public int getIdade()
@@ -104,6 +110,7 @@ public class Pessoas
 	public void setCPF(int CPF)
 	{
 		this.CPF = CPF;
+		System.out.printf("CPF da pessoa foi modificado\n");
 	}
 	public int getPessoas()
 	{
@@ -125,11 +132,13 @@ public class Pessoas
 		if(novoTipo == "ADMINISTRADOR")
 		{
 			classe = Tipo.ADMINISTADOR;
+			System.out.printf("A pessoa é do tipo 'ADMINISTRADOR'.\n");
 		}
 		else
 		{
 
 			classe = Tipo.ALUNO;
+			System.out.printf("A pessoa é do tipo 'ALUNO'.\n");
 		}
 	}
 }
