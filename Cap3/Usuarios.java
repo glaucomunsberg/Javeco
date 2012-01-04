@@ -23,7 +23,7 @@ public class Usuarios
 		}
 	}
 	
-	public void Usuario(String user, int senha, String tipo)
+	public void Usuario(String user, int senha)
 	{
 		this.senha = senha;
 		this.user = user;
@@ -33,7 +33,6 @@ public class Usuarios
 			usuarioInicializado = true;
 			numUsuarios++;
 		}
-		usuario.setTipo(tipo);
 
 		firt = false;
 	}
