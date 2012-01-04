@@ -33,6 +33,7 @@ public class CursoDeTeste
 		glaucoAluno.setMatricula(10202117);
 		glaucoAluno.setNome(glauco.getNome());
 		glaucoAluno.setSobreNome(glauco.getSobreNome());
+		
 		glaucoAluno.setSituacao( Alunos.Status.DESCONHECIDO );
 		
 		System.out.printf(glaucoAluno.toString());
