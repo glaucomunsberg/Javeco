@@ -1,5 +1,9 @@
+Versão 0.9
+	Implementação
+		ImagemAndTexto 	- Imagem e Texto em frame
+		
 Versão 0.8
-	Implementacao
+	Implementação
 		Usuario 		- Usuário do sistema
 		Alunos  		- Informacações coorespondente ao aluno
 		Administrador	- Métodos para administrador
@@ -11,9 +15,10 @@ Versão 0.8
 		Time 	- Correções de retorno e controles
 
 Versão 0.7
-	Implementacao
+	Implementação
 		ColetorDeLixo - Classe criada para demonstrar o coletor de lixo e as "static"
 		Lixo - Objeto para ser manipulado por ColetorDeLixo
+
 Versão 0.6
 	Implementação
 		Time  - Classe para a data ss/mm/hh dd/MM/AAAA
