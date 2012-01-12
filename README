@@ -1,6 +1,8 @@
 Versão 0.9
 	Implementação
 		ImagemAndTexto 	- Imagem e Texto em frame
+		IconeJanela		- Icones/Imagens e textos em uma única janela
+		TextoSenha		- Campos de texto e senhas
 		
 Versão 0.8
 	Implementação
