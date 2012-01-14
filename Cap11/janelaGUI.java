@@ -2,7 +2,6 @@
  * Como utilizar janelas e notificações com elas
  */
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 public class janelaGUI 
 {
 	public static void main( String args[])
