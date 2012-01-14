@@ -1,0 +1,71 @@
+Versão 0.9
+	Implementação
+		ImagemAndTexto 	- Imagem e Texto em frame
+		IconeJanela		- Icones/Imagens e textos em uma única janela
+		TextoSenha		- Campos de texto e senhas
+		
+Versão 0.8
+	Implementação
+		Usuario 		- Usuário do sistema
+		Alunos  		- Informacações coorespondente ao aluno
+		Administrador	- Métodos para administrador
+		Pessoas			- Informacações restritas ao pessoal
+
+	Modificações
+		Curso   - Várias para acomodar o novo modo de validacao
+		OCurso  - Várias modificações para suportar o usuário
+		Time 	- Correções de retorno e controles
+
+Versão 0.7
+	Implementação
+		ColetorDeLixo - Classe criada para demonstrar o coletor de lixo e as "static"
+		Lixo - Objeto para ser manipulado por ColetorDeLixo
+
+Versão 0.6
+	Implementação
+		Time  - Classe para a data ss/mm/hh dd/MM/AAAA
+	Modificações
+		Curso - Adiciona o retorno de erros e mensagens de alerta através do console
+		Curso - Modificação do tipo de Data para Time
+		
+Versão 0.5
+	Implementações
+		Dialogo - Classe responsável pelas mensagems e leitura de valores
+		PassagemParametros - Classe para a comunição por passagem de parametros
+		Ocurso - Classe para testes mais elaborados da classe Curso
+	Modificações
+		Troca do nome das classes:
+			Livro para Curso
+			LivroTeste para CursoTeste
+
+Versão 0.4
+	Implementação
+		Inserido informações pelo .project
+		NumAleatorio
+		Desenho agora faz um smile
+	Modificações
+		Correções no Desenho
+
+Versão 0.3
+	Obs.: Nada feito
+
+Versão 0.2
+	Implementações
+		Criação das Classes:
+			Desenhar
+			Desenho
+	Modificações
+		Livro
+		LivroDeTeste
+
+Versão 0.1
+	Implementações
+		Criação das Classes:
+			Somar
+			Welcome
+			WelcomeDialogo
+			Livro ( Agora curso)
+			LivroDeTeste (Agora Curso de Teste)
+
+Versão 0.0
+	Configuração dos primeiros arquivos para o projeto Javeco
