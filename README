@@ -1,10 +1,16 @@
 Versão 1.0
+	Implementações
+		BottonFrame 		- Botão simples e com imagem no botão
+		CkeckBoxFrame		- CkeckBom com ação
+		CheckBoxComAcao		- 
+		JanelaGUI		-
+		BotaoComAcao
 	Modificações
 		Modificações e correções causados por um erro no git
 
 Versão 0.9
 	Implementação
-		ImagemAndTexto 	- Imagem e Texto em frame
+		ImagemAndTexto 		- Imagem e Texto em frame
 		IconeJanela		- Icones/Imagens e textos em uma única janela
 		TextoSenha		- Campos de texto e senhas
 		

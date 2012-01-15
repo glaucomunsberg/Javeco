@@ -19,8 +19,8 @@ public class BottonFrame extends JFrame
 		plainJButton = new JButton( "Plain Botão");
 		add( plainJButton );
 		
-		Icon bug1 = new ImageIcon( "ok.gif" );
-		Icon bug2 = new ImageIcon( "ok.gif" );
+		Icon bug1 = new ImageIcon( "Cap11/ok.gif" );
+		Icon bug2 = new ImageIcon( "Cap11/ok.gif" );
 		fancyJButton = new JButton( "Fancy Botão", bug1);
 		fancyJButton.setRolloverIcon(bug2);
 		add( fancyJButton );
