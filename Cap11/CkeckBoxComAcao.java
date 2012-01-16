@@ -1,5 +1,7 @@
+/**
+ *  Testa a implementação de uma CheckBoxFrame
+ */
 import javax.swing.JFrame;
-
 public class CkeckBoxComAcao 
 {
 	public static void main( String args[])

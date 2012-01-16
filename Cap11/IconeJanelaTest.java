@@ -1,6 +1,7 @@
+/**
+ * Implementação do IconeJanela e TextoSenha
+ */
 import javax.swing.JFrame;
-
-
 public class IconeJanelaTest 
 {
 	public static void main( String args[])

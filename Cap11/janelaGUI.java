@@ -1,4 +1,4 @@
-/**
+/** JanelaGUI mostra como funciona os "icones" de mensagens e
  * Como utilizar janelas e notificações com elas
  */
 import javax.swing.JOptionPane;

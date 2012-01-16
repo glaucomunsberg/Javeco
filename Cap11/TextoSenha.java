@@ -1,18 +1,25 @@
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JOptionPane;
+/** Implementa caixa de textos de texto e senha assim como
+ * 		escutar ações dele.
+ */
+
+import java.awt.FlowLayout; 			//Coloca cada elemento do JFrame na ordem que é inserido
+import java.awt.event.ActionEvent;		//Trata evento
+import java.awt.event.ActionListener;	//Escuta eventos de ação
+import javax.swing.JFrame;				//Frame para inserir os objetos e icones
+import javax.swing.JTextField;			//Campo de texto
+import javax.swing.JPasswordField;		//Campo de senha
+import javax.swing.JOptionPane;			//Painel ou Dialogo
 
 public class TextoSenha extends JFrame 
 {
-	private JTextField campoTexto1;
+	private JTextField campoTexto1; 	//Cria campo de texto1,2 e 3
 	private JTextField campoTexto2;
 	private JTextField campoTexto3;
-	private JPasswordField campoSenha;
+	private JPasswordField campoSenha;	//Cria campo de senha
 	
+	/**
+	 * 
+	 */
 	public TextoSenha()
 	{
 		super("User e Password");//Ao chamada a classe Frame passa a String como parametro e gera o titulo da mesma
@@ -43,12 +50,15 @@ public class TextoSenha extends JFrame
 		
 		
 	}
+	//Implementação da textFieldHandler para tratar o evento
 	private class TextFieldHandler implements ActionListener
 	{
 		public void actionPerformed( ActionEvent event )
 		{
 			String texto = null; //String a ser exibida
 			
+			//IF's para verificar qual dos campos ocorreu a ação
+			// e então notifica que esse campo foi acionado
 			if( event.getSource() == campoTexto1 )
 			{
 				texto = String.format("CampoTexto1: %d.", event.getModifiers());
@@ -66,6 +76,7 @@ public class TextoSenha extends JFrame
 				texto = String.format("CampoSenha: %s.", event.getActionCommand());
 			}
 			
+			//Imprime através de mensagem qual campo foi acionado
 			JOptionPane.showMessageDialog(null, texto);
 		}
 		
