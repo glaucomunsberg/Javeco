@@ -43,13 +43,14 @@ public class ComboBoxFrame extends JFrame
 		comboBox = new JComboBox( enderecos );		//Combo rece seus itens 
 		comboBox.setMaximumRowCount(2);				//Indica quantas linhas haverá na lista
 		comboBox.addItemListener(																										//|
+																					//Classe interna e anonima do Handler				//|
 				 new ItemListener()													//adiciona um escutador de evento 					//|
 				 {																														//| seta o comportamento
 					 public void itemStateChanged( ItemEvent event)					//IDentifica se houve mudança						//|   da combo.
 					 {																													//|
 						 if(event.getStateChange() == ItemEvent.SELECTED)			//Verifica o evento e selecionado 					//|
 						 {																												//|
-							 label.setIcon(icons[comboBox.getSelectedIndex()]);		//Da combo pega o item selecionado (sua posicao)	//|										//e na array passa para o label						//|
+							 label.setIcon(icons[comboBox.getSelectedIndex()]);		//Da combo pega o item selecionado (sua posicao)	//|
 						 }																												//|
 					 }																													//|
 				 }																														//|
