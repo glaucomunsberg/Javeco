@@ -17,6 +17,23 @@ public class CheckBoxFrame  extends JFrame
 	private JCheckBox boldJCheckBox; 			//para selecionar/deselecionar o negrito
 	private JCheckBox italicJCheckBox; 			//para selecionar/deselecionar o italico
 	
+	/**
+	 * main da classe
+	 * @param args
+	 */
+	public static void main( String args[])
+	{
+		
+		CheckBoxFrame checkBox = new CheckBoxFrame();
+		checkBox.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
+		checkBox.setSize(270, 100);
+		checkBox.setVisible(true);
+		
+	}
+	
+	/**
+	 * Implementação do checkBox
+	 */
 	public CheckBoxFrame()
 	{
 		super( "JCheckBox Test");				//Chama super e atribui titulo ao frame
@@ -24,7 +41,8 @@ public class CheckBoxFrame  extends JFrame
 		setLayout( new FlowLayout() );			//Seta que o Frama vai apenas inserir e não justifica nem nada a posicao
 		
 		textField = new JTextField(" Modifique o estilo da fonte");
-		textField.setFont( new Font( "Ubuntu", Font.PLAIN, 14));
+		textField.setFont( new Font( "Ubuntu", Font.PLAIN, 14)); //Seta a fonte do JTextField como "ubuntu"
+																//  não está Italic e não Bloud e tamanho 14
 		add( textField );
 		
 		boldJCheckBox = new JCheckBox("Bold");    		//cria a caixa do bold

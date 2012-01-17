@@ -19,6 +19,22 @@ public class IconeJanela extends JFrame
 	private JLabel label2;
 	private JLabel label3;
 	
+	
+	/**
+	 * implementação da própria classe
+	 * @param args
+	 */
+	public static void main( String args[])
+	{
+		IconeJanela labelFrame = new IconeJanela();
+		labelFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
+		labelFrame.setSize(900, 900	);
+		labelFrame.setVisible(true);
+	}
+	
+	/**
+	 * médoto de implementação da janela
+	 */
 	public IconeJanela()
 	{
 

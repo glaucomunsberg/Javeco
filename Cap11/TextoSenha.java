@@ -17,6 +17,19 @@ public class TextoSenha extends JFrame
 	private JTextField campoTexto3;
 	private JPasswordField campoSenha;	//Cria campo de senha
 	
+	
+	/**
+	 * Implementação da própria classe
+	 * @param args
+	 */
+	public static void main( String args[] )
+	{
+		TextoSenha janela = new TextoSenha();
+		janela.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
+		janela.setSize(311,140);
+		janela.setVisible(true);
+	}
+	
 	/**
 	 * 
 	 */
