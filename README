@@ -1,3 +1,9 @@
+Versão 1.1
+	Implementação
+		BorderLayoutFrame	- Como funciona o possicionamento do Frame
+		FlowLayoutFrame		- item anterior
+		GridLayoutFrame		- item anterior
+
 Versão 1.0
 	Implementações
 		BottonFrame 		- Botão simples e com imagem no botão
