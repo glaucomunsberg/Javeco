@@ -4,6 +4,11 @@
 	<classpathentry kind="src" path="Cap2"/>
 	<classpathentry excluding="OCurso.java" kind="src" path="Cap3"/>
 	<classpathentry kind="src" path="Cap8"/>
+	<classpathentry kind="src" path="Cap11"/>
+	<classpathentry kind="src" path="Cap9"/>
+	<classpathentry kind="src" path="Cap12"/>
+	<classpathentry kind="src" path="Cap13"/>
+	<classpathentry kind="src" path="Cap14"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
