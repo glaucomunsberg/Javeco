@@ -1,4 +1,13 @@
-Versão 1.4.2
+Versão 1.4.5
+	Implementação
+		As classes abaixo estão relacionadas ao exercício de
+		tudo que aprendi até o meio do livro. Sendo um sistema
+		elaborado apartir do Cap3\Curso e OCurso
+			BaseDoCurso		- Baseado no Cap3\Curso
+			LogDoSistema	- Responsável por gravar em um .txt os logs
+			SistemaDoCurso	- Main do sistema
+
+Versão 1.4.1
 	Implementação
 		ClassDeAcessoRan...	- Permite o acesso randomico a dados
 		CreateRandomAcce...	- Perimite criar um arquivo de Acesso Random
