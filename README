@@ -1,3 +1,19 @@
+Versão 1.4.2
+	Implementação
+		ClassDeAcessoRan...	- Permite o acesso randomico a dados
+		CreateRandomAcce...	- Perimite criar um arquivo de Acesso Random
+		ReadRandomAccess...	- Leitura de um arquivo Random
+		WriteRandomAcess...	- Grava dados conforme são inseridos pelo usuário
+		ReadSerializable...	- Lê de um arquivo serializado os dados
+		Random.dat			- Dat recebe os valores de um acess. random
+		Array				- Demostra o tamanho do array
+		package time		- Pertence ao com.glauco.time
+		Prototipagem.pdf	- Prototipo do sistema de curso usado no Cap14 Exec
+		build.xml			- Usado pelo netBeans
+		
+	Correções
+		Em diversas classes
+
 Versão 1.4
 	Implementação
 		FileDemostracao		- Demostra como verifica se é diretório ou arquivo
@@ -8,7 +24,7 @@ Versão 1.4
 		FileTest			- Testa a implementação da leitura/escrita do TextFile e Serilizable
 
 Versão 1.3
-	implementação
+	Implementação
 		ColorJPanel			- Como funciona a colocaração em java
 		CalorShow			- Painel de troca de cor, util para a GUI
 		DesenhoGradientJ...	- Como desenhar em java formas
@@ -17,7 +33,9 @@ Versão 1.3
 		TratamentoDeExce...	- "Try" como usar ( básico)
 		UsandoExcessao		- "Try", "Catch" e "Finally" como funcionando (médio)
 		UsandoExcessaoTr...	- Exceção, como trabalhar com dados gerados por ele
-
+Versão 1.2
+		Obs.:
+				Nada feito.
 Versão 1.1
 	Implementação
 		BorderLayoutFrame	- Como funciona o possicionamento do Frame
@@ -36,46 +54,46 @@ Versão 1.0
 		MouseTrackerFrame	- Tratando eventos com mouse
 		RadioButtonFrame	- Como tratar eventos no RadioButton
 		
-	Modificações
-		Modificações e correções causados por um erro no git
+	Correções
+		Correções e modificações causados por um erro no git
 		Documentação
 
 Versão 0.9
 	Implementação
 		ImagemAndTexto 		- Imagem e Texto em frame
-		IconeJanela		- Icones/Imagens e textos em uma única janela
-		TextoSenha		- Campos de texto e senhas
+		IconeJanela			- Icones/Imagens e textos em uma única janela
+		TextoSenha			- Campos de texto e senhas
 		
 Versão 0.8
 	Implementação
-		Usuario 		- Usuário do sistema
-		Alunos  		- Informacações coorespondente ao aluno
-		Administrador	- Métodos para administrador
-		Pessoas			- Informacações restritas ao pessoal
+		Usuario 			- Usuário do sistema
+		Alunos  			- Informacações coorespondente ao aluno
+		Administrador		- Métodos para administrador
+		Pessoas				- Informacações restritas ao pessoal
 
-	Modificações
-		Curso   - Várias para acomodar o novo modo de validacao
-		OCurso  - Várias modificações para suportar o usuário
-		Time 	- Correções de retorno e controles
+	Correções
+		Curso  				- Várias para acomodar o novo modo de validacao
+		OCurso  			- Várias Correções para suportar o usuário
+		Time 				- Correções de retorno e controles
 
 Versão 0.7
 	Implementação
-		ColetorDeLixo - Classe criada para demonstrar o coletor de lixo e as "static"
-		Lixo - Objeto para ser manipulado por ColetorDeLixo
+		ColetorDeLixo		- Classe criada para demonstrar o coletor de lixo e as "static"
+		Lixo 				- Objeto para ser manipulado por ColetorDeLixo
 
 Versão 0.6
 	Implementação
-		Time  - Classe para a data ss/mm/hh dd/MM/AAAA
-	Modificações
-		Curso - Adiciona o retorno de erros e mensagens de alerta através do console
-		Curso - Modificação do tipo de Data para Time
+		Time  				- Classe para a data ss/mm/hh dd/MM/AAAA
+	Correções
+		Curso				- Adiciona o retorno de erros e mensagens de alerta através do console
+		Curso 				- Correção do tipo de Data para Time
 		
 Versão 0.5
 	Implementações
-		Dialogo - Classe responsável pelas mensagems e leitura de valores
-		PassagemParametros - Classe para a comunição por passagem de parametros
-		Ocurso - Classe para testes mais elaborados da classe Curso
-	Modificações
+		Dialogo 			- Classe responsável pelas mensagems e leitura de valores
+		PassagemParametr... - Classe para a comunição por passagem de parametros
+		Ocurso 				- Classe para testes mais elaborados da classe Curso
+	Correções
 		Troca do nome das classes:
 			Livro para Curso
 			LivroTeste para CursoTeste
@@ -85,7 +103,7 @@ Versão 0.4
 		Inserido informações pelo .project
 		NumAleatorio
 		Desenho agora faz um smile
-	Modificações
+	Correções
 		Correções no Desenho
 
 Versão 0.3
@@ -96,7 +114,7 @@ Versão 0.2
 		Criação das Classes:
 			Desenhar
 			Desenho
-	Modificações
+	Correção
 		Livro
 		LivroDeTeste
 

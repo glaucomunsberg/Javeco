@@ -53,6 +53,13 @@ public class FileTest
 					serializable.closeFile();
 					
 				}
+				else
+				{
+					ReadSerializableFile serializable = new ReadSerializableFile();
+					serializable.openFile();
+					serializable.readValores();
+					serializable.closeFile();
+				}
 			}
 		}
 	}

@@ -8,184 +8,282 @@
 
 public class Curso 
 {
-	private String cursoNome; // contém o nome do curso
+	boolean chkMaximoDeAlunos = false;				//Faz com que apenas uma vez seja fixado o tamanho máximo do curso
+	
+	private String cursoNome;
 	private int numAlunos;
 	private String objetivo;
-
+	private String[] gradeNomes;
+	private int[] gradeNotas;
+	private int[] gradeConceitos;
+	private String nomeProfessor;
+	private int numMaxDeAluno;
 	
 	Dialogo interacao = new Dialogo();
 	Time inicioCurso = new Time();
 	Time finalCurso = new Time();
 	
-	public Curso( String nome, int alunos,int numAlunos, String nomes[])
+	/**
+	 * Inicia o curso como os seguintes dados:
+	 * 
+	 * @param String nomeDoCurso
+	 * @param String objetivoCurso
+	 * @param int numAlunos
+	 * @param int numMaxDeAluno
+	 * @param String nomePorfessor
+	 * @param String gradeNomes
+	 * @param int gradeNotas
+	 * @param int gradeConceitos
+	 */
+	public Curso( String nomeDoCurso, String objetivoCurso ,int numAlunos, int numMaxDeAluno, String nomeProfessor, String[] gradeNomes, int[] gradeNotas, int[] gradeConceitos)
 	{
-		cursoNome = nome; 
-		numAlunos = alunos;
-		//gradeNotas = gradeArray; //Array com notas
-		//gradeNomes = nomes;
-		System.out.printf("Criado o objeto Curso %s\n", inicioCurso.getHoraAtual());
+		setNomeCurso( nomeDoCurso );
+		setNumeroDeAlunos( numAlunos );
+		setObjetivo( objetivoCurso );
+		setNomeProfessor( nomeProfessor );
+		
+		if( this.chkMaximoDeAlunos == false )
+		{
+			setNumeroMaximoDeAluno( numMaxDeAluno );
+			this.chkMaximoDeAlunos = true;
+		}
+		
+		setGrades();
+		setValoresDoAluno(gradeNomes, gradeNotas, gradeConceitos);
+		
 	}
-
+	
+	/**
+	 * Inicia o curso com valores nulos
+	 * 		e numero máximo de alunos 10
+	 */
+	public Curso()
+	{
+		setNomeCurso("curso");
+		setObjetivo("indefinido");
+		
+		if( this.chkMaximoDeAlunos == false )
+		{
+			setNumeroMaximoDeAluno(10);
+			this.chkMaximoDeAlunos = true;
+		}
+		
+		setGrades();
+	}
+	
+	/**
+	 * de uso protegido para que seja criado apenas uma vez as constantes
+	 */
+	protected void setGrades()
+	{
+		gradeNomes 		= new String[ this.getNumeroMaximoDeAluno() ];
+		gradeNotas 		= new int[ this.getNumeroMaximoDeAluno() ];
+		gradeConceitos 	= new int[ this.getNumeroMaximoDeAluno() ];
+	}
+	/**
+	 * Insere o nome do curso
+	 * @param String nome
+	 */
 	public void setNomeCurso(String nome)
 	{
-		// Insere o nome do curso
 		cursoNome = nome;
 		System.out.printf("Modificado o nome do curso %s\n", inicioCurso.getHoraAtual());
 	}
 	
+	/**
+	 * Modifica o objetivo do curso
+	 * @param String novoObjetivo
+	 */
 	public void setObjetivo( String novoObjetivo)
 	{
 		this.objetivo = novoObjetivo;
 		System.out.printf("Modificado o objetivo do curso %s\n", inicioCurso.getHoraAtual());
 	}
 	
+	/**
+	 * Trás o nome do curso
+	 * @return objetivo
+	 */
 	public String getObjetivo()
 	{
 		return objetivo;
 	}
 	
+	/**
+	 *  Retorna a data do início do curso
+	 * @return String data
+	 */
 	public String getInicioCurso()
 	{
 		
 		return inicioCurso.getDate();
 	}
 
+	/**
+	 *  Recebe o novo início do curso
+	 *  em forma de string ss/mm/hh/dd/MM/AAAA
+	 * @param novoInicio
+	 */
 	public void setInicioCurso( String novoInicio)
 	{
 		inicioCurso.setTimeOfString(novoInicio);
 		System.out.printf("Modificado o início do curso %s\n", inicioCurso.getHoraAtual());
 	}
-
+	
+	/**
+	 * Retorna a hora do final do curso
+	 * em forma de dd/MM/aaaa 
+	 * @return String hora
+	 */
 	public String getFinalCurso()
 	{
 		return finalCurso.getDate();
 	}
 
+	/**
+	 * Seta o final do curso recebendo uma
+	 * 	string com ss/mm/hh/dd/MM/AAAA
+	 */
 	public void setFinalCurso(String novoFim)
 	{
 		
 		finalCurso.setTimeOfString(novoFim);
 	}
 
+	/**
+	 * retorna o nome do curso
+	 * @return String
+	 */
 	public String getNomeCurso()
 	{
 		// Retorna o nome do Curso
 		return cursoNome;
 	}
-
+	
+	/**
+	 * Insere o novo numero de alunos
+	 * @param valor
+	 */
 	public void setNumeroDeAlunos(int valor)
 	{
 		numAlunos = valor;
 		System.out.printf("Modificado o Número de alunos %s\n", inicioCurso.getHoraAtual());
 	}
 
+	/**
+	 * Retorna o número de alunos
+	 * @return int
+	 */
 	public int getNumeroDeAlunos()
 	{
 		return numAlunos;
 	}
-
-	public void setNotas( int Array[])
-	{
-		gradeNotas = Array;
-		System.out.printf("Modificado todas as notas %s\n", inicioCurso.getHoraAtual());
-	}
-
-	public int getMenorNota()
-	{
-		int menor = gradeNotas[0];
-		for(int menorDaGrade : gradeNotas)
-		{
-			if( menorDaGrade < menor)
-			{
-				menor = menorDaGrade;
-			}
-		}
-		return menor;
-	}
-
-	public int getMaiorNota()
-	{
-		int maior = gradeNotas[0];
-		for( int maiorDaGrade : gradeNotas)
-		{
-			if( maiorDaGrade > maior)
-			{
-				maior = maiorDaGrade;
-			}
-		}
-		return maior;
-	}
-
-	public double getMedia()
-	{
-		double media = 0;
-		for( int nota: gradeNotas)
-		{
-			media += nota;
-		}
-		media /= gradeNotas.length;
-		return media;
-	}
 	
-	public int getNumeroDeNotas()
+	/**
+	 * adiciona um novo nome para o aluno
+	 * @param nome
+	 * @param posicao
+	 */
+	public void setNomeAluno(String nome, int posicao)
 	{
-		return gradeNotas.length;
-	}
-	
-	public int getNota(int posicao)
-	{
-		int temp;
-		if( posicao >= 0 && posicao <= gradeNotas.length)
+		if( (posicao > numAlunos) || posicao < 0 )
 		{
-			temp = gradeNotas[posicao];
-			return temp;
-		}
-		return 0;
-	}
-	
-	public void setNota(int posicao, int valor)
-	{
-		if( posicao >= 0 )
-		{
-			if( posicao <= gradeNotas.length )
-			{
-				System.out.printf("Modificada a nota %d por %d. %s\n", gradeNotas[posicao],valor, inicioCurso.getHoraAtual());
-				gradeNotas[posicao] = valor;
-			}
-		}
-	}
-	
-	public void setNomes( String novosNomes[] )
-	{
-		gradeNomes = novosNomes;
-		System.out.printf("Modificado todas os nomes %s\n", inicioCurso.getHoraAtual());
-	}
-	
-	public String getNomes()
-	{
-		String temp;
-		String nomes = "";
-		for( int contador = 0; contador < gradeNomes.length; contador++)
-		{
-			temp = String.format("\n%d - %s",contador,gradeNomes[contador] );
-			nomes = nomes + temp;
-		}
-		return nomes;
-	}
-	
-	public String getNome( int posicao)
-	{
-		if( posicao >= 0 && posicao <= gradeNotas.length)
-		{
-			String temp = gradeNomes[posicao];
-			return temp;
+			System.out.printf("Posição %d incorreta", posicao);
 		}
 		else
 		{
-			System.out.printf("Atenção! Não foi foi retornado nenhum nome %s\n", inicioCurso.getHoraAtual());
-			return null;
+			gradeNomes[posicao] = nome;
 		}
 	}
+	
+	/**
+	 * Recebe por parametro um array de nomes e notas dos alunos
+	 * @param nomes
+	 * @param notas
+	 */
+	private void setValoresDoAluno(String[] nomes, int[]notas, int[]conceitos)
+	{
+		if( nomes.length > 0 && notas.length > 0)
+		{
+			for(int a=0; a < nomes.length || a < numMaxDeAluno; a++)
+			{
+				gradeNomes[a] = nomes[a];
+				gradeNotas[a] = notas[a];
+				gradeConceitos[a] = conceitos[a];
+			}
+		}
+	}
+	
+	/**
+	 * retorna o nome do aluno segundo a posicao
+	 * @param posicao
+	 * @return String
+	 */
+	public String getNomeAluno( int posicao)
+	{
+		return gradeNomes[posicao];
+	}
+	
+	/**
+	 * atribui o valor máximo de alunos que pode haver
+	 * @param novoValor
+	 */
+	public void setNumeroMaximoDeAluno( int novoValor)
+	{
+		if( this.chkMaximoDeAlunos == false)
+		{
+			numMaxDeAluno = novoValor;
+		}
+		
+	}
+	
+	/**
+	 * retorna o número máximo de alunos que pode
+	 * 		haver no curso.
+	 * @return
+	 */
+	public int getNumeroMaximoDeAluno()
+	{
+		return numMaxDeAluno;
+	}
+	
+	/**
+	 * método responsável por inserir um novo conceito
+	 * 	para uma posicao específica.
+	 * 
+	 * @param posicao
+	 * @param novoConceito
+	 */
+	public void setConceito(int posicao, int novoConceito)
+	{
+		gradeConceitos[posicao] = novoConceito;
+	}
+	
+	/**
+	 * retorna o conceito da posicao que recebe
+	 * @param posicao
+	 * @return conceito
+	 */
+	public int getConceito(int posicao)
+	{
+		return gradeConceitos[posicao];
+	}
+	
+	/**
+	 * Insere o novo nome do professor
+	 * @param novoNome
+	 */
+	private void setNomeProfessor(String novoNome)
+	{
+		this.nomeProfessor = novoNome;
+	}
 
-
+	/**
+	 * Retorna o nome do professor
+	 * @return nomeProfessor
+	 */
+	public String getNomeProfessor()
+	{
+		return nomeProfessor;
+	}
 }

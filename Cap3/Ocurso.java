@@ -1,3 +1,5 @@
+import Sistema.BaseDoCurso;
+
 /** Ocurso
  * 		objeto criado para a criacao e manupulação dentro da classe Curso.java. 
  * 			Toda manipulação é feita através de interações feitas pela classe
@@ -9,7 +11,7 @@
 
 public class Ocurso
 {
-	static Curso meuCurso = new Curso(); 		//Estancia o objeto meuLivro baseado na classe Livro
+	static BaseDoCurso meuCurso = new BaseDoCurso(); 		//Estancia o objeto meuLivro baseado na classe Livro
 	static Dialogo interacao = new Dialogo();					//Cria objeto que será usado para leitura
 	
 	

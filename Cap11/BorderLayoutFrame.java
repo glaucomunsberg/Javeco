@@ -44,7 +44,7 @@ public class BorderLayoutFrame extends JFrame implements ActionListener
 	public BorderLayoutFrame()
 	{
 		super( "BorderLayout teste");
-		layout = new BorderLayout(5,5);						//seta borda
+		layout = new BorderLayout(0,0);						//seta borda
 		setLayout( layout );								//diz que o layout e bord
 		botoes = new JButton[names.length];					//inicia os botes com o tamnho
 		
