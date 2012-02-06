@@ -5,13 +5,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
-public class FlowLayoutFrame  extends JFrame
+public class FlowLayoutFrame extends JFrame
 {
 	private JButton botaoEsquerda;	//botão que alinha a esquerda e etc
 	private JButton botaoCentro;
 	private JButton botaoDireita;
 	private FlowLayout layout;		//Objoto de layout
 	private Container container;	//Contêiner para configurar o layout
+	private TextoSenha ts;
 	
 	/**
 	 * main para executar a implementacao
