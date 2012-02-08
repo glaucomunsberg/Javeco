@@ -1,11 +1,12 @@
+/**
+ * SistemaDoCuso executará todos os seus modulos
+ * 	bem como os subsistemas de log e configuracaoes
+ */
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Container;
+import Sistema.Paineis;
 
 //Implementação do ActionListener extendida a JFrame
 public class SistemaDoCurso extends JFrame
@@ -15,9 +16,8 @@ public class SistemaDoCurso extends JFrame
 	protected static String nomeDoPrograma = "Programa do Curso";
 	protected static int alturaDaJanela = 1024;
 	protected static int comprimentoDaJanela = 768;
-	
-	private BorderLayout layout;				//Organiza as informações no layout norte, sul...
-	private static PainelCabecaD cabeca;
+	private BorderLayout layout;												//Organiza as informações no layout norte, sul...
+	private static Paineis paineis;
 	private Container container;
 	
 	
@@ -37,58 +37,37 @@ public class SistemaDoCurso extends JFrame
 			nomeDoPrograma 		= args[0];
 			alturaDaJanela 		= Integer.parseInt(args[1]);
 			comprimentoDaJanela = Integer.parseInt(args[2]);
-			
+
 		}
-		
 		SistemaDoCurso frame = new SistemaDoCurso(nomeDoPrograma);
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		frame.setSize(1204,872);
+		//frame.pack();
+		frame.setSize(1000,700);
 		
 	}
+	
 	/**
 	 * SistemDoCurso contém a estrutura do programa
 	 * 	que será executada, nela é adicionado cada
-	 * 	um dos modulos que vão constituir a janela
+	 * 	um dos modulos que foram construidos como
+	 * 	paineis
 	 * @param nomeProPrograma
 	 */
 	public SistemaDoCurso(String nomeProPrograma)
 	{
 		super(nomeProPrograma);
 
-		layout = new BorderLayout();							//seta borda
-		container = getContentPane();						 //obter o contêiner				
+		layout = new BorderLayout();						//seta borda
+		layout = new BorderLayout(0,0);
+		container = getContentPane();						 //obter o contêiner	
+		//container.setBackground( Color.WHITE);				//Fundo branco para o sistema
 		setLayout( layout );								//diz que o layout e bord
-		cabeca = new PainelCabecaD("Cabeca");
-		add( cabeca, BorderLayout.SOUTH );
+		paineis = new Paineis(1);
+		add( paineis.painelCabeca("Cabeca"), BorderLayout.NORTH );
+		add( paineis.painelHome(),BorderLayout.CENTER);
+		//add( paineis.painelNotification(), BorderLayout.CENTER);
+		
 	}
 	
-	public static void controleDeViews(int a)
-	{
-		
-	}
-}
-class PainelCabecaD extends JPanel
-{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3937242914762404944L;
-	private JTextField campoTexto1;
-		
-	public PainelCabecaD(String texto)
-	{
-		campoTexto1 = new JTextField( texto ); //10 colunas como campo
-		campoTexto1.setVisible(true);
-		campoTexto1.setSize(30, 30);
-		campoTexto1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                System.out.println(e);
-                SistemaDoCurso.controleDeViews(1);
-            }
-		});
-		add( campoTexto1 );
-	}
-
 }
