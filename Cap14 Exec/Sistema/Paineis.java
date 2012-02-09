@@ -20,27 +20,30 @@ import Sistema.Lang;
 public class Paineis
 {
 	
-	public static Icones icones;
-	public static Lang lang;
-	public JPanel painelCabeca;
-	public JPanel painelHome;
-	public JPanel painelCurso;
-	public JPanel painelNotification;
+	protected static Icones icones;
+	protected static Lang lang;
+	protected JPanel painelCabeca;
+	protected JPanel painelHome;
+	protected JPanel painelCurso;
+	protected JPanel painelAluno;
+	protected JPanel painelConfiguracao;
 	
 	JLabel cabecaLabelTexto;
 	JLabel cabecaLabelImagem;
 	JLabel notificationTexto;
 	
-	public Paineis(int tema)
+	public Paineis()
 	{
 		
-		icones = new Icones(tema);
-		lang = new Lang(1);
+		icones = new Icones(1); //--> Icones padrão
+		lang = new Lang(1);		//--> Linguagem Portugues
 		
 		painelCabeca = cabecaImplementacao();
 		painelHome = homeImplementacao();
 		painelCurso = cursoImplementacao();
-		painelNotification = notificationImplementacao();
+		painelAluno = alunoImplementacao();
+		painelConfiguracao = configuracaoImplementacao();
+		
 	}
 	
 	/**
@@ -59,22 +62,30 @@ public class Paineis
 	{
 		return painelHome;
 	}
+	public JPanel painelConfiguracao()
+	{
+		return painelConfiguracao;
+	}
+	
 	public JPanel painelCurso()
 	{
 		return painelCurso;
 	}
-	public JPanel painelNotification()
+	
+	public JPanel painelAluno()
 	{
-		return painelNotification;
-	}
-	private JPanel cursoImplementacao()
-	{
-		painelCurso = new JPanel();
-		return painelCurso;
+		return painelAluno;
 	}
 	
-	private JPanel cabecaImplementacao()
+	protected JPanel cabecaImplementacao()
 	{
+		//		-----------------------------------------------------------------------
+		//      |            |                                                        |
+		//		|   ICONES   |             Testos de ilustracoes                      |
+		//      |            |                                                        |
+		//      -----------------------------------------------------------------------
+		
+		
 		painelCabeca = new JPanel();						//Painel que será retornado
 		GridBagConstraints cons = new GridBagConstraints();	//Diz o tamanho que ocupará no JPanel
 		GridBagLayout layout = new GridBagLayout();			//Layout para a JPanel de grid de tamanho variado
@@ -98,8 +109,16 @@ public class Paineis
 		return painelCabeca;
 	}
 	
-	private JPanel homeImplementacao()
+	protected JPanel homeImplementacao()
 	{
+		//		-----------------------------------------------------------------------
+		//      |                                                                     |
+		//		|																	  |
+		//		|		labelCurso		  labelAluno		labelConfiguracao		  |
+		//      |                                                                     |
+		//		|																	  |
+		//		-----------------------------------------------------------------------
+		
 		JLabel labelCurso;
 		JLabel labelAluno;
 		JLabel labelConfiguracao;
@@ -133,25 +152,84 @@ public class Paineis
 		labelConfiguracao.addMouseListener(new MouseHandler(0100));
 		painelHome.add(labelConfiguracao);
 		
-		
-		
 		return painelHome;
 	}
 	
-	private JPanel notificationImplementacao()
+	private JPanel cursoImplementacao()
 	{
-		painelNotification = new JPanel();
-		notificationTexto = new JLabel( lang.sysInicializando, JLabel.LEFT);
-		painelNotification.add(notificationTexto);
-		painelNotification.setBackground(Color.WHITE);
-		return painelNotification;
+		//		-----------------------------------------------------------------------
+		//      |                                                                     |
+		//		|																	  |
+		//		|								labelUI								  |
+		//      |                                                                     |
+		//		|																	  |
+		//		-----------------------------------------------------------------------
+		
+		
+		GridBagLayout layout = new GridBagLayout();
+		painelCurso = new JPanel();
+		painelCurso.setLayout(layout);
+		painelCurso.setBackground(Color.WHITE);
+		painelCurso.setVisible(false);
+		JLabel labelUI = new JLabel( icones.curso, SwingConstants.CENTER);
+		painelCurso.add(labelUI);
+		
+		return painelCurso;
 	}
+	
+	private JPanel alunoImplementacao()
+	{
+		//		-----------------------------------------------------------------------
+		//      |                                                                     |
+		//		|																	  |
+		//		|								labelUI								  |
+		//      |                                                                     |
+		//		|																	  |
+		//		-----------------------------------------------------------------------
+		
+		
+		GridBagLayout layout = new GridBagLayout();
+		painelAluno = new JPanel();
+		painelAluno.setLayout(layout);
+		painelAluno.setBackground(Color.WHITE);
+		painelAluno.setVisible(false);
+		JLabel labelUI = new JLabel( icones.aluno, SwingConstants.CENTER);
+		painelAluno.add(labelUI);
+		
+		return painelAluno;
+	}
+	
+	
+	protected JPanel configuracaoImplementacao()
+	{
+		//		-----------------------------------------------------------------------
+		//      |                                                                     |
+		//		|																	  |
+		//		|								labelUI								  |
+		//      |                                                                     |
+		//		|																	  |
+		//		-----------------------------------------------------------------------
+		
+		GridBagLayout layout = new GridBagLayout();
+		
+		painelConfiguracao = new JPanel();
+		painelConfiguracao.setLayout(layout);
+		painelConfiguracao.setBackground(Color.WHITE);
+		painelConfiguracao.setVisible(false);
+		
+		JLabel labelUI = new JLabel( icones.configuracao, SwingConstants.CENTER);
+		painelConfiguracao.add(labelUI);
+		
+		return painelConfiguracao;
+	}
+	
 	/** COD_ID = 0001, habilita o frame HOME
 	 * 	COD_ID = 0010, habilita o frame CURSO
 	 *  COD_ID = 0011, habilita o frame ALUNO
 	 *  COD_ID = 0100, habilita o frame CONFIGURACAO
+	 *  COD_ID = 0101, habilita o frame CURSO - EDITAR
+	 *  COD_ID = 0110, habilita o frame ALUNO - EDITAR
 	 *  
-	 *  COD_ID = 1111, habilita o frame NOTIFICATION por um determinado tempo
 	 * 	
 	 * 	No controleDePaineis tem se então o controle
 	 * 		de qual dos paineis que serão demonstrados
@@ -159,7 +237,7 @@ public class Paineis
 	 * 	@return imageIcon icone do frame habilitado
 	 * 	
 	 */
-	public void controleDePaineis(int COD_ID)
+	private void controleDePaineis(int COD_ID)
 	{
 		switch(COD_ID)
 		{
@@ -167,18 +245,35 @@ public class Paineis
 			case 0001:
 				cabecaLabelImagem.setIcon( icones.goHome );
 				cabecaLabelTexto.setText(lang.cabecaEscolhaModulo);
+				painelHome.setVisible(true);
+				painelCurso.setVisible(false);
+				painelAluno.setVisible(false);
+				painelConfiguracao.setVisible(false);
 				break;
 			case 0010:
 				cabecaLabelImagem.setIcon( icones.curso );
 				cabecaLabelTexto.setText(lang.cabecaCurso);
+				painelHome.setVisible(false);
+				painelCurso.setVisible(true);
+				painelAluno.setVisible(false);
+				painelConfiguracao.setVisible(false);
 				break;
 			case 0011:
 				cabecaLabelImagem.setIcon( icones.aluno );
 				cabecaLabelTexto.setText(lang.cabecaAluno);
+				painelHome.setVisible(false);
+				painelCurso.setVisible(false);
+				painelAluno.setVisible(true);
+				painelConfiguracao.setVisible(false);
 				break;
 			case 0100:
 				cabecaLabelImagem.setIcon( icones.configuracao );
 				cabecaLabelTexto.setText(lang.cabecaConfi);
+				painelHome.setVisible(false);
+				painelCurso.setVisible(false);
+				painelAluno.setVisible(false);
+				painelConfiguracao.setVisible(true);
+				
 				break;
 			default:
 				cabecaLabelImagem.setIcon( icones.erro);
@@ -186,7 +281,7 @@ public class Paineis
 		}
 	}
 	
-	private class MouseHandler implements MouseListener
+	protected class MouseHandler implements MouseListener
 	 {
 		 public int COD_ID;	//armazena o codigo de qual frame será ativado
 		 
