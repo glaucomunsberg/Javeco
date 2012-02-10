@@ -1,0 +1,3 @@
+22:31:59 - Inicializando o sistema de log
+22:31:59 - 0000
+22:31:59 - Iniciando paineis do sistema.

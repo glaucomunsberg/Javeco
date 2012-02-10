@@ -9,10 +9,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import Sistema.Paineis;
 
+
 //Implementação do ActionListener extendida a JFrame
 public class SistemaDoCurso extends JFrame
 {
-
 	protected static final long serialVersionUID = -4083184620633799749L;		//Identifador unico
 	protected static String nomeDoPrograma = "Programa do Curso";
 	/**
@@ -25,17 +25,24 @@ public class SistemaDoCurso extends JFrame
 	 */
 	public static void main( String args[])
 	{
+		
+		
 		if( args.length >= 3)
 		{
 			
 			nomeDoPrograma 		= args[0];
-
+			Sistema.LogDoSistema.openFile(args[1]);
+			Sistema.LogDoSistema.addLog("Iniciando o sistema!");
+		}
+		else
+		{
+			Sistema.LogDoSistema.openFile(null);
 		}
 		SistemaDoCurso frame = new SistemaDoCurso(nomeDoPrograma);
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		//frame.setResizable(false);
 		frame.setSize(1024,726);
+		Sistema.LogDoSistema.addLog("Sistema carregado com sucesso!");
 		
 	}
 	

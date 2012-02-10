@@ -4,40 +4,48 @@
  */
 package Sistema;								//Constitui parte do Sistema
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;						//Gera o layout em forma de grid
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;				//Trás algumas constantes usandas no alinhamento
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.File;
 
-import Sistema.Icones;
-import Sistema.Lang;
+import Sistema.SistemConfiguracoes;
+import Sistema.SistemConfiguracoes.HowStart;
 
 public class Paineis
-{
-	
-	protected static Icones icones;
-	protected static Lang lang;
+{	
 	protected JPanel painelCabeca;
 	protected JPanel painelHome;
 	protected JPanel painelCurso;
 	protected JPanel painelAluno;
 	protected JPanel painelConfiguracao;
 	
-	JLabel cabecaLabelTexto;
-	JLabel cabecaLabelImagem;
-	JLabel notificationTexto;
+	protected JLabel cabecaLabelTexto;
+	protected JLabel cabecaLabelImagem;
+	protected JLabel notificationTexto;
+	
+	public SistemConfiguracoes SysConfig;
+	public HowStart comoIniciar;
 	
 	public Paineis()
-	{
+	{	
+		LogDoSistema.addLog("Iniciando os paineis do sistema.");
+		File arqConfigs = new File("Cap14 Exec/Sistema/Configs/configs.ser");
 		
-		icones = new Icones(1); //--> Icones padrão
-		lang = new Lang(1);		//--> Linguagem Portugues
-		
+		if( arqConfigs.isFile() )
+		{
+			comoIniciar = HowStart.RECUPERAR;
+		}
+		else
+		{
+			comoIniciar = HowStart.DEFAULT;
+		}
+		SysConfig = new SistemConfiguracoes( comoIniciar);
 		painelCabeca = cabecaImplementacao();
 		painelHome = homeImplementacao();
 		painelCurso = cursoImplementacao();
@@ -90,12 +98,12 @@ public class Paineis
 		GridBagConstraints cons = new GridBagConstraints();	//Diz o tamanho que ocupará no JPanel
 		GridBagLayout layout = new GridBagLayout();			//Layout para a JPanel de grid de tamanho variado
 		
-		cabecaLabelImagem = new JLabel( icones.goHome, JLabel.CENTER);
+		cabecaLabelImagem = new JLabel( SysConfig.icones.goHome, JLabel.CENTER);
 		cabecaLabelImagem.addMouseListener(new MouseHandler(001) );
+		cabecaLabelImagem.setToolTipText( SysConfig.lang.cabecaDescricao);
 		
-		cabecaLabelTexto = new JLabel(lang.cabecaBemVindoEscolha, JLabel.CENTER);
-		cabecaLabelTexto.setFont(new Font("Ubuntu", Font.BOLD, 18));
-		cabecaLabelTexto.setBackground( Color.BLUE);
+		cabecaLabelTexto = new JLabel(SysConfig.lang.cabecaBemVindoEscolha, JLabel.CENTER);
+		cabecaLabelTexto.setFont(SysConfig.fonte.fontTitulo);
 		
 		painelCabeca.setLayout(layout);					//Diz que o JPanel vai receber uma grid com valor variável
 		cons.fill = GridBagConstraints.BOTH;			
@@ -105,7 +113,6 @@ public class Paineis
 		painelCabeca.add( cabecaLabelImagem, cons);
 		cons.weightx = 0.90;							//a outra grid terá a porcentagem inserida
 		painelCabeca.add(cabecaLabelTexto, cons);
-		
 		return painelCabeca;
 	}
 	
@@ -128,27 +135,27 @@ public class Paineis
 		painelHome.setBackground(Color.WHITE);
 		
 		
-		labelCurso = new JLabel( icones.curso, SwingConstants.CENTER);
-		labelCurso.setText( lang.homeGerenciarCurso);
+		labelCurso = new JLabel( SysConfig.icones.curso, SwingConstants.CENTER);
+		labelCurso.setText( SysConfig.lang.homeGerenciarCurso);
 		labelCurso.setHorizontalTextPosition( SwingConstants.CENTER);	//manipula o texto centralizando no horizonte
 		labelCurso.setVerticalTextPosition( SwingConstants.BOTTOM);		//manipula o texto colocando na parte de baixo do rotulo
-		labelCurso.setFont(new Font("Ubuntu", Font.PLAIN, 14));
+		labelCurso.setFont( SysConfig.fonte.getFontTexto() );
 		labelCurso.addMouseListener(new MouseHandler(0010) );
 		painelHome.add(labelCurso);
 		
-		labelAluno = new JLabel( icones.aluno, SwingConstants.CENTER);
-		labelAluno.setText( lang.homeGerenciarAluno);
+		labelAluno = new JLabel( SysConfig.icones.aluno, SwingConstants.CENTER);
+		labelAluno.setText( SysConfig.lang.homeGerenciarAluno);
 		labelAluno.setHorizontalTextPosition( SwingConstants.CENTER);	//manipula o texto centralizando no horizonte
 		labelAluno.setVerticalTextPosition( SwingConstants.BOTTOM);		//manipula o texto colocando na parte de baixo do rotulo
-		labelAluno.setFont(new Font("Ubuntu", Font.PLAIN, 14));
+		labelAluno.setFont( SysConfig.fonte.getFontTexto());
 		labelAluno.addMouseListener(new MouseHandler(0011) );
 		painelHome.add(labelAluno);
 		
-		labelConfiguracao = new JLabel( icones.configuracao, SwingConstants.CENTER);
-		labelConfiguracao.setText( lang.homeGerenciarConfi);
+		labelConfiguracao = new JLabel( SysConfig.icones.configuracao, SwingConstants.CENTER);
+		labelConfiguracao.setText( SysConfig.lang.homeGerenciarConfi);
 		labelConfiguracao.setHorizontalTextPosition( SwingConstants.CENTER);	//manipula o texto centralizando no horizonte
 		labelConfiguracao.setVerticalTextPosition( SwingConstants.BOTTOM);		//manipula o texto colocando na parte de baixo do rotulo
-		labelConfiguracao.setFont(new Font("Ubuntu", Font.PLAIN, 14));
+		labelConfiguracao.setFont( SysConfig.fonte.getFontTexto());
 		labelConfiguracao.addMouseListener(new MouseHandler(0100));
 		painelHome.add(labelConfiguracao);
 		
@@ -171,7 +178,7 @@ public class Paineis
 		painelCurso.setLayout(layout);
 		painelCurso.setBackground(Color.WHITE);
 		painelCurso.setVisible(false);
-		JLabel labelUI = new JLabel( icones.curso, SwingConstants.CENTER);
+		JLabel labelUI = new JLabel( SysConfig.icones.curso, SwingConstants.CENTER);
 		painelCurso.add(labelUI);
 		
 		return painelCurso;
@@ -193,7 +200,7 @@ public class Paineis
 		painelAluno.setLayout(layout);
 		painelAluno.setBackground(Color.WHITE);
 		painelAluno.setVisible(false);
-		JLabel labelUI = new JLabel( icones.aluno, SwingConstants.CENTER);
+		JLabel labelUI = new JLabel( SysConfig.icones.aluno, SwingConstants.CENTER);
 		painelAluno.add(labelUI);
 		
 		return painelAluno;
@@ -217,7 +224,7 @@ public class Paineis
 		painelConfiguracao.setBackground(Color.WHITE);
 		painelConfiguracao.setVisible(false);
 		
-		JLabel labelUI = new JLabel( icones.configuracao, SwingConstants.CENTER);
+		JLabel labelUI = new JLabel( SysConfig.icones.configuracao, SwingConstants.CENTER);
 		painelConfiguracao.add(labelUI);
 		
 		return painelConfiguracao;
@@ -243,32 +250,32 @@ public class Paineis
 		{
 		
 			case 0001:
-				cabecaLabelImagem.setIcon( icones.goHome );
-				cabecaLabelTexto.setText(lang.cabecaEscolhaModulo);
+				cabecaLabelImagem.setIcon( SysConfig.icones.goHome );
+				cabecaLabelTexto.setText(SysConfig.lang.cabecaEscolhaModulo);
 				painelHome.setVisible(true);
 				painelCurso.setVisible(false);
 				painelAluno.setVisible(false);
 				painelConfiguracao.setVisible(false);
 				break;
 			case 0010:
-				cabecaLabelImagem.setIcon( icones.curso );
-				cabecaLabelTexto.setText(lang.cabecaCurso);
+				cabecaLabelImagem.setIcon( SysConfig.icones.curso );
+				cabecaLabelTexto.setText(SysConfig.lang.cabecaCurso);
 				painelHome.setVisible(false);
 				painelCurso.setVisible(true);
 				painelAluno.setVisible(false);
 				painelConfiguracao.setVisible(false);
 				break;
 			case 0011:
-				cabecaLabelImagem.setIcon( icones.aluno );
-				cabecaLabelTexto.setText(lang.cabecaAluno);
+				cabecaLabelImagem.setIcon( SysConfig.icones.aluno );
+				cabecaLabelTexto.setText(SysConfig.lang.cabecaAluno);
 				painelHome.setVisible(false);
 				painelCurso.setVisible(false);
 				painelAluno.setVisible(true);
 				painelConfiguracao.setVisible(false);
 				break;
 			case 0100:
-				cabecaLabelImagem.setIcon( icones.configuracao );
-				cabecaLabelTexto.setText(lang.cabecaConfi);
+				cabecaLabelImagem.setIcon( SysConfig.icones.configuracao );
+				cabecaLabelTexto.setText( SysConfig.lang.cabecaConfi);
 				painelHome.setVisible(false);
 				painelCurso.setVisible(false);
 				painelAluno.setVisible(false);
@@ -276,8 +283,8 @@ public class Paineis
 				
 				break;
 			default:
-				cabecaLabelImagem.setIcon( icones.erro);
-				cabecaLabelTexto.setText(lang.erroNaCabeca);
+				cabecaLabelImagem.setIcon( SysConfig.icones.erro);
+				cabecaLabelTexto.setText(SysConfig.lang.erroNaCabeca);
 		}
 	}
 	
@@ -317,7 +324,7 @@ public class Paineis
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			controleDePaineis(COD_ID);
-			System.out.print(arg0+"\n");
+			System.out.printf("Próximo painel: %d\n", COD_ID);
 			
 		}
 
