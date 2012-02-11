@@ -45,7 +45,6 @@ public class TextoSenha extends JFrame
 		add( campoTexto2);
 		
 		campoTexto3 = new JTextField("Edição cortada", 21); //texto padrão e 21 colunas
-		
 		campoTexto3.setSize(200, 200);
 		campoTexto3.setEditable(false); //Corta edição
 		add( campoTexto3);

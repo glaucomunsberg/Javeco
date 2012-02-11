@@ -11,6 +11,9 @@ Versão 1.4.5
 			Paineis		- Todos os Paineis (JPanel) que são usados no SistemaDoCurso
 			GerenciadorD... - Gerencia todas as informações do curso
 			GerenciadorD... - Gerencia todas as informações do sistema
+	Modificações
+			OCurso		- Modificações para se alinhar com o projeto do sistema
+			Time		- Modificado seu pacote
 			
 Versão 1.4.1
 	Implementação

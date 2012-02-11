@@ -170,11 +170,11 @@ public class Time
 		String retorno;
 		GregorianCalendar calendarioAtual = new GregorianCalendar();
 	  
-		atual.append( calendarioAtual.get( GregorianCalendar.SECOND ) );
+		atual.append( calendarioAtual.get( GregorianCalendar.HOUR_OF_DAY ) );
 		atual.append( ":" );
 		atual.append( calendarioAtual.get( GregorianCalendar.MINUTE ) );  
 		atual.append( ":" );
-		atual.append( calendarioAtual.get( GregorianCalendar.HOUR_OF_DAY ) );
+		atual.append( calendarioAtual.get( GregorianCalendar.SECOND ) );
 		retorno = atual.toString() ;
 		return retorno;
 	}

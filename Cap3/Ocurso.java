@@ -1,4 +1,4 @@
-import Sistema.BaseDoCurso;
+import Sistema.CursoBase;
 
 /** Ocurso
  * 		objeto criado para a criacao e manupulação dentro da classe Curso.java. 
@@ -11,7 +11,7 @@ import Sistema.BaseDoCurso;
 
 public class Ocurso
 {
-	static BaseDoCurso meuCurso = new BaseDoCurso(); 		//Estancia o objeto meuLivro baseado na classe Livro
+	static CursoBase meuCurso = new CursoBase(); 		//Estancia o objeto meuLivro baseado na classe Livro
 	static Dialogo interacao = new Dialogo();					//Cria objeto que será usado para leitura
 	
 	
