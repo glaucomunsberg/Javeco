@@ -1,86 +1,52 @@
 /**
  * Capacidade de internacionalizar o sistema.
- * 	Possui todas as langs dos sistema
+ * 	Possue todas as "langs" para o sistema
  */
-package Sistema;
+/**
+ * Lang possui a capacidada de internacionalizar o sistema
+ * 		baseado no ResourceBundle do próprio java precisa unicamente
+ * 		que seja adicionado o local do arquivo e a linguagem para o
+ * 		sistema
+ */
 
-public class Lang 
+package Sistema;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+public  class Lang 
 {
-	protected int linguagemEscolhida;
-	
-	public String cabecaBemVindoEscolha;
-	public String cabecaEscolhaModulo;
-	public String cabecaCurso;
-	public String cabecaAluno;
-	public String cabecaConfi;
-	public String cabecaDescricao;
-	
-	public String home;
-	public String homeGerenciarCurso;
-	public String homeGerenciarAluno;
-	public String homeGerenciarConfi;
-	
-	public String sysInicializando;
-	
-	public String erroNaCabeca;
+	public static Locale local;				//Contem a lingua como "pt_BR" ou "en_US"
+	public static ResourceBundle palavras;	//Contém o local dos arquivos de linguagem
 	
 	/**
-	 * inicia a linguagem do sistema tendo tendo as linguagens
-	 * 	1 - Portugres
-	 *  2 - Ingles
-	 * @param linguaguem
+	 * inicia o sistema com o idioma setada
+	 * @param idioma{ "pt_BR" || "en_US" } 
 	 */
-	Lang(int linguaguem)
+	public Lang(String idioma )
 	{
-		linguagemEscolhida = linguaguem;
-		if( linguaguem == 1)
+		if(idioma == "en_US")
 		{
-			linguagemPortugues();
+			local = setLocale_en_US();
 		}
-	}
-	
-	public void linguagemPortugues()
-	{
-		cabecaBemVindoEscolha = "Bem-Vindo ao sistema. Escolha o modulo que seja começar";
-		cabecaEscolhaModulo = "Escolha abaixo o modulo para visualizar e editar informações";
-		cabecaCurso = "Gerenciamento de informações do Curso";
-		cabecaAluno = "Gerencimaento de informações e notas de Alunos";
-		cabecaConfi = "Configuração e Gerencimaneto";
-		cabecaDescricao = "Clique aqui para ir ao painel Home";
-		
-		home = "Home";
-		homeGerenciarCurso = "Gerenciar o Curso";
-		homeGerenciarAluno = "Gerenciar os Alunos";
-		homeGerenciarConfi = "Gerenciar as Configurações";
-		
-		sysInicializando = "Sistema Inicializando...";
-		erroNaCabeca = "Oops! Que painel é esse?! õ.O";
-		
-		LogDoSistema.addLog("Linguagem selecionada: Português.");
+		if(idioma == "pt_BR")
+		{
+			local = setLocale_pt_BR();
+		}
+		palavras = ResourceBundle.getBundle("Sistema.Configs.Linguas", local);
 	}
 	
 	/**
-	 * troca de linguagem do sistema
-	 *  1 - portugues
-	 *  2 - Ingles
-	 * @param linguagem
-	 */
-	public void setTemaLinguagem(int linguagem)
-	{
-		linguagemEscolhida = linguagem;
-		if(linguagem == 1 )
-		{
-			linguagemPortugues();
-		}
-	}
-	
-	/**
-	 * retorna a linguagem usada no sistema
+	 * setará o sistema o local como en_US
 	 * @return
 	 */
-	public int getTemaLinguagem()
+	protected static Locale setLocale_en_US()
 	{
-		return linguagemEscolhida;
+		return new Locale("en","US");
+	}
+
+	protected static Locale setLocale_pt_BR()
+	{
+		return new Locale("pt","BR");
 	}
 
 }

@@ -3,13 +3,15 @@ Versão 1.4.5
 		As classes abaixo estão relacionadas ao exercício de
 		tudo que aprendi até o meio do livro. Sendo um sistema
 		elaborado apartir do Cap3\Curso e OCurso
-			BaseDoCurso	- Baseado no Cap3\Curso
+			CursoBase	- Baseado no Cap3\Curso
 			LogDoSistema	- Responsável por gravar em um .txt os logs
 			SistemaDoCurso	- Main do sistema
 			Icones		- Contem os icones temáticos
 			Lang		- Contém a linguagem do sistema (Portugues e Ingles)
 			Paineis		- Todos os Paineis (JPanel) que são usados no SistemaDoCurso
-
+			GerenciadorD... - Gerencia todas as informações do curso
+			GerenciadorD... - Gerencia todas as informações do sistema
+			
 Versão 1.4.1
 	Implementação
 		ClassDeAcessoRan...	- Permite o acesso randomico a dados

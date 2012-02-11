@@ -63,8 +63,9 @@ public class CursoBase
 	 * @param int gradeConceitos
 	 * @param String locaDolog
 	 */
-	public CursoBase( String nomeDoCurso, String objetivoCurso ,int numAlunos, int numMaxDeAluno, String nomeProfessor, String[] gradeNomes, int[] gradeNotas, int[] gradeConceitos)
+	public void setCursoBase( String nomeDoCurso, String objetivoCurso ,int numAlunos, int numMaxDeAluno, String nomeProfessor, String[] gradeNomes, int[] gradeNotas, int[] gradeConceitos)
 	{
+		LogDoSistema.addLog("Todos os dados estão sendo carregados do default");
 		if( this.chkInicializacaoLog == false )
 		{	
 			this.chkInicializacaoLog = true;
@@ -252,7 +253,7 @@ public class CursoBase
 	public void setNomeCurso(String nome)
 	{
 		nomeCurso = nome;
-		System.out.printf("Modificado o nome do curso %s\n", inicioCurso.getHoraAtual());
+		LogDoSistema.addLog("Modificado o nome do curso.");
 	}
 	
 	/**

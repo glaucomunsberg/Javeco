@@ -61,7 +61,7 @@ public class LogDoSistema
 				System.err.println("Atenção! Sistema de log não pode se recuperar!");
 			}
 		}
-		System.out.printf("Inicializando o sistema de log");
+		System.out.printf("Inicializando o sistema de log\n");
 		addLog("Inicializando o sistema de log.");
 	}
 	protected static void tentarRecuperar()

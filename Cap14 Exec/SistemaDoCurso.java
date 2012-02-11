@@ -1,20 +1,26 @@
 /**
+ * Bem-Vindo ao codigo do executador do
+ * 		OCurso
+ * 
  * SistemaDoCuso executará todos os seus modulos
- * 	bem como os subsistemas de log e configuracaoes
+ * 		bem como os subsistemas de log, 
+ * 		configurações do sistema e do próprio curso
  */
-import javax.swing.JFrame;
+
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
+import javax.swing.JFrame;
+
 import Sistema.Paineis;
 
-
-//Implementação do ActionListener extendida a JFrame
 public class SistemaDoCurso extends JFrame
 {
 	protected static final long serialVersionUID = -4083184620633799749L;		//Identifador unico
-	protected static String nomeDoPrograma = "Programa do Curso";
+	protected static String nomeDoPrograma = "OCurso - Versão 0.5 (beta)";
 	/**
 	 * Executará o programa, recebe parametros
 	 * caso não se queira as configurações default
@@ -25,14 +31,14 @@ public class SistemaDoCurso extends JFrame
 	 */
 	public static void main( String args[])
 	{
-		
-		
+
+
 		if( args.length >= 3)
 		{
-			
+
 			nomeDoPrograma 		= args[0];
 			Sistema.LogDoSistema.openFile(args[1]);
-			Sistema.LogDoSistema.addLog("Iniciando o sistema!");
+			Sistema.LogDoSistema.addLog("OCurso - Versão 0.5 (beta)");
 		}
 		else
 		{
@@ -43,9 +49,9 @@ public class SistemaDoCurso extends JFrame
 		frame.setVisible(true);
 		frame.setSize(1024,726);
 		Sistema.LogDoSistema.addLog("Sistema carregado com sucesso!");
-		
+
 	}
-	
+
 	/**
 	 * SistemDoCurso contém a estrutura do programa
 	 * 	que será executada, nela é adicionado cada
@@ -55,7 +61,7 @@ public class SistemaDoCurso extends JFrame
 	 */
 	public SistemaDoCurso(String nomeProPrograma)
 	{		
-		
+
 		super(nomeProPrograma);
 
 		Container c = this.getContentPane();  					//Pega o container deste Frame
@@ -81,5 +87,5 @@ public class SistemaDoCurso extends JFrame
 		this.setMinimumSize(arg0);
         
 	}
-	
+
 }
