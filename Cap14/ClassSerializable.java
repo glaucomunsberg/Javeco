@@ -8,7 +8,7 @@
  */
 import java.io.Serializable;
 //Serialisable "marcar" a classe como serializável
-public class ClassSerializable implements Serializable	
+public class ClassSerializable 	
 {
 	private int 	conta;
 	private String 	nome;

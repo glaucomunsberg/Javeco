@@ -5,22 +5,20 @@
  */
 package Sistema;
 
-import Sistema.GerenciadorDoSistema.HowStart;
-
 public class GerenciadorDoCurso extends CursoBase
 {
 	
-	public GerenciadorDoCurso(HowStart comoIniciar)
+	public GerenciadorDoCurso()
 	{
-		LogDoSistema.addLog("Iniciando as configurações do curso");
-		if(comoIniciar == HowStart.RECUPERAR)
-		{
-			this.getDataCurso();
-		}
-		else
-		{
-			this.getDefaultCurso();
-		}
+		LogDoSistema.addLog("Inicilizando as configurações do curso");
+		//if(comoIniciar == HowStart.RECUPERAR)
+		//{
+		//	this.getDataCurso();
+		//}
+		//else
+		//{
+		//	this.getDefaultCurso();
+		//}
 	}
 	
 	/**
@@ -53,4 +51,13 @@ public class GerenciadorDoCurso extends CursoBase
 		setCursoBase( nome, objCurso, numAluno, numDeAluno, Professor, Nomes,gradeNotas ,Conceitos );
 	}
 	
+	
+	/**
+	 * responsável pela gravação de dados do curso dentro do 
+	 * 		arquivo configs.dat
+	 */
+	protected void setDataCurso()
+	{
+		
+	}
 }

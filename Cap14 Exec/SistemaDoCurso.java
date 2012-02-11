@@ -21,6 +21,7 @@ public class SistemaDoCurso extends JFrame
 {
 	protected static final long serialVersionUID = -4083184620633799749L;		//Identifador unico
 	protected static String nomeDoPrograma = "OCurso - Versão 0.5 (beta)";
+	
 	/**
 	 * Executará o programa, recebe parametros
 	 * caso não se queira as configurações default
@@ -29,6 +30,7 @@ public class SistemaDoCurso extends JFrame
 	 * @param args[1] String alturaDaJanela
 	 * @param args[2] String comprimeitoDaJanela
 	 */
+	
 	public static void main( String args[])
 	{
 
@@ -43,11 +45,13 @@ public class SistemaDoCurso extends JFrame
 		else
 		{
 			Sistema.LogDoSistema.openFile(null);
+			Sistema.LogDoSistema.addLog(nomeDoPrograma);
 		}
 		SistemaDoCurso frame = new SistemaDoCurso(nomeDoPrograma);
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setSize(1024,726);
+		//frame.pack();
 		Sistema.LogDoSistema.addLog("Sistema carregado com sucesso!");
 
 	}

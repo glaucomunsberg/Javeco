@@ -6,7 +6,7 @@
  */
 package Sistema;
 import javax.swing.ImageIcon;
-public class Icones 
+public class Icone
 {
 	public int temaDoIcone;
 	
@@ -22,7 +22,7 @@ public class Icones
 	 * 1 - Carisma
 	 * 2 - Metalico
 	 */
-	public Icones(int temaEscolhido)
+	public Icone(int temaEscolhido)
 	{
 		temaDoIcone = temaEscolhido;
 		if(temaEscolhido == 1)
@@ -63,23 +63,23 @@ public class Icones
 	
 	public void setTemaCarisma()
 	{
-		goHome 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Home.png");
-		curso 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Curso.png");
-		aluno 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Aluno.png");
-		configuracao 	= new ImageIcon("Cap14 Exec/Sistema/icones/T1Configuracao.png");
-		erro 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Erro.png");
-		ok				= new ImageIcon("Cap14 Exec/Sistema/icones/T1Ok.png");
+		goHome 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Home.png");
+		curso 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Curso.png");
+		aluno 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Aluno.png");
+		configuracao 	= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Configuracao.png");
+		erro 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Erro.png");
+		ok				= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Ok.png");
 		LogDoSistema.addLog("Tema dos Icones: Carisma.");
 	}
 	
 	public void setTemaMetalico()
 	{
-		goHome 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Home.png");
-		curso 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Curso.png");
-		aluno 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Aluno.png");
-		configuracao 	= new ImageIcon("Cap14 Exec/Sistema/icones/T1Configuracao.png");
-		erro 			= new ImageIcon("Cap14 Exec/Sistema/icones/T1Erro.png");
-		ok				= new ImageIcon("Cap14 Exec/Sistema/icones/T1Ok.png");
+		goHome 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Home.png");
+		curso 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Curso.png");
+		aluno 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Aluno.png");
+		configuracao 	= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Configuracao.png");
+		erro 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Erro.png");
+		ok				= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Ok.png");
 		LogDoSistema.addLog("Tema dos Icones: Metalico.");
 	}
 

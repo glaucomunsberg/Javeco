@@ -1,10 +1,12 @@
-package Sistema;
+
 /**
  * Responsável pelo gravação de logs gerados pelo sistema
  * 	do curso
  */
-import com.glaucoroberto.time.*;
 
+package Sistema;
+
+import com.glaucoroberto.time.*;
 import java.io.File;
 import java.io.FileNotFoundException; 				//Trata o arquivo não encontrado
 import java.lang.SecurityException;					//Trata não poder abrir o arquivo
@@ -20,7 +22,15 @@ public class LogDoSistema
 	private static Formatter saida;					//Formatter terá o trabalho de criar o arquivo e
 													//alimentá-lo com as informações que receberá
 	
-	
+	/**
+	 * abre o sistema para escrever logs. Pode
+	 * 		se receber um parametro que é o caminho
+	 * 		para o local onde será gravado as inf de
+	 * 		log.
+	 * @param String arg - URL para o local de se gravar as informações
+	 * 				não é necessário o nome do arquivo pois esse é gerado pelo
+	 * 				sistema
+	 */
 	public static void openFile(String arg)
 	{
 		try
@@ -32,7 +42,7 @@ public class LogDoSistema
 			}
 			else
 			{
-				inderecoDoArquivo = arg;
+				inderecoDoArquivo = String.format("%sLog_%s-%s-%s_.txt", hora.getDiaAtual(), hora.getMesAtual(),hora.getAnoAtual());
 				saida = new Formatter(arg);
 			}
 		}
@@ -61,15 +71,26 @@ public class LogDoSistema
 				System.err.println("Atenção! Sistema de log não pode se recuperar!");
 			}
 		}
-		System.out.printf("Inicializando o sistema de log\n");
-		addLog("Inicializando o sistema de log.");
 	}
+	
+	/**
+	 * Tenta forçar a abertura de um novo arquivo
+	 * agora no log do local padrão do sistema
+	 */
 	protected static void tentarRecuperar()
 	{
 		tentouRecuperarAntes = true;
-		openFile(inderecoDoArquivo);
+		closeFile();
+		openFile("Cap14 Exec/Sistema/Logs/");
 		addLog("Tentativa de reiniciar o sistema de log executada com sucesso!");
 	}
+	
+	/**
+	 * Adiciona uma linha ao arquivo de log
+	 * 		essa linha é constituída de:
+	 * 		HH:MM:SS - "mensagem"
+	 * @param String novaLinha - mensagem que será gravada no log
+	 */
 	public static void addLog(String novaLinha)
 	{
 		hora = new Time();
@@ -90,7 +111,11 @@ public class LogDoSistema
 
 	}
 	
-	public void closeFile()
+	/**
+	 * Fecha o sistema de log para que não se perca nenhum
+	 * 		dado de log
+	 */
+	public static void closeFile()
 	{
 		addLog("Fechando o sistema de log");
 		System.out.println("Fechando o sistema de log");

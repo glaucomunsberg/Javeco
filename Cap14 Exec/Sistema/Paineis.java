@@ -12,10 +12,8 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;				//Trás algumas constantes usandas no alinhamento
-import java.io.File;
 
 import Sistema.GerenciadorDoSistema;
-import Sistema.GerenciadorDoSistema.HowStart;
 import Sistema.Lang;
 
 public class Paineis
@@ -32,23 +30,14 @@ public class Paineis
 	
 	public GerenciadorDoSistema ConfigSistema;
 	public GerenciadorDoCurso ConfigCurso;
-	public HowStart comoIniciar;
 	
 	public Paineis()
 	{	
 		LogDoSistema.addLog("Iniciando os paineis do sistema.");
-		File arqConfigs = new File("Cap14 Exec/Sistema/Configs/configs.ser");
 		
-		if( arqConfigs.isFile() )
-		{
-			comoIniciar = HowStart.RECUPERAR;
-		}
-		else
-		{
-			comoIniciar = HowStart.DEFAULT;
-		}
-		ConfigSistema = new GerenciadorDoSistema( comoIniciar);
-		ConfigCurso = new GerenciadorDoCurso( comoIniciar );
+	
+		ConfigSistema = new GerenciadorDoSistema();
+		ConfigCurso = new GerenciadorDoCurso();
 		painelCabeca = cabecaImplementacao();
 		painelHome = homeImplementacao();
 		painelCurso = cursoImplementacao();
@@ -101,7 +90,7 @@ public class Paineis
 		GridBagConstraints cons = new GridBagConstraints();	//Diz o tamanho que ocupará no JPanel
 		GridBagLayout layout = new GridBagLayout();			//Layout para a JPanel de grid de tamanho variado
 		
-		cabecaLabelImagem = new JLabel( ConfigSistema.icones.goHome, JLabel.CENTER);
+		cabecaLabelImagem = new JLabel( ConfigSistema.icones.ok, JLabel.CENTER);
 		cabecaLabelImagem.addMouseListener(new MouseHandler(001) );
 		cabecaLabelImagem.setToolTipText( Lang.palavras.getString("cabecaDescricao"));
 		

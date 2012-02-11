@@ -31,24 +31,24 @@ public class CursoBase
 	 * Inicia o curso com valores nulos
 	 * 		e numero máximo de alunos 10
 	 */
-	public CursoBase()
-	{
-		if( this.chkInicializacaoLog == false )
-		{
-			this.chkInicializacaoLog = true;
-		}
+	//public CursoBase()
+	//{
+	//	if( this.chkInicializacaoLog == false )
+	//	{
+	//		this.chkInicializacaoLog = true;
+	//	}
 		
-		setNomeCurso("curso");
-		setObjetivo("indefinido");
+	//	setNomeCurso("curso");
+	//	setObjetivo("indefinido");
 		
-		if( this.chkMaximoDeAlunos == false )
-		{
-			setNumeroMaximoDeAluno(10);
-			this.chkMaximoDeAlunos = true;
-		}
+	//	if( this.chkMaximoDeAlunos == false )
+	//	{
+	//		setNumeroMaximoDeAluno(10);
+	//		this.chkMaximoDeAlunos = true;
+	//	}
 		
-		setGrades();
-	}
+	//	setGrades();
+	//}
 
 	/**
 	 * Inicia o curso como os seguintes dados:

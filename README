@@ -14,6 +14,7 @@ Versão 1.4.5
 	Modificações
 			OCurso		- Modificações para se alinhar com o projeto do sistema
 			Time		- Modificado seu pacote
+			Configs		- Contém as informações de qual icone, linguagem e Fonte será usanda no sistema
 			
 Versão 1.4.1
 	Implementação
