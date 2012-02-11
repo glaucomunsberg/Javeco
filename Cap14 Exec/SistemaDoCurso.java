@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 
+import Sistema.Lang;
 import Sistema.Paineis;
 
 public class SistemaDoCurso extends JFrame
@@ -66,8 +67,6 @@ public class SistemaDoCurso extends JFrame
 	public SistemaDoCurso(String nomeProPrograma)
 	{		
 
-		super(nomeProPrograma);
-
 		Container c = this.getContentPane();  					//Pega o container deste Frame
 	    Paineis paineis = new Paineis();						//Inicia todos os paineis
         GridBagConstraints cons = new GridBagConstraints();  	//O esquema será de gride sendo o primeiro a cabeça e todos os demais abaixo
@@ -88,6 +87,7 @@ public class SistemaDoCurso extends JFrame
         c.add(paineis.painelAluno(), cons);
         Dimension arg0 = new Dimension(1024, 700);
 		c.setMinimumSize(arg0);
+		super.setTitle(Lang.palavras.getString("programaNome"));		//Insere o titulo da janela
 		this.setMinimumSize(arg0);
         
 	}

@@ -90,7 +90,7 @@ public class Paineis
 		GridBagConstraints cons = new GridBagConstraints();	//Diz o tamanho que ocupará no JPanel
 		GridBagLayout layout = new GridBagLayout();			//Layout para a JPanel de grid de tamanho variado
 		
-		cabecaLabelImagem = new JLabel( ConfigSistema.icones.ok, JLabel.CENTER);
+		cabecaLabelImagem = new JLabel( ConfigSistema.icones.goHome, JLabel.CENTER);
 		cabecaLabelImagem.addMouseListener(new MouseHandler(001) );
 		cabecaLabelImagem.setToolTipText( Lang.palavras.getString("cabecaDescricao"));
 		

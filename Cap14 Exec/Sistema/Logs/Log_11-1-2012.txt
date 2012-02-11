@@ -1,8 +1,9 @@
-16:31:34 - OCurso - Versão 0.5 (beta)
-16:31:34 - Iniciando os paineis do sistema.
-16:31:34 - Inicilizando as Configurações do sistema
-16:31:34 - O Gerenciador do Sistema iniciará com dados 'default'.
-16:31:35 - Tema dos Icones: Carisma.
-16:31:35 - Tema da Fonte: Ubuntu.
-16:31:35 - Iniciando as configurações do curso
-16:31:35 - Sistema carregado com sucesso!
+18:23:16 - OCurso - Versão 0.5 (beta)
+18:23:17 - Iniciando os paineis do sistema.
+18:23:17 - Inicilizando as Configurações do sistema
+18:23:17 - O Gerenciador do Sistema iniciará com dados do 'configs.ser'.
+18:23:17 - Tema do idioma: Português do Brasil.
+18:23:17 - Tema dos Icones: Carisma.
+18:23:17 - Tema da Fonte: Ubuntu.
+18:23:17 - Inicilizando as configurações do curso
+18:23:17 - Sistema carregado com sucesso!
