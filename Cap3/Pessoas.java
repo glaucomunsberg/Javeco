@@ -1,3 +1,5 @@
+import com.glaucoroberto.time.Time;
+
 /** Alunos
  * 	Classe que contém todas as informações pertinentes aos alunos
  * @author glaucoroberto

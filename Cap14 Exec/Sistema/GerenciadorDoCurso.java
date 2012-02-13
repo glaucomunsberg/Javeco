@@ -7,10 +7,11 @@ package Sistema;
 
 public class GerenciadorDoCurso extends CursoBase
 {
+	protected boolean gravouComSucesso = false;
 	
 	public GerenciadorDoCurso()
 	{
-		LogDoSistema.addLog("Inicilizando as configurações do curso");
+		Logs.addLog("Inicilizando as configurações do curso");
 		//if(comoIniciar == HowStart.RECUPERAR)
 		//{
 		//	this.getDataCurso();
@@ -59,5 +60,10 @@ public class GerenciadorDoCurso extends CursoBase
 	protected void setDataCurso()
 	{
 		
+	}
+	
+	protected boolean gravarArquivoSerializado()
+	{
+		return true;
 	}
 }

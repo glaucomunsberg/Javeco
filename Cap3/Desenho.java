@@ -10,9 +10,11 @@ import javax.swing.JPanel;
 
 public class Desenho extends JPanel
 {
-	private String funcao	= "Responsável por fazer desenhos do tipo, Linha, Retângulo e Oval. Recebe como parametro qual das formas quer.";
-	private Double versao	= 0.0;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3884061780920725514L;
+
 	public int opcaoDeDesenho; // Responsável pela escolha de qual forma de desenho
 	
 	Dialogo interacao = new Dialogo();

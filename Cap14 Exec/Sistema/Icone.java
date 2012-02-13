@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 public class Icone
 {
 	public int temaDoIcone;
+	public static String[] tempString;
 	
 	public ImageIcon goHome;
 	public ImageIcon curso;
@@ -25,11 +26,11 @@ public class Icone
 	public Icone(int temaEscolhido)
 	{
 		temaDoIcone = temaEscolhido;
-		if(temaEscolhido == 1)
+		if(temaEscolhido == 0)
 		{
 			setTemaCarisma();
 		}
-		if( temaEscolhido == 2)
+		if( temaEscolhido == 1)
 		{
 			setTemaMetalico();
 		}
@@ -42,11 +43,11 @@ public class Icone
 	public void setTemaIcone(int escolhido)
 	{
 		temaDoIcone = escolhido;
-		if(escolhido == 1)
+		if(escolhido == 0)
 		{
 			setTemaCarisma();
 		}
-		if(escolhido == 2)
+		if(escolhido == 1)
 		{
 			setTemaMetalico();
 		}
@@ -63,24 +64,31 @@ public class Icone
 	
 	public void setTemaCarisma()
 	{
-		goHome 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Home.png");
-		curso 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Curso.png");
-		aluno 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Aluno.png");
-		configuracao 	= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Configuracao.png");
-		erro 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Erro.png");
-		ok				= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Ok.png");
-		LogDoSistema.addLog("Tema dos Icones: Carisma.");
+		goHome 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Home.png");
+		curso 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Curso.png");
+		aluno 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Aluno.png");
+		configuracao 	= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Configuracao.png");
+		erro 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Erro.png");
+		ok				= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Ok.png");
+		Logs.addLog("Tema dos Icones: Carisma.");
 	}
 	
+	public static String[] getComboIcones()
+	{
+		tempString = new String[2];
+		tempString[0] = "Carisma";
+		tempString[1] = "Metálico";
+		return tempString;
+	}
 	public void setTemaMetalico()
 	{
-		goHome 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Home.png");
-		curso 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Curso.png");
-		aluno 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Aluno.png");
-		configuracao 	= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Configuracao.png");
-		erro 			= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Erro.png");
-		ok				= new ImageIcon("Cap14 Exec/Sistema/Icones/T1Ok.png");
-		LogDoSistema.addLog("Tema dos Icones: Metalico.");
+		goHome 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Home.png");
+		curso 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Curso.png");
+		aluno 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Aluno.png");
+		configuracao 	= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Configuracao.png");
+		erro 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Erro.png");
+		ok				= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Ok.png");
+		Logs.addLog("Tema dos Icones: Metalico.");
 	}
 
 }

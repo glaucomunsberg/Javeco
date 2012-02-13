@@ -13,6 +13,7 @@ public class Fonte
 	protected Font fontTitulo;
 	protected Font fontTexto;
 	protected int temaDaFonte;
+	protected String[] tempString;
 	
 	/**
 	 * inicia a font do sistema
@@ -42,7 +43,7 @@ public class Fonte
 	{
 		fontTitulo = new Font("Ubuntu", Font.BOLD, 18);
 		fontTexto = new Font("Ubuntu", Font.PLAIN, 14);
-		LogDoSistema.addLog("Tema da Fonte: Ubuntu.");
+		Logs.addLog("Tema da Fonte: Ubuntu.");
 	}
 	
 	/**
@@ -53,7 +54,7 @@ public class Fonte
 	{
 		fontTitulo = new Font("serif", Font.BOLD, 18);
 		fontTexto = new Font("serif", Font.PLAIN, 14);
-		LogDoSistema.addLog("Tema da Fonte: Serif.");
+		Logs.addLog("Tema da Fonte: Serif.");
 	}
 	
 	/**
@@ -75,11 +76,11 @@ public class Fonte
 	public void setTemaFonte(int fonte)
 	{
 		temaDaFonte = fonte;
-		if(fonte == 1)
+		if(fonte == 0)
 		{
 			setFontUbuntu();
 		}
-		else
+		if( fonte == 1)
 		{
 			setFontSerif();
 		}
@@ -101,6 +102,14 @@ public class Fonte
 	public Font getFontTitulo()
 	{
 		return fontTitulo;
+	}
+	
+	public String[] getComboFontes()
+	{
+		tempString = new String[2];
+		tempString[0] = "Ubuntu";
+		tempString[1] = "Serif";
+		return tempString;
 	}
 
 }

@@ -24,6 +24,10 @@
 //Implementação do ActionListener extendida a JFrame
 public class BorderLayoutFrame extends JFrame implements ActionListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3756925750902258777L;
 	private JButton botoes[];		//Array de botoes
 	private final String names[] = {"Esconder North", "Esconder South", "Esconder Leste", "Esconder Oeste", "Esconder Centro"}; //Nome dos botões
 	private BorderLayout layout;	//border object

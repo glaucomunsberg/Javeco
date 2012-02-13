@@ -7,21 +7,23 @@
  * 		configurações do sistema e do próprio curso
  */
 
-
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Sistema.Lang;
+import Sistema.Logs;
 import Sistema.Paineis;
 
 public class SistemaDoCurso extends JFrame
 {
 	protected static final long serialVersionUID = -4083184620633799749L;		//Identifador unico
-	protected static String nomeDoPrograma = "OCurso - Versão 0.5 (beta)";
+	protected static String nomeDoPrograma;
 	
 	/**
 	 * Executará o programa, recebe parametros
@@ -31,29 +33,17 @@ public class SistemaDoCurso extends JFrame
 	 * @param args[1] String alturaDaJanela
 	 * @param args[2] String comprimeitoDaJanela
 	 */
-	
 	public static void main( String args[])
 	{
 
-
-		if( args.length >= 3)
-		{
-
-			nomeDoPrograma 		= args[0];
-			Sistema.LogDoSistema.openFile(args[1]);
-			Sistema.LogDoSistema.addLog("OCurso - Versão 0.5 (beta)");
-		}
-		else
-		{
-			Sistema.LogDoSistema.openFile(null);
-			Sistema.LogDoSistema.addLog(nomeDoPrograma);
-		}
+		Sistema.Logs.openFile(null);
+		Sistema.Logs.addLog("Sistema iniciado");
 		SistemaDoCurso frame = new SistemaDoCurso(nomeDoPrograma);
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setSize(1024,726);
-		//frame.pack();
-		Sistema.LogDoSistema.addLog("Sistema carregado com sucesso!");
+		//Sistema.LogDoSistema.addLog("Sistema carregado com sucesso!");
+		
 
 	}
 
@@ -68,7 +58,7 @@ public class SistemaDoCurso extends JFrame
 	{		
 
 		Container c = this.getContentPane();  					//Pega o container deste Frame
-	    Paineis paineis = new Paineis();						//Inicia todos os paineis
+	    final Paineis paineis = new Paineis();						//Inicia todos os paineis
         GridBagConstraints cons = new GridBagConstraints();  	//O esquema será de gride sendo o primeiro a cabeça e todos os demais abaixo
         GridBagLayout layout = new GridBagLayout();				//Layout em forma de Gride de uma coluna
         c.setLayout(layout);
@@ -89,6 +79,63 @@ public class SistemaDoCurso extends JFrame
 		c.setMinimumSize(arg0);
 		super.setTitle(Lang.palavras.getString("programaNome"));		//Insere o titulo da janela
 		this.setMinimumSize(arg0);
+		this.addWindowListener(new WindowAdapter() 
+		{  
+		    public void windowClosing(WindowEvent evt)
+		    {
+		    	boolean continuar = true;
+		    	int cod = 0;
+		    	/**
+		    	 * Antes de fechar a janela vai tentar salvar as informações
+		    	 * 	que estão foram modificadas no sistema, caso não
+		    	 * 	ele simplesmente fecha a janela sem nenhum alerta
+		    	 */
+		    	do
+		    	{
+		    		if( Paineis.getHaDadosParaSerGravado())
+		    		{
+		    			JOptionPane painelDeSaida = new JOptionPane();
+		    			painelDeSaida.setFont(Paineis.Config.fonte.getFontTexto());
+		    			cod = JOptionPane.showConfirmDialog(null,"Há dados para ser gravados. Deseja salvar esses dados?!");
+		    			if(cod == 0)
+		    			{
+		    				boolean gravouComSucesso;
+		    				gravouComSucesso = Paineis.gravarDados();
+		    				if( gravouComSucesso == false)
+		    				{
+		    					JOptionPane.showMessageDialog(null, "Atenção não pode ser gravado seus dados");
+		    					continuar = false;
+		    				}
+		    				else
+		    				{
+		    					continuar = false;
+		    				}
+		    			}
+		    			else
+		    			{
+		    				continuar = false;
+		    			}
+		    			
+		    		}
+		    		else
+		    		{
+		    			System.out.printf("Não há dados");
+		    			continuar = false;
+		    		}
+		    		
+		    		/*
+		    		 * se for fechar realmente então fecha o log
+		    		 * 	e os paineis do coletor de lixo
+		    		 */
+		    		if( continuar == false)
+		    		{
+		    			Logs.closeFile();
+		    			paineis.finalize();
+		    		}
+		    	}while(continuar);
+		    	
+		    }  
+		}); 
         
 	}
 

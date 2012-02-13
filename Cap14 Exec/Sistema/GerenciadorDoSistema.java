@@ -32,6 +32,8 @@ public class GerenciadorDoSistema
 	public int langSerializada;						
 	public int iconesSerializado;
 	public int fonteSerializada;
+	public boolean logSerializado;
+	public boolean gravouComSucesso = false;
 	
 	public Lang lang;								//Idiota do sistema
 	public Icone icones;							//Icones para o sistema
@@ -45,8 +47,8 @@ public class GerenciadorDoSistema
 	 */
 	public GerenciadorDoSistema()
 	{
-		LogDoSistema.addLog("Inicilizando as Configurações do sistema");
-		File arqConfigs = new File("Cap14 Exec/Sistema/Configs/Configs.ser");
+		Logs.addLog("Inicilizando as Configurações do sistema");
+		File arqConfigs = new File(Constantes.CONST_CONFIGS_URL+"Configs.ser");
 		
 		if( arqConfigs.isFile() && arqConfigs != null )
 		{
@@ -68,16 +70,14 @@ public class GerenciadorDoSistema
 	 */
 	private void iniciarInfoDefault()
 	{
-		LogDoSistema.addLog("O Gerenciador do Sistema iniciará com dados 'default'.");
+		Logs.addLog("O Gerenciador do Sistema iniciará com dados 'default'.");
 		
-		lang = new Lang("pt_BR");
-		icones = new Icone(1);
-		fonte = new Fonte(1);
+		lang = new Lang(Constantes.CONST_DEFAULT_LINGUAGE);
+		icones = new Icone(Constantes.CONST_DEFAULT_ICONES);
+		fonte = new Fonte(Constantes.CONST_DEFAULT_FONTE);
+		Logs.setLogAtivo(Constantes.CONST_DEFAULT_INICLOG);
 		
-		iconesSerializado = icones.getTemaIcone();
-		langSerializada = lang.getTemaLinguagem();
-		fonteSerializada = fonte.getTemaFonte();
-		gravarArquivoSerializado();
+		atualizarValores();
 	}
 	
 	/**
@@ -89,29 +89,48 @@ public class GerenciadorDoSistema
 	 */
 	private void iniciarInfoRestaurando()
 	{
-		LogDoSistema.addLog("O Gerenciador do Sistema iniciará com dados do 'configs.ser'.");
+		Logs.addLog("O Gerenciador do Sistema iniciará com dados do 'configs.ser'.");
 		lerArquivoSerializado();
 		lang = new Lang(langSerializada);
 		icones = new Icone(iconesSerializado);
 		fonte = new Fonte(fonteSerializada);
+		Logs.setLogAtivo(logSerializado);
+	}
+	/**
+	 * atualiza os valores para que quando gravar
+	 * 		grave com as informações atuais do sistema
+	 */
+	private void atualizarValores()
+	{
+		iconesSerializado = icones.getTemaIcone();
+		langSerializada = Lang.getTemaLinguagem();
+		fonteSerializada = fonte.getTemaFonte();
+		logSerializado = Logs.getLogAtivo();
 	}
 	
-	protected void gravarArquivoSerializado()
+	/**
+	 * Método para gravar as informações do sistema
+	 * 	em um arquivo serializado
+	 * @return
+	 */
+	protected boolean gravarArquivoSerializado()
 	{
-		LogDoSistema.addLog("O Gerenciador do Sistema está gravando os dados em 'configs.ser'.");
+		Logs.addLog("O Gerenciador do Sistema está gravando os dados em 'configs.ser'.");
+		atualizarValores();
 		/**
 		 * tentará abrir o arquivo para serializar
 		 */
 		try
 		{
 			salvar = new ObjectOutputStream( 						//Objeto de sainda
-					new FileOutputStream("Cap14 Exec/Sistema/Configs/Configs.ser"));		//Arquivo de saida
+					new FileOutputStream(Constantes.CONST_CONFIGS_URL+"Configs.ser"));		//Arquivo de saida
+			gravouComSucesso = true;
 		}
 		catch( IOException ioException)
 		{
 			System.err.println("Erro ao abrir o arquivo 'Configs.ser' para serializar.");
-			LogDoSistema.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' para serializar.");
-			
+			Logs.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' para serializar.");
+			gravouComSucesso = false;
 		}
 		
 		/**
@@ -119,26 +138,38 @@ public class GerenciadorDoSistema
 		 */
 		try
 		{	
-			Configs salvarConfiguracaoes = new Configs(iconesSerializado, fonteSerializada, langSerializada);
+			if(this.logSerializado)
+			{
+				System.out.printf("Salvará como LOG HABILITADO");
+			}
+			else
+			{
+				System.out.printf("Salavá como LOG DESABILITADO");
+			}
+			
+			Configs salvarConfiguracaoes = new Configs(iconesSerializado, fonteSerializada, langSerializada, logSerializado);
 			salvar.writeObject(salvarConfiguracaoes);																//O objeto saida recebe a classe para sair o objeto
-			salvar.flush();																									//"flush()" garante que a gravação será imediata!
+			salvar.flush();																								//"flush()" garante que a gravação será imediata!
+			gravouComSucesso = true;
 		}
 		catch(IOException ioException)
 		{
 			/*
 			 * trata a exceção de erro de I/O
 			 */
-			LogDoSistema.addLog("Atenção! Erro ao escrever no 'Configs.ser'. ");
+			Logs.addLog("Atenção! Erro ao escrever no 'Configs.ser'. ");
 			System.err.printf("Atenção! Erro ao escrever no 'Configs.ser'.\n");
 			System.err.printf("%s", ioException);
+			gravouComSucesso = false;
 		}
 		catch(NoSuchElementException noSuch )
 		{
 			/*
 			 * Trata a exceção de erro de tipos
 			 */
-			LogDoSistema.addLog("Atenção! Erro de tipos de dados gravados no 'Configs.ser'.");
+			Logs.addLog("Atenção! Erro de tipos de dados gravados no 'Configs.ser'.");
 			System.err.println("Erro no tipo de dado ao gravar");
+			gravouComSucesso = false;
 		}
 		
 		/**
@@ -149,14 +180,18 @@ public class GerenciadorDoSistema
 			if( salvar != null )
 			{
 				salvar.close();
+				gravouComSucesso = true;
 			}
 
 		}
 		catch(IOException exception)
 		{
 				System.err.println( "Atenção! Não pode fechar o arquivo que foi serializado 'Configs.ser'.");
-				LogDoSistema.addLog("Atenção! Não pode fechar o arquivo que foi serializado 'Configs.ser'.");
+				Logs.addLog("Atenção! Não pode fechar o arquivo que foi serializado 'Configs.ser'.");
+				gravouComSucesso = false;
 		}
+		
+		return gravouComSucesso;
 	}
 	
 	protected void lerArquivoSerializado()
@@ -166,26 +201,27 @@ public class GerenciadorDoSistema
 		 */
 		try
 		{
-			salvado = new ObjectInputStream( new FileInputStream( "Cap14 Exec/Sistema/Configs/Configs.ser"));
+			salvado = new ObjectInputStream( new FileInputStream( Constantes.CONST_CONFIGS_URL+"Configs.ser"));
 		}
 		catch( IOException ioException)
 		{
 			System.err.println( "Atenção! Erro ao abrir o arquivo 'Configs.ser' serializado.");
-			LogDoSistema.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' serializado.");
+			Logs.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' serializado.");
 		}
 		
-		Configs configuracaoesSalvas;
+		Configs configuracoesSalvas;
 		
 		/**
 		 * lerá o arquivo
 		 */
 		try
 		{
-			configuracaoesSalvas = ( Configs ) salvado.readObject();
-			this.fonteSerializada = configuracaoesSalvas.getFonteSerializado();
-			this.iconesSerializado = configuracaoesSalvas.getIconeSerializado();
-			this.langSerializada = configuracaoesSalvas.getLangSerializado();
-			configuracaoesSalvas = null;
+			configuracoesSalvas = ( Configs ) salvado.readObject();
+			this.fonteSerializada = configuracoesSalvas.getFonteSerializado();
+			this.iconesSerializado = configuracoesSalvas.getIconeSerializado();
+			this.langSerializada = configuracoesSalvas.getLangSerializado();
+			this.logSerializado = configuracoesSalvas.getLogAtivo();
+			configuracoesSalvas = null;
 		}
 		catch( EOFException endOfFileExcepetion)
 		{
@@ -198,13 +234,13 @@ public class GerenciadorDoSistema
 		catch( ClassNotFoundException classNot)
 		{
 			System.err.println( "Atenção! Hablilite a criação do objeto GerenciadorDoSistema");
-			LogDoSistema.addLog("Atenção! Hablilite a criação do objeto GerenciadorDoSistema");
+			Logs.addLog("Atenção! Hablilite a criação do objeto GerenciadorDoSistema");
 			
 		}
 		catch( IOException ioException)
 		{
 			System.err.println( "Atenção! Erro durante a leitura do arquivo 'Configs.ser'.");
-			LogDoSistema.addLog("Atenção! Erro durante a leitura do arquivo 'Configs.ser'.");
+			Logs.addLog("Atenção! Erro durante a leitura do arquivo 'Configs.ser'.");
 			System.err.printf("\n%s", ioException);
 		}
 		
@@ -223,7 +259,7 @@ public class GerenciadorDoSistema
 		catch(IOException exception)
 		{
 				System.err.println( "Atenção! Não pode fechar o arquivo serializado 'Configs.ser'.");
-				LogDoSistema.addLog("Atenção! Não pode fechar o arquivo serializado 'Configs.ser'.");
+				Logs.addLog("Atenção! Não pode fechar o arquivo serializado 'Configs.ser'.");
 		}
 	}
 }

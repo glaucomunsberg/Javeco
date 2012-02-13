@@ -17,25 +17,25 @@ public  class Lang
 {
 	public static Locale local;				//Contem a lingua como "pt_BR" ou "en_US"
 	public static ResourceBundle palavras;	//Contém o local dos arquivos de linguagem
-	
+	public static String[] tempString;
 	public static int temaLinguagem;
 	/**
 	 * inicia o sistema com o idioma setada
-	 * @param idioma{ "pt_BR" || "en_US" } 
+	 * @param idioma{ "pt_BR" || "en_US" }
 	 */
 	public Lang(String idioma )
 	{
 		if(idioma == "pt_BR")
 		{
 			local = setLocale_pt_BR();
-			temaLinguagem = 1;
+			temaLinguagem = 0;
 		}
 		if(idioma == "en_US")
 		{
 			local = setLocale_en_US();
-			temaLinguagem = 2;
+			temaLinguagem = 1;
 		}
-		palavras = ResourceBundle.getBundle("Sistema.Linguages.Linguas", local);
+		palavras = ResourceBundle.getBundle(Constantes.CONST_LINGUAS_URL, local);
 	}
 	
 	/**
@@ -47,17 +47,17 @@ public  class Lang
 	public Lang(int idioma )
 	{
 		temaLinguagem = idioma;
-		if(idioma == 2 )
+		if(idioma == 0 )
+		{
+			local = setLocale_pt_BR();
+			temaLinguagem = 0;
+		}
+		if(idioma == 1 )
 		{
 			local = setLocale_en_US();
 			temaLinguagem = 1;
 		}
-		if(idioma == 1 )
-		{
-			local = setLocale_pt_BR();
-			temaLinguagem = 2;
-		}
-		palavras = ResourceBundle.getBundle("Sistema.Linguages.Linguas", local);
+		palavras = ResourceBundle.getBundle(Constantes.CONST_LINGUAS_URL, local);
 	}
 	
 	/**
@@ -66,18 +66,39 @@ public  class Lang
 	 */
 	protected static Locale setLocale_en_US()
 	{
-		LogDoSistema.addLog("Tema do idioma: Inglês dos EUA.");
+		Logs.addLog("Tema do idioma: Inglês dos EUA.");
 		return new Locale("en","US");
 	}
 
 	protected static Locale setLocale_pt_BR()
 	{
-		LogDoSistema.addLog("Tema do idioma: Português do Brasil.");
+		Logs.addLog("Tema do idioma: Português do Brasil.");
 		return new Locale("pt","BR");
 	}
 	
-	public int getTemaLinguagem()
+	public void setNovoIdioma(int lingua)
+	{
+		temaLinguagem = lingua;
+		if( lingua == 0)
+		{
+			local = setLocale_pt_BR();
+		}
+		if( lingua == 1)
+		{
+			local = setLocale_en_US();
+		}
+	}
+	
+	public static int getTemaLinguagem()
 	{
 		return temaLinguagem;
+	}
+	
+	public static String[] getComboLinguagens()
+	{
+		tempString = new String[2];
+		tempString[0] = "Português do Brasil (pt_BR)";
+		tempString[1] = "Inglês dos EUAS (en_US)";
+		return tempString;
 	}
 }

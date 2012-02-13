@@ -23,8 +23,8 @@ public class Ocurso
 	
 	public static void main(String args[])
 	{
-		meuCurso.setNotas(gradeDeNotas);						//Insere as notas de modo indireta
-		meuCurso.setNomes(gradeDeNomes);						//Insere os nomes de modo indireta
+		//meuCurso.setNotas(gradeDeNotas);						//Insere as notas de modo indireta
+		//meuCurso.setNomes(gradeDeNomes);						//Insere os nomes de modo indireta
 		interacao.mensagem("Bem-vindo!\n Esse é o programa responsável pela manipulação de informações de um curso.");
 		
 		do
@@ -196,17 +196,17 @@ public class Ocurso
 						int valor;
 						do
 						{
-							texto = String.format("Qual aluno deseja alterar:\n Obs.: De 0 a %d", meuCurso.getNumeroDeNotas()-1);
+							//texto = String.format("Qual aluno deseja alterar:\n Obs.: De 0 a %d", meuCurso.getNumeroDeNotas()-1);
 							posicao = interacao.lerInt(texto);
-							
-						}while( posicao < 0 || posicao > meuCurso.getNumeroDeNotas()-1);
+							//NÂO FUNCIONA
+						}while( posicao < 0);
 						
 						do
 						{
-							texto = String.format(" A nota do aluno '%s' é %d. Qual o novo valor:", meuCurso.getNome(posicao), meuCurso.getNota(posicao));
+							//texto = String.format(" A nota do aluno '%s' é %d. Qual o novo valor:", meuCurso.getNome(posicao), meuCurso.getNota(posicao));
 							valor = interacao.lerInt(texto);
 						}while( valor < 0);
-						meuCurso.setNota(posicao, valor);
+						//meuCurso.setNota(posicao, valor);
 						break;
 				default:
 						interacao.mensagem("Ooops! Você não deveria estar aqui õ.O");

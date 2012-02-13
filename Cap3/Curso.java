@@ -1,3 +1,5 @@
+import com.glaucoroberto.time.Time;
+
 /** Livro
  * 		Classe que possui estrutura para um curso que está sendo
  * 			montado. Possue informações como Nome, Numero de Alunos

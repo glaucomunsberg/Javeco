@@ -90,31 +90,13 @@ public class Usuarios
 		}
 	}
 	
-	private void setInformacaos( String nome, String sobreNome, int idade, int matricula, int CPF, String setor, String funcao)
+	//private void setInformacaos( String nome, String sobreNome, int idade, int matricula, int CPF, String setor, String funcao)
 	{
 		boolean validacao = validadorSenha();
 		if( validacao )
 		{
-			usuario.setInformacoesPessoas(nome, sobreNome, idade, CPF);
-			if( usuario.getTipo() == "ALUNO" )
-			{
-				if( usuario.aluno.getMatricula() == matricula )
-				{
-					usuario.aluno.setMatricula(matricula);
-				}
-			}
-			else
-			{
-				if( funcao != null)
-				{
-					usuario.administrador.setFuncao(funcao);
-				}
-				if( setor != null)
-				{
-					usuario.administrador.setSetor(setor);
-				}
-				
-			}
+
+				//NÂO FUNCIONA
 
 		}
 		else
