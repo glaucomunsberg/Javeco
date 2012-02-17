@@ -8,8 +8,8 @@ package Sistema;
 import javax.swing.ImageIcon;
 public class Icone
 {
-	public int temaDoIcone;
-	public static String[] tempString;
+	protected int temaDoIcone;
+	protected static String[] tempString;
 	
 	public ImageIcon goHome;
 	public ImageIcon curso;
@@ -17,6 +17,9 @@ public class Icone
 	public ImageIcon configuracao;
 	public ImageIcon erro;
 	public ImageIcon ok;
+	public ImageIcon editando;
+	public ImageIcon salvado;
+	public ImageIcon adicionar;
 	
 	/**
 	 * Inicia o sistema escolhendo o tema
@@ -70,7 +73,10 @@ public class Icone
 		configuracao 	= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Configuracao.png");
 		erro 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Erro.png");
 		ok				= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Ok.png");
-		Logs.addLog("Tema dos Icones: Carisma.");
+		editando		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Editar.png");
+		salvado			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Salvar.png");
+		adicionar		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Adicionar.png");
+		Log.addLog("Tema dos Icones: Carisma.");
 	}
 	
 	public static String[] getComboIcones()
@@ -88,7 +94,10 @@ public class Icone
 		configuracao 	= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Configuracao.png");
 		erro 			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Erro.png");
 		ok				= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Ok.png");
-		Logs.addLog("Tema dos Icones: Metalico.");
+		editando		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Editar");
+		salvado			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Salvar");
+		adicionar		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Adicionar.png");
+		Log.addLog("Tema dos Icones: Metalico.");
 	}
 
 }

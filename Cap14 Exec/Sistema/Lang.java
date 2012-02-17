@@ -61,21 +61,28 @@ public  class Lang
 	}
 	
 	/**
-	 * setará o sistema o local como en_US
+	 * setará no sistema o local como en_US
 	 * @return
 	 */
 	protected static Locale setLocale_en_US()
 	{
-		Logs.addLog("Tema do idioma: Inglês dos EUA.");
+		Log.addLog("Tema do idioma: Inglês dos EUA.");
 		return new Locale("en","US");
 	}
-
+	/**
+	 * setará no sistema o local como pt_BR
+	 * @return
+	 */
 	protected static Locale setLocale_pt_BR()
 	{
-		Logs.addLog("Tema do idioma: Português do Brasil.");
+		Log.addLog("Tema do idioma: Português do Brasil.");
 		return new Locale("pt","BR");
 	}
 	
+	/**
+	 * modifica o idioma do sistema
+	 * @param lingua
+	 */
 	public void setNovoIdioma(int lingua)
 	{
 		temaLinguagem = lingua;
@@ -89,11 +96,19 @@ public  class Lang
 		}
 	}
 	
+	/**
+	 * retorna o int que corresponde ao idioma do sistema
+	 * @return int temaLinguagem do sistema
+	 */
 	public static int getTemaLinguagem()
 	{
 		return temaLinguagem;
 	}
 	
+	/**
+	 * combo com o
+	 * @return
+	 */
 	public static String[] getComboLinguagens()
 	{
 		tempString = new String[2];

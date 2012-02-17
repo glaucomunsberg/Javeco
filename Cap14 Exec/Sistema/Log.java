@@ -15,12 +15,12 @@ import java.lang.SecurityException;					//Trata não poder abrir o arquivo
 import java.util.FormatterClosedException;			//Trata eventos de fechamento de formato
 import java.util.NoSuchElementException;			//Trata a exceção do dado errado
 
-public class Logs 
+public class Log 
 {
 	protected static boolean tentouRecuperarAntes = false;
 	private static String inderecoDoArquivo;
 	private static Time hora = new Time();								//Vai trazer a hora atual para inserir no sistema
-	private static BufferedWriter saida;					//Formatter terá o trabalho de criar o arquivo e
+	private static BufferedWriter saida;								//Formatter terá o trabalho de criar o arquivo e
 	protected static boolean logAtivo = true;
 	
 	/**
@@ -37,6 +37,7 @@ public class Logs
 	{
 		try
 		{
+			
 			logAtivo = Constantes.CONST_DEFAULT_INICLOG;
 			if( arg == null)
 			{
@@ -48,6 +49,7 @@ public class Logs
 				inderecoDoArquivo = String.format("%sLog_%s-%s-%s_.log", hora.getDiaAtual(), hora.getMesAtual(),hora.getAnoAtual());
 				saida = new BufferedWriter( new FileWriter(inderecoDoArquivo, true));
 			}
+		
 		}
 		catch(IOException io)
 		{
@@ -104,7 +106,7 @@ public class Logs
 			catch( NoSuchElementException element)
 			{
 				System.err.println("Ooops! Ou não! Você mandou o tipo errado e ele não pode ser escrito. Lamentamos u.u");
-				Logs.addLog("Ooops! Ou não! Você mandou o tipo errado e ele não pode ser escrito. Lamentamos u.u");
+				addLog("Ooops! Ou não! Você mandou o tipo errado e ele não pode ser escrito. Lamentamos u.u");
 			}
 			catch( IOException io)
 			{

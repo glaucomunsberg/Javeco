@@ -26,29 +26,6 @@ public class CursoBase
 	Time inicioCurso = new Time();
 	Time finalCurso = new Time();
 	
-	
-	/**
-	 * Inicia o curso com valores nulos
-	 * 		e numero máximo de alunos 10
-	 */
-	//public CursoBase()
-	//{
-	//	if( this.chkInicializacaoLog == false )
-	//	{
-	//		this.chkInicializacaoLog = true;
-	//	}
-		
-	//	setNomeCurso("curso");
-	//	setObjetivo("indefinido");
-		
-	//	if( this.chkMaximoDeAlunos == false )
-	//	{
-	//		setNumeroMaximoDeAluno(10);
-	//		this.chkMaximoDeAlunos = true;
-	//	}
-		
-	//	setGrades();
-	//}
 
 	/**
 	 * Inicia o curso como os seguintes dados:
@@ -65,7 +42,7 @@ public class CursoBase
 	 */
 	public void setCursoBase( String nomeDoCurso, String objetivoCurso ,int numAlunos, int numMaxDeAluno, String nomeProfessor, String[] gradeNomes, int[] gradeNotas, int[] gradeConceitos)
 	{
-		Logs.addLog("Todos os dados estão sendo carregados do default");
+		Log.addLog("Todos os dados estão sendo carregados do default");
 		if( this.chkInicializacaoLog == false )
 		{	
 			this.chkInicializacaoLog = true;
@@ -75,6 +52,8 @@ public class CursoBase
 		setNumeroDeAlunos( numAlunos );
 		setObjetivo( objetivoCurso );
 		setNomeProfessor( nomeProfessor );
+		this.setInicioCurso("00/00/00/11/12/2010");
+		this.setFinalCurso("00/00/00/12/12/2010");
 		
 		if( this.chkMaximoDeAlunos == false )
 		{
@@ -147,7 +126,7 @@ public class CursoBase
 		}
 		else
 		{
-			Logs.addLog("Atenção! Posição da nota está fora da faixa.");
+			Log.addLog("Atenção! Posição da nota está fora da faixa.");
 			return -999;
 		}
 		
@@ -166,7 +145,7 @@ public class CursoBase
 		}
 		else
 		{
-			Logs.addLog("Atenção! Posição do nome está fora da faixa.");
+			Log.addLog("Atenção! Posição do nome está fora da faixa.");
 			return null;
 		}
 	}
@@ -194,7 +173,7 @@ public class CursoBase
 		}
 		else
 		{
-			Logs.addLog("Atenção! A posição do conceito está fora da faixa.");
+			Log.addLog("Atenção! A posição do conceito está fora da faixa.");
 			return -1;
 		}
 		
@@ -237,14 +216,32 @@ public class CursoBase
 		return gradeConceitos;
 	}
 	
+	
+	public int getPorcentoDeAlunosNoCurso()
+	{
+		double valor = 0;
+		try
+		{
+			valor = ( this.numAlunos * 100)/ this.numMaxDeAluno;
+		}
+		catch(ArithmeticException aritmeticExcepetion)
+		{
+			Log.addLog("Atenção! Erro aritmético encontrado. Porcentagem de alunos será 0.");
+			valor = 0;
+		}
+		
+		return (int) Math.round(valor);
+	}
 	/**
 	 * de uso protegido para que seja criado apenas uma vez as constantes
 	 */
 	protected void setGrades()
 	{
+		
 		gradeNomes 		= new String[ this.getNumeroMaximoDeAluno() ];
 		gradeNotas 		= new int[ this.getNumeroMaximoDeAluno() ];
 		gradeConceitos 	= new int[ this.getNumeroMaximoDeAluno() ];
+		
 	}
 	/**
 	 * Insere o nome do curso
@@ -253,7 +250,7 @@ public class CursoBase
 	public void setNomeCurso(String nome)
 	{
 		nomeCurso = nome;
-		Logs.addLog("Modificado o nome do curso.");
+		Log.addLog("Modificado o nome do curso.");
 	}
 	
 	/**
@@ -263,7 +260,7 @@ public class CursoBase
 	public void setObjetivo( String novoObjetivo)
 	{
 		this.objetivo = novoObjetivo;
-		Logs.addLog("Modificado o objetivo do curso.");
+		Log.addLog("Modificado o objetivo do curso.");
 	}
 	
 	/**
@@ -274,7 +271,7 @@ public class CursoBase
 	public void setInicioCurso( String novoInicio)
 	{
 		inicioCurso.setTimeOfString(novoInicio);
-		Logs.addLog("Modificado o data do início do curso.");
+		Log.addLog("Modificado o data do início do curso.");
 	}
 	
 	/**
@@ -285,7 +282,7 @@ public class CursoBase
 	{
 		
 		finalCurso.setTimeOfString(novoFim);
-		Logs.addLog("Modificado o data do fim do curso.");
+		Log.addLog("Modificado o data do fim do curso.");
 	}
 
 	/**
@@ -295,7 +292,7 @@ public class CursoBase
 	public void setNumeroDeAlunos(int valor)
 	{
 		numAlunos = valor;
-		Logs.addLog("Modificado o número máximo de alunos");
+		Log.addLog("Modificado o número máximo de alunos");
 	}
 
 	/**
@@ -307,12 +304,12 @@ public class CursoBase
 	{
 		if( (posicao > numAlunos) || posicao < 0 )
 		{
-			Logs.addLog("Atençã! A posição do nome do aluno não foi encontrada.");
+			Log.addLog("Atençã! A posição do nome do aluno não foi encontrada.");
 		}
 		else
 		{
 			gradeNomes[posicao] = nome;
-			Logs.addLog("Modificado o nome do aluno");
+			Log.addLog("Modificado o nome do aluno");
 		}
 	}
 	
@@ -332,7 +329,7 @@ public class CursoBase
 				setConceitoAluno(conceitos[a], a);
 			}
 		}
-		Logs.addLog("Foram inseridos todos os alunos da lista na grade");
+		Log.addLog("Foram inseridos todos os alunos da lista na grade");
 	}
 	
 	/**
@@ -354,11 +351,11 @@ public class CursoBase
 				conceito = 3;
 			}
 			gradeConceitos[posicao] = conceito;
-			Logs.addLog("Modificado a nota de um aluno");
+			Log.addLog("Modificado a nota de um aluno");
 		}
 		else
 		{
-			Logs.addLog("Atenção! Posição do conceito está fora da faixa.");
+			Log.addLog("Atenção! Posição do conceito está fora da faixa.");
 		}
 		
 	}
@@ -373,11 +370,11 @@ public class CursoBase
 		if( posicao <= numAlunos && posicao >= 0)
 		{
 			gradeNotas[posicao] = nota;
-			Logs.addLog("Modificado a nota de um aluno");
+			Log.addLog("Modificado a nota de um aluno");
 		}
 		else
 		{
-			Logs.addLog("Atenção! Posição da nota está fora da faixa.");
+			Log.addLog("Atenção! Posição da nota está fora da faixa.");
 		}
 		
 	}
@@ -391,11 +388,11 @@ public class CursoBase
 		if( this.chkMaximoDeAlunos == false)
 		{
 			numMaxDeAluno = novoValor;
-			Logs.addLog("Modificado o máximo do alunos do curso.");
+			Log.addLog("Modificado o máximo do alunos do curso.");
 		}
 		else
 		{
-			Logs.addLog("Atenção! Não se pode modificar o máximo de alunos, pois este já foi inserido antes.");
+			Log.addLog("Atenção! Não se pode modificar o máximo de alunos, pois este já foi inserido antes.");
 		}
 		
 	}
@@ -412,11 +409,11 @@ public class CursoBase
 		if( posicao <= numAlunos && posicao >= 0 )
 		{
 			gradeConceitos[posicao] = novoConceito;
-			Logs.addLog("Modificado o conceito do aluno.");
+			Log.addLog("Modificado o conceito do aluno.");
 		}
 		else
 		{
-			Logs.addLog("Atenção! O conceito do aluno não pode ser modificado, pois está fora da faixa.");
+			Log.addLog("Atenção! O conceito do aluno não pode ser modificado, pois está fora da faixa.");
 		}
 	}
 	
@@ -427,7 +424,7 @@ public class CursoBase
 	public void setNomeProfessor(String novoNome)
 	{
 		this.nomeProfessor = novoNome;
-		Logs.addLog("Modificado o nome do Instrutor.");
+		Log.addLog("Modificado o nome do Instrutor.");
 	}
 	
 	/**
@@ -447,11 +444,11 @@ public class CursoBase
 			setNotaAluno(nota, numAlunos);
 			setConceitoAluno(conceito, numAlunos);
 			
-			Logs.addLog("Inserido novo aluno.");
+			Log.addLog("Inserido novo aluno.");
 		}
 		else
 		{
-			Logs.addLog("Atenção! Não pode ser inserir novo aluno por ter atingido o máximo permitido.");
+			Log.addLog("Atenção! Não pode ser inserir novo aluno por ter atingido o máximo permitido.");
 		}
 	}
 	
@@ -476,11 +473,11 @@ public class CursoBase
 
 			}
 			setNumeroDeAlunos( numAlunos-1);
-			Logs.addLog("Aluno foi removido.");
+			Log.addLog("Aluno foi removido.");
 		}
 		else
 		{
-			Logs.addLog("Atenção! Não pode se remover o aluno, pois ele está fora da faixa");
+			Log.addLog("Atenção! Não pode se remover o aluno, pois ele está fora da faixa");
 		}
 	}
 	

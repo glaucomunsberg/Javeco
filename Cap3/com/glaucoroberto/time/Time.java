@@ -167,7 +167,6 @@ public class Time
 	public String getHoraAtual()
 	{
 		StringBuilder atual = new StringBuilder();
-		String retorno;
 		GregorianCalendar calendarioAtual = new GregorianCalendar();
 	  
 		atual.append( calendarioAtual.get( GregorianCalendar.HOUR_OF_DAY ) );
@@ -175,8 +174,7 @@ public class Time
 		atual.append( calendarioAtual.get( GregorianCalendar.MINUTE ) );  
 		atual.append( ":" );
 		atual.append( calendarioAtual.get( GregorianCalendar.SECOND ) );
-		retorno = atual.toString() ;
-		return retorno;
+		return atual.toString() ;
 	}
 	
 	public int getAnoAtual()

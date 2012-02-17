@@ -12,6 +12,7 @@ public class Fonte
 {
 	protected Font fontTitulo;
 	protected Font fontTexto;
+	protected Font fontTextoBold;
 	protected int temaDaFonte;
 	protected String[] tempString;
 	
@@ -25,11 +26,11 @@ public class Fonte
 	{
 		temaDaFonte = fonteEscolhida;
 		
-		if(fonteEscolhida == 1)
+		if(fonteEscolhida == 0)
 		{
 			setFontUbuntu();
 		}
-		if(fonteEscolhida == 2)
+		if(fonteEscolhida == 1)
 		{
 			setFontSerif();
 		}
@@ -43,7 +44,8 @@ public class Fonte
 	{
 		fontTitulo = new Font("Ubuntu", Font.BOLD, 18);
 		fontTexto = new Font("Ubuntu", Font.PLAIN, 14);
-		Logs.addLog("Tema da Fonte: Ubuntu.");
+		fontTextoBold = new Font("Ubuntu", Font.BOLD, 14);
+		Log.addLog("Tema da Fonte: Ubuntu.");
 	}
 	
 	/**
@@ -54,7 +56,8 @@ public class Fonte
 	{
 		fontTitulo = new Font("serif", Font.BOLD, 18);
 		fontTexto = new Font("serif", Font.PLAIN, 14);
-		Logs.addLog("Tema da Fonte: Serif.");
+		fontTextoBold = new Font("serif", Font.BOLD, 14);
+		Log.addLog("Tema da Fonte: Serif.");
 	}
 	
 	/**
@@ -102,6 +105,16 @@ public class Fonte
 	public Font getFontTitulo()
 	{
 		return fontTitulo;
+	}
+	
+	/**
+	 * retorna a fonte para o texto, porém
+	 * 	com um "resalto" possibilitado pelo bold
+	 * @return
+	 */
+	public Font getFontTextoBold()
+	{
+		return fontTextoBold;
 	}
 	
 	public String[] getComboFontes()

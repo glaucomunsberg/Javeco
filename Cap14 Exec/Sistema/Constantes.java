@@ -26,10 +26,10 @@ public class Constantes
 	/**
 	 * constantes de preferencia de inicialização
 	 */
-	static final int 	CONST_DEFAULT_LARTURA = 1024;
-	static final int 	CONST_DEFAULT_LARGURA = 724;
-	static final int 	 CONST_DEFAULT_ICONES 	= 1;
-	static final int 	 CONST_DEFAULT_FONTE 	= 1;
+	static final int 	CONST_DEFAULT_ALTURA = 1024;
+	static final int 	CONST_DEFAULT_LARGURA = 350;
+	static final int 	 CONST_DEFAULT_ICONES 	= 0;
+	static final int 	 CONST_DEFAULT_FONTE 	= 0;
 	static final String CONST_DEFAULT_LINGUAGE	= "pt_BR";
 	static final boolean CONST_DEFAULT_INICLOG = true;
 

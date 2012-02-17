@@ -4,6 +4,10 @@ import java.io.RandomAccessFile;	//Importa a capacidade de acesso Rondomico
 public class ClassDeAcessoRandom extends ClassSerializable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -294535674580762227L;
+	/**
 	 * a soma de um int(4byte) e dois char[15] (total 60 byte) e um double(8byte)
 	 */
 	public static final int SIZE = 72;

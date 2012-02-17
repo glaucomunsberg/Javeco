@@ -8,8 +8,12 @@
  */
 import java.io.Serializable;
 //Serialisable "marcar" a classe como serializável
-public class ClassSerializable 	
+public class ClassSerializable implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2176291712046110817L;
 	private int 	conta;
 	private String 	nome;
 	private String 	sobreNome;

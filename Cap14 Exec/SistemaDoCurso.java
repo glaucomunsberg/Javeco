@@ -17,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Sistema.Lang;
-import Sistema.Logs;
+import Sistema.Log;
 import Sistema.Paineis;
 
 public class SistemaDoCurso extends JFrame
@@ -36,8 +36,8 @@ public class SistemaDoCurso extends JFrame
 	public static void main( String args[])
 	{
 
-		Sistema.Logs.openFile(null);
-		Sistema.Logs.addLog("Sistema iniciado");
+		Sistema.Log.openFile(null);
+		Sistema.Log.addLog("Sistema iniciado");
 		SistemaDoCurso frame = new SistemaDoCurso(nomeDoPrograma);
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -65,7 +65,7 @@ public class SistemaDoCurso extends JFrame
         cons.fill = GridBagConstraints.BOTH;
         cons.gridy = 1;
         cons.weightx = 1;
-        c.add(paineis.painelCabeca("0"), cons);
+        c.add(paineis.painelCabeca(), cons);
         cons.gridy = 2;
         cons.weighty = 0.8;
         c.add(paineis.painelHome(), cons);
@@ -84,7 +84,7 @@ public class SistemaDoCurso extends JFrame
 		    public void windowClosing(WindowEvent evt)
 		    {
 		    	boolean continuar = true;
-		    	int cod = 0;
+		    	int codigo = 0;
 		    	/**
 		    	 * Antes de fechar a janela vai tentar salvar as informações
 		    	 * 	que estão foram modificadas no sistema, caso não
@@ -96,8 +96,8 @@ public class SistemaDoCurso extends JFrame
 		    		{
 		    			JOptionPane painelDeSaida = new JOptionPane();
 		    			painelDeSaida.setFont(Paineis.Config.fonte.getFontTexto());
-		    			cod = JOptionPane.showConfirmDialog(null,"Há dados para ser gravados. Deseja salvar esses dados?!");
-		    			if(cod == 0)
+		    			codigo = JOptionPane.showConfirmDialog(null,"Há dados para ser gravados. Deseja salvar esses dados?!");
+		    			if(codigo == 0)
 		    			{
 		    				boolean gravouComSucesso;
 		    				gravouComSucesso = Paineis.gravarDados();
@@ -119,7 +119,6 @@ public class SistemaDoCurso extends JFrame
 		    		}
 		    		else
 		    		{
-		    			System.out.printf("Não há dados");
 		    			continuar = false;
 		    		}
 		    		
@@ -129,7 +128,7 @@ public class SistemaDoCurso extends JFrame
 		    		 */
 		    		if( continuar == false)
 		    		{
-		    			Logs.closeFile();
+		    			Log.closeFile();
 		    			paineis.finalize();
 		    		}
 		    	}while(continuar);

@@ -11,7 +11,8 @@ public class GerenciadorDoCurso extends CursoBase
 	
 	public GerenciadorDoCurso()
 	{
-		Logs.addLog("Inicilizando as configurações do curso");
+		Log.addLog("Inicilizando as configurações do curso");
+		this.getDefaultCurso();
 		//if(comoIniciar == HowStart.RECUPERAR)
 		//{
 		//	this.getDataCurso();
@@ -39,17 +40,21 @@ public class GerenciadorDoCurso extends CursoBase
 	 */
 	protected void getDefaultCurso()
 	{
-		int numDeAluno = 10;
+		int numMaxDeAluno = 100;
 		int numAluno = 0;
 		int[] gradeNotas = new int[numMaxDeAluno];
 		int[] Conceitos = new int[numMaxDeAluno];
 		
 		String nome = "O curso";
-		String objCurso = "O objetivo do curso";
-		String Professor = "professor";
+		String objCurso = "Curso javeco tem como objetivo ensinar a todos os estudantes como "
+						+"se trabalhar com a plataforma java. Indepentende da plataforma, java "
+						+"possibilita trabalhar com uma rica interface. Usando por exemplo 'awt' e "
+						+"'swing' pode se criar ótimos programas. Modestia parte como este que você "
+						+" está usando agora.";
+		String Professor = "Glauco Munsberg dos Santos";
 		String[] Nomes = new String[numMaxDeAluno];
 	
-		setCursoBase( nome, objCurso, numAluno, numDeAluno, Professor, Nomes,gradeNotas ,Conceitos );
+		setCursoBase( nome, objCurso, numAluno, numMaxDeAluno, Professor, Nomes,gradeNotas ,Conceitos  );
 	}
 	
 	

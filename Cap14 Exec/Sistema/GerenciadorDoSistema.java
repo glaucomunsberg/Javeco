@@ -47,7 +47,7 @@ public class GerenciadorDoSistema
 	 */
 	public GerenciadorDoSistema()
 	{
-		Logs.addLog("Inicilizando as Configurações do sistema");
+		Log.addLog("Inicilizando as Configurações do sistema");
 		File arqConfigs = new File(Constantes.CONST_CONFIGS_URL+"Configs.ser");
 		
 		if( arqConfigs.isFile() && arqConfigs != null )
@@ -70,12 +70,12 @@ public class GerenciadorDoSistema
 	 */
 	private void iniciarInfoDefault()
 	{
-		Logs.addLog("O Gerenciador do Sistema iniciará com dados 'default'.");
+		Log.addLog("O Gerenciador do Sistema iniciará com dados 'default'.");
 		
 		lang = new Lang(Constantes.CONST_DEFAULT_LINGUAGE);
 		icones = new Icone(Constantes.CONST_DEFAULT_ICONES);
 		fonte = new Fonte(Constantes.CONST_DEFAULT_FONTE);
-		Logs.setLogAtivo(Constantes.CONST_DEFAULT_INICLOG);
+		Log.setLogAtivo(Constantes.CONST_DEFAULT_INICLOG);
 		
 		atualizarValores();
 	}
@@ -89,12 +89,12 @@ public class GerenciadorDoSistema
 	 */
 	private void iniciarInfoRestaurando()
 	{
-		Logs.addLog("O Gerenciador do Sistema iniciará com dados do 'configs.ser'.");
+		Log.addLog("O Gerenciador do Sistema iniciará com dados do 'configs.ser'.");
 		lerArquivoSerializado();
 		lang = new Lang(langSerializada);
 		icones = new Icone(iconesSerializado);
 		fonte = new Fonte(fonteSerializada);
-		Logs.setLogAtivo(logSerializado);
+		Log.setLogAtivo(logSerializado);
 	}
 	/**
 	 * atualiza os valores para que quando gravar
@@ -105,7 +105,7 @@ public class GerenciadorDoSistema
 		iconesSerializado = icones.getTemaIcone();
 		langSerializada = Lang.getTemaLinguagem();
 		fonteSerializada = fonte.getTemaFonte();
-		logSerializado = Logs.getLogAtivo();
+		logSerializado = Log.getLogAtivo();
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class GerenciadorDoSistema
 	 */
 	protected boolean gravarArquivoSerializado()
 	{
-		Logs.addLog("O Gerenciador do Sistema está gravando os dados em 'configs.ser'.");
+		Log.addLog("O Gerenciador do Sistema está gravando os dados em 'configs.ser'.");
 		atualizarValores();
 		/**
 		 * tentará abrir o arquivo para serializar
@@ -129,7 +129,7 @@ public class GerenciadorDoSistema
 		catch( IOException ioException)
 		{
 			System.err.println("Erro ao abrir o arquivo 'Configs.ser' para serializar.");
-			Logs.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' para serializar.");
+			Log.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' para serializar.");
 			gravouComSucesso = false;
 		}
 		
@@ -157,7 +157,7 @@ public class GerenciadorDoSistema
 			/*
 			 * trata a exceção de erro de I/O
 			 */
-			Logs.addLog("Atenção! Erro ao escrever no 'Configs.ser'. ");
+			Log.addLog("Atenção! Erro ao escrever no 'Configs.ser'. ");
 			System.err.printf("Atenção! Erro ao escrever no 'Configs.ser'.\n");
 			System.err.printf("%s", ioException);
 			gravouComSucesso = false;
@@ -167,7 +167,7 @@ public class GerenciadorDoSistema
 			/*
 			 * Trata a exceção de erro de tipos
 			 */
-			Logs.addLog("Atenção! Erro de tipos de dados gravados no 'Configs.ser'.");
+			Log.addLog("Atenção! Erro de tipos de dados gravados no 'Configs.ser'.");
 			System.err.println("Erro no tipo de dado ao gravar");
 			gravouComSucesso = false;
 		}
@@ -187,7 +187,7 @@ public class GerenciadorDoSistema
 		catch(IOException exception)
 		{
 				System.err.println( "Atenção! Não pode fechar o arquivo que foi serializado 'Configs.ser'.");
-				Logs.addLog("Atenção! Não pode fechar o arquivo que foi serializado 'Configs.ser'.");
+				Log.addLog("Atenção! Não pode fechar o arquivo que foi serializado 'Configs.ser'.");
 				gravouComSucesso = false;
 		}
 		
@@ -206,7 +206,7 @@ public class GerenciadorDoSistema
 		catch( IOException ioException)
 		{
 			System.err.println( "Atenção! Erro ao abrir o arquivo 'Configs.ser' serializado.");
-			Logs.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' serializado.");
+			Log.addLog("Atenção! Erro ao abrir o arquivo 'Configs.ser' serializado.");
 		}
 		
 		Configs configuracoesSalvas;
@@ -234,13 +234,13 @@ public class GerenciadorDoSistema
 		catch( ClassNotFoundException classNot)
 		{
 			System.err.println( "Atenção! Hablilite a criação do objeto GerenciadorDoSistema");
-			Logs.addLog("Atenção! Hablilite a criação do objeto GerenciadorDoSistema");
+			Log.addLog("Atenção! Hablilite a criação do objeto GerenciadorDoSistema");
 			
 		}
 		catch( IOException ioException)
 		{
 			System.err.println( "Atenção! Erro durante a leitura do arquivo 'Configs.ser'.");
-			Logs.addLog("Atenção! Erro durante a leitura do arquivo 'Configs.ser'.");
+			Log.addLog("Atenção! Erro durante a leitura do arquivo 'Configs.ser'.");
 			System.err.printf("\n%s", ioException);
 		}
 		
@@ -259,7 +259,7 @@ public class GerenciadorDoSistema
 		catch(IOException exception)
 		{
 				System.err.println( "Atenção! Não pode fechar o arquivo serializado 'Configs.ser'.");
-				Logs.addLog("Atenção! Não pode fechar o arquivo serializado 'Configs.ser'.");
+				Log.addLog("Atenção! Não pode fechar o arquivo serializado 'Configs.ser'.");
 		}
 	}
 }
