@@ -15,16 +15,16 @@ public class CursoBase
 	protected boolean chkInicializacaoLog = false;				//Verifica se já inicializou o sistema de log
 	
 	protected int numMaxDeAluno;								//Protegido pois se esse modificador for modifcado, pode causar uma inconsistência 
-	private int numAlunos;
-	private String objetivo;
-	private String nomeProfessor;
-	private String nomeCurso;
-	private String[] gradeNomes;
-	private int[] gradeNotas;
-	private int[] gradeConceitos;
+	protected int numAlunos;
+	protected String objetivo;
+	protected String nomeProfessor;
+	protected String nomeCurso;
+	protected String[] gradeNomes;
+	protected int[] gradeNotas;
+	protected int[] gradeConceitos;
 
-	Time inicioCurso = new Time();
-	Time finalCurso = new Time();
+	protected Time inicioCurso = new Time();
+	protected Time finalCurso = new Time();
 	
 
 	/**
@@ -193,9 +193,15 @@ public class CursoBase
 	 * Retorna uma String[] de nomes
 	 * @return String[] gradeNomes
 	 */
-	public String[] getTodosNomeDeAlunos()
+	public String[] getTodosNomesDeAlunos()
 	{
-		return gradeNomes;
+		String[] todosNomes = new String[this.getNumeroDeAlunos()];
+		for(int a=0; a < numAlunos; a++)
+		{
+			System.out.printf("\nAdicionou a lista %s", gradeNomes[a]);
+			todosNomes[a] = gradeNomes[a];
+		}
+		return todosNomes;
 	}
 	
 	/**
@@ -351,11 +357,35 @@ public class CursoBase
 				conceito = 3;
 			}
 			gradeConceitos[posicao] = conceito;
-			Log.addLog("Modificado a nota de um aluno");
+			Log.addLog("Modificado a nota de um aluno.");
 		}
 		else
 		{
 			Log.addLog("Atenção! Posição do conceito está fora da faixa.");
+		}
+		
+	}
+	
+	/**
+	 * Modifica todas as informações de um único aluno de uma
+	 * 	unica fez.
+	 * @param int posicao
+	 * @param String novoNome
+	 * @param int novaNota
+	 * @param int novoConceito
+	 */
+	public void setTodosDadosDeUmAluno(int posicao, String novoNome, int novaNota, int novoConceito)
+	{
+		if( posicao <= numAlunos && posicao >= 0 )
+		{
+			this.gradeConceitos[posicao] = novoConceito;
+			this.gradeNomes[posicao] = novoNome;
+			this.gradeNotas[posicao] = novaNota;
+			Log.addLog("Modificado todas as informações de um aluno.");
+		}
+		else
+		{
+			Log.addLog("Atenção! Posição dos dados está fora da faixa.");
 		}
 		
 	}
@@ -440,9 +470,9 @@ public class CursoBase
 		{
 			setNumeroDeAlunos( numAlunos + 1);
 			
-			setNomeAluno(nome, numAlunos);
-			setNotaAluno(nota, numAlunos);
-			setConceitoAluno(conceito, numAlunos);
+			setNomeAluno(nome, numAlunos-1);
+			setNotaAluno(nota, numAlunos-1);
+			setConceitoAluno(conceito, numAlunos-1);
 			
 			Log.addLog("Inserido novo aluno.");
 		}
@@ -461,17 +491,19 @@ public class CursoBase
 	{
 		if( posicao >= 0 && posicao <= numAlunos )
 		{
-			if( posicao > 0)	//Caso seja unico aluno, então não se copia
+			//if( posicao >= 0)	//Caso seja unico aluno, então não se copia
 								//apenas ignora
-			{
+			//{
+				System.out.printf("NumeroDeAlunos: %s", numAlunos );
 				for( int a = posicao; a < numAlunos; a++)
 				{
-					gradeNomes[ posicao ] = gradeNomes[ posicao+1 ];
-					gradeNotas[ posicao ] = gradeNotas[ posicao+1 ];
-					gradeConceitos[ posicao ] = gradeConceitos[ posicao+1 ];
+					gradeNomes[ a ] = gradeNomes[ a+1 ];
+					System.out.printf("\n%s por %s", gradeNomes[ a ],gradeNomes[ a+1 ]);
+					gradeNotas[ a ] = gradeNotas[ a+1 ];
+					gradeConceitos[ a ] = gradeConceitos[ a+1 ];
 				}
-
-			}
+			//}
+			System.out.printf("NumeroDeAlunos: %s", numAlunos-1 );
 			setNumeroDeAlunos( numAlunos-1);
 			Log.addLog("Aluno foi removido.");
 		}

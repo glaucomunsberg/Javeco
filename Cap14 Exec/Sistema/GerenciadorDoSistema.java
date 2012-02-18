@@ -29,11 +29,11 @@ public class GerenciadorDoSistema
 	 * Serao os parametros para dizer ao
 	 * 	Configs qual é os temas usado pelo sistema
 	 */
-	public int langSerializada;						
-	public int iconesSerializado;
-	public int fonteSerializada;
-	public boolean logSerializado;
-	public boolean gravouComSucesso = false;
+	protected int langSerializada;						
+	protected int iconesSerializado;
+	protected int fonteSerializada;
+	protected boolean logSerializado;
+	protected boolean gravouComSucesso = false;
 	
 	public Lang lang;								//Idiota do sistema
 	public Icone icones;							//Icones para o sistema
@@ -68,7 +68,7 @@ public class GerenciadorDoSistema
 	 * Inicia o curso com valores padrões
 	 * sendo sempre
 	 */
-	private void iniciarInfoDefault()
+	protected void iniciarInfoDefault()
 	{
 		Log.addLog("O Gerenciador do Sistema iniciará com dados 'default'.");
 		
@@ -87,7 +87,7 @@ public class GerenciadorDoSistema
 	 * Inicia o curso com informações obtidas pelo
 	 *  arquivo data.dat
 	 */
-	private void iniciarInfoRestaurando()
+	protected void iniciarInfoRestaurando()
 	{
 		Log.addLog("O Gerenciador do Sistema iniciará com dados do 'configs.ser'.");
 		lerArquivoSerializado();
@@ -100,7 +100,7 @@ public class GerenciadorDoSistema
 	 * atualiza os valores para que quando gravar
 	 * 		grave com as informações atuais do sistema
 	 */
-	private void atualizarValores()
+	protected void atualizarValores()
 	{
 		iconesSerializado = icones.getTemaIcone();
 		langSerializada = Lang.getTemaLinguagem();

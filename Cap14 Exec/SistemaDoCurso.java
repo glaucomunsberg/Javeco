@@ -94,8 +94,6 @@ public class SistemaDoCurso extends JFrame
 		    	{
 		    		if( Paineis.getHaDadosParaSerGravado())
 		    		{
-		    			JOptionPane painelDeSaida = new JOptionPane();
-		    			painelDeSaida.setFont(Paineis.Config.fonte.getFontTexto());
 		    			codigo = JOptionPane.showConfirmDialog(null,"Há dados para ser gravados. Deseja salvar esses dados?!");
 		    			if(codigo == 0)
 		    			{

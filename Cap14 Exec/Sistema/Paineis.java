@@ -20,22 +20,22 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;				//Trás algumas constantes usandas no alinhamento
 import javax.swing.JComboBox;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import Sistema.GerenciadorDoSistema;
 import Sistema.Lang;
 import Sistema.GerenciadorDoCurso;
+
 enum estadoDoBotao
 {
 	SALVO, EDITANDO, ADICIONANDO;
 }
-enum oPainelAtivo
-{
-	HOME, ALUNO, CURSO, CONFIGURACAO;
-}
+
 public class Paineis
 {	
 	protected JPanel painelCabeca;
@@ -49,15 +49,15 @@ public class Paineis
 	protected JLabel notificationTexto;
 	
 	protected static boolean flagHaDadosParaGravar = false;
+	protected boolean editandoAluno = false;
+	protected boolean podeExcluir = false;
 	
-	protected estadoDoBotao botaoEditar = estadoDoBotao.SALVO;
-	protected oPainelAtivo painelAtivo = oPainelAtivo.HOME;
-	public static GerenciadorDoSistema Config;
-	public static GerenciadorDoCurso ConfigCurso;
+	protected estadoDoBotao estadoBotaoEditarCurso = estadoDoBotao.SALVO;
+	protected estadoDoBotao estadoBotaoEditarAluno = estadoDoBotao.ADICIONANDO;
 	
-	
-
-	
+	protected static GerenciadorDoSistema Config;
+	protected static GerenciadorDoCurso ConfigCurso;
+		
 	public Paineis()
 	{	
 		Log.addLog("Iniciando os paineis do sistema.");
@@ -73,6 +73,7 @@ public class Paineis
 		
 		
 	}
+	
 	/**
 	 * retorna o painel da cabeça do sistema
 	 * 	ele está implementado em Cabeca
@@ -84,11 +85,11 @@ public class Paineis
 		return painelCabeca;
 	}
 	
-	
 	public JPanel painelHome()
 	{
 		return painelHome;
 	}
+	
 	public JPanel painelConfiguracao()
 	{
 		return painelConfiguracao;
@@ -277,7 +278,7 @@ public class Paineis
 	        			{
 	        				@Override
 							public void mouseClicked(MouseEvent arg0) {
-	        					if( botaoEditar == estadoDoBotao.SALVO || botaoEditar == estadoDoBotao.ADICIONANDO )
+	        					if( estadoBotaoEditarCurso == estadoDoBotao.SALVO || estadoBotaoEditarCurso == estadoDoBotao.ADICIONANDO )
 	        					{
 	        						jFormattedDataFinal.setEditable(true);
 	        						jFormattedDataFinal.setBackground( new Color(237, 237, 237) );
@@ -291,7 +292,7 @@ public class Paineis
 	        						jlabelInformaNumMaximo.setBackground( new Color(237,237,237) );
 	        						BotaoEditar.setIcon( Config.icones.editando);
 	        						
-	        						botaoEditar = estadoDoBotao.EDITANDO;
+	        						estadoBotaoEditarCurso = estadoDoBotao.EDITANDO;
 	        						
 	        					}
 	        					else
@@ -316,7 +317,7 @@ public class Paineis
 	        						jprogressBarra.setValue( ConfigCurso.getPorcentoDeAlunosNoCurso() );
 	        						setHaDadosParaSerGravados(true);
 	        						
-	        						botaoEditar = estadoDoBotao.SALVO;
+	        						estadoBotaoEditarCurso = estadoDoBotao.SALVO;
 	        					}
 	        					
 	        					painelCurso.validate();
@@ -467,197 +468,399 @@ public class Paineis
 	
 	private JPanel implementacaoAluno()
 	{		
+		
 		painelAluno = new JPanel();
 		painelAluno.setMinimumSize(new java.awt.Dimension(Constantes.CONST_DEFAULT_LARGURA, Constantes.CONST_DEFAULT_ALTURA));
 		
-		    JLabel jlabelGrupoAlunos = new javax.swing.JLabel();
-	        JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-	        JList jList1 = new javax.swing.JList();
-	        JLabel jlabelGrupoNome = new javax.swing.JLabel();
-	        JLabel jlabelGrupoNota = new javax.swing.JLabel();
-	        JLabel jlabelGrupoConceito = new javax.swing.JLabel();
-	        JLabel BotaoEditar = new javax.swing.JLabel(Config.icones.adicionar, SwingConstants.CENTER);
-	        JScrollPane jlabelInformaNumMaximo1 = new javax.swing.JScrollPane();
-	        JTextArea jtextEditarNotaAluno = new javax.swing.JTextArea();
-	        JScrollPane jlabelInformaNumMaximo2 = new javax.swing.JScrollPane();
-	        JTextArea jtextEditarNomeAluno = new javax.swing.JTextArea();
-	        JSlider jSliderConceitoAluno = new javax.swing.JSlider();
-	        JLabel jlabelGrupoMediaDosAlunos = new javax.swing.JLabel();
-	        JProgressBar jProgressBarMediaAlunos = new javax.swing.JProgressBar();
-	        
-	        jlabelGrupoAlunos.setText(Lang.palavras.getString("alunoGrupoAlunos") );
-	        jlabelGrupoAlunos.setFont( Config.fonte.getFontTitulo() );
-	        
-	        jList1.setFont( Config.fonte.getFontTexto() );
-	        jList1.setModel(new javax.swing.AbstractListModel() {
-				private static final long serialVersionUID = 5685550824154242180L;
-				String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-	            public int getSize() { return strings.length; }
-	            public Object getElementAt(int i) { return strings[i]; }
-	        });
-	        
-	        jScrollPane1.setViewportView(jList1);
-	        jScrollPane1.setHorizontalScrollBarPolicy( ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        final JTextArea jtextEditarNotaAluno = new javax.swing.JTextArea();
+        final JTextArea jtextEditarNomeAluno = new javax.swing.JTextArea();
+        final JSlider jSliderConceitoAluno = new javax.swing.JSlider();
+        final JLabel BotaoEditar = new javax.swing.JLabel(Config.icones.adicionar, SwingConstants.CENTER);
+        final JLabel BotaoExcluir = new javax.swing.JLabel(Config.icones.excluir, SwingConstants.CENTER);
+	    
+        JScrollPane jlabelInformaNumMaximo1 = new javax.swing.JScrollPane();
+        JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+        JScrollPane jlabelInformaNumMaximo2 = new javax.swing.JScrollPane();
+        final JList jList1 = new javax.swing.JList( new String[] {""} );
+        JLabel jlabelGrupoNome = new javax.swing.JLabel();
+        JLabel jlabelGrupoNota = new javax.swing.JLabel();
+        JLabel jlabelGrupoConceito = new javax.swing.JLabel();
+        JLabel jlabelGrupoAlunos = new javax.swing.JLabel();
+        JLabel jlabelGrupoMediaDosAlunos = new javax.swing.JLabel();
+        JProgressBar jProgressBarMediaAlunos = new javax.swing.JProgressBar();
+	    
+        estadoBotaoEditarCurso = estadoDoBotao.SALVO;
+        
+        jlabelGrupoAlunos.setText(Lang.palavras.getString("alunoGrupoAlunos") );
+        jlabelGrupoAlunos.setFont( Config.fonte.getFontTitulo() );
+        
+        jList1.setFont( Config.fonte.getFontTexto() );
+        jList1.setVisibleRowCount( 10 );
+        jList1.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+        //jList1.setListData(  );
 
-	        jlabelGrupoNome.setText(Lang.palavras.getString("alunoGrupoNomeAluno"));
-	        jlabelGrupoNome.setFont( Config.fonte.getFontTitulo() );
-	        
-	        jlabelGrupoNota.setText(Lang.palavras.getString("alunoGrupoNotaAluno"));
-	        jlabelGrupoNota.setFont( Config.fonte.getFontTitulo() );
-	        
-	        jlabelGrupoConceito.setText(Lang.palavras.getString("alunoGrupoConceitoAluno"));
-	        jlabelGrupoConceito.setFont( Config.fonte.getFontTitulo() );
-	        
-	        BotaoEditar.setBackground(new java.awt.Color(254, 1, 1));
-	        BotaoEditar.setPreferredSize(new java.awt.Dimension(80, 80));
-	        BotaoEditar.addMouseListener(
-        			new MouseListener()
-        			{
-        				@Override
-						public void mouseClicked(MouseEvent arg0) {
-        					
-        					painelAluno.validate();
-        					
+        //lista.setVisibleRowCount( 5 );														//Seta como 5 o número de itens a amostra
+		//lista.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );						//Diz que apenas um item será possível de selecionar
+        jList1.addListSelectionListener(
+				new ListSelectionListener()
+				{
+					public void valueChanged( ListSelectionEvent event)
+					{
+						BotaoExcluir.setVisible( true);
+						podeExcluir = true;
+						editandoAluno = true;
+						BotaoEditar.setIcon(Config.icones.editando);
+						estadoBotaoEditarAluno = estadoDoBotao.SALVO;
+						
+						jtextEditarNomeAluno.setEditable(true);
+						jtextEditarNomeAluno.setText( ConfigCurso.getNomeAluno( jList1.getSelectedIndex() ) );
+						jtextEditarNotaAluno.setEditable(true);
+						jtextEditarNotaAluno.setText( String.format("%s", ConfigCurso.getNotaAluno( jList1.getSelectedIndex() ) ) );
+						jSliderConceitoAluno.setEnabled(true);
+						jSliderConceitoAluno.setValue( ConfigCurso.getConceitoAluno( jList1.getSelectedIndex() ) );
+					}
+			}
+				
+		);
+        
+        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setHorizontalScrollBarPolicy( ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        jlabelGrupoNome.setText(Lang.palavras.getString("alunoGrupoNomeAluno"));
+        jlabelGrupoNome.setFont( Config.fonte.getFontTitulo() );
+        
+        jlabelGrupoNota.setText(Lang.palavras.getString("alunoGrupoNotaAluno"));
+        jlabelGrupoNota.setFont( Config.fonte.getFontTitulo() );
+        
+        jlabelGrupoConceito.setText(Lang.palavras.getString("alunoGrupoConceitoAluno"));
+        jlabelGrupoConceito.setFont( Config.fonte.getFontTitulo() );
+        
+        BotaoEditar.setBackground(new java.awt.Color(254, 1, 1));
+        BotaoEditar.setPreferredSize(new java.awt.Dimension(80, 80));
+        BotaoEditar.addMouseListener(
+    			new MouseListener()
+    			{
+    				@Override
+					public void mouseClicked(MouseEvent arg0) {
+						
+    					/**
+    					 * verifica se pode excluir, se pode então
+    					 * 	o icone fica visivel, caso não pode pois
+    					 * 	não há nada para editar então ele some
+    					 */
+    					if( podeExcluir)
+    					{
+    						BotaoExcluir.setVisible(true);
+    					}
+    					else
+    					{
+    						BotaoExcluir.setVisible(false);
+    					}
+    					
+						/** ESTADO = ADICIONANDO
+						 * abre os campos para inserir
+						 */
+						if( estadoBotaoEditarAluno == estadoDoBotao.ADICIONANDO )
+						{
+							BotaoEditar.setIcon( Config.icones.editando);
+							estadoBotaoEditarAluno = estadoDoBotao.EDITANDO;
+							jtextEditarNomeAluno.setEditable(true);
+							jtextEditarNomeAluno.setBackground( new Color(237,237,237) );
+							jtextEditarNotaAluno.setEditable(true);
+							jtextEditarNotaAluno.setBackground( new Color(237,237,237) );
+							jSliderConceitoAluno.setEnabled(true);
+							jSliderConceitoAluno.setValue(0);
+							jSliderConceitoAluno.setBackground( new Color(237, 237, 237) );
+							editandoAluno = false;
 							
 						}
+						else
+						{
+        					/** ESTADO = SALVO
+							 * Se ele está no estado salvo
+							 * 	ele automaticamente limpa os campos
+							 * 	e volta para o editar;
+							 */
+        					if( estadoBotaoEditarAluno == estadoDoBotao.SALVO)
+							{
+								BotaoEditar.setIcon( Config.icones.adicionar);
+								estadoBotaoEditarAluno = estadoDoBotao.ADICIONANDO;
+								BotaoExcluir.setVisible( false);
+								jtextEditarNomeAluno.setText("");
+								jtextEditarNomeAluno.setBackground( Color.WHITE );
+								jtextEditarNomeAluno.setEditable(false);
+								jtextEditarNotaAluno.setText("");
+								jtextEditarNotaAluno.setBackground( Color.WHITE );
+								jtextEditarNotaAluno.setEditable(false);
+								jSliderConceitoAluno.setValue(0);
+								jSliderConceitoAluno.setBackground( Color.WHITE );
+								jSliderConceitoAluno.setEnabled(false);
+								editandoAluno = false;
+								podeExcluir = false;
+							}
+        					else
+        					{
+    							/** ESTADO = EDITANDO
+    							 * se está editando então ele salva
+    							 */
 
-						@Override
-						public void mouseEntered(MouseEvent arg0) {
-							// TODO Auto-generated method stub
+    							BotaoEditar.setIcon( Config.icones.salvado);
+    							estadoBotaoEditarAluno = estadoDoBotao.SALVO;
+    							jtextEditarNomeAluno.setBackground( Color.WHITE );
+    							jtextEditarNotaAluno.setBackground( Color.WHITE );
+    							jSliderConceitoAluno.setEnabled(false);
+    							
+    							/**
+    							 * essa parte do código fará a verificação do nota
+    							 * 	assim evitando que não se possa fazer uma conversao
+    							 * indevida de String para char
+    							 */
+    							int notaConvertida = 0;
+    							int posicao = jList1.getSelectedIndex();
+    							String notaString = jtextEditarNotaAluno.getText();
+    							try
+    							{
+    								notaConvertida = Integer.parseInt(notaString);
+    							}
+	    						catch(NumberFormatException NumerHong)
+	    						{
+	    							notaConvertida = 0;
+	    							Log.addLog("Atenção! Uma nota precisa ser do tipo Int, nota atribuida é zero.");
+	    						}
+    							finally
+    							{
+    								//Não não está editando então salva como novo
+    								if(editandoAluno == false)
+    								{
+    									ConfigCurso.setNovoAluno(jtextEditarNomeAluno.getText(), notaConvertida, jSliderConceitoAluno.getValue());
+    									jList1.setListData( ConfigCurso.getTodosNomesDeAlunos());
+    									editandoAluno = false;
+    									podeExcluir = false;
+    								}
+    								//Salva a informação por cima da que está salva
+    								else
+    								{
+    									editandoAluno = false;
+    									podeExcluir = false;
+    									ConfigCurso.setTodosDadosDeUmAluno(posicao, jtextEditarNomeAluno.getText(), notaConvertida, jSliderConceitoAluno.getValue());
+    	    						}
+    							}//TRY_FIM
+        					}//ELSE_FIM
+						}//IF_FIM	
+						BotaoEditar.validate();
+						painelAluno.validate();
+					}//MOUSECLICKED_FIM
+
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+    			}
+    		);
+
+        javax.swing.GroupLayout BotaoEditarLayout = new javax.swing.GroupLayout(BotaoEditar);
+        BotaoEditar.setLayout(BotaoEditarLayout);
+        BotaoEditarLayout.setHorizontalGroup(
+            BotaoEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+        BotaoEditarLayout.setVerticalGroup(
+            BotaoEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+        
+
+        jtextEditarNotaAluno.setColumns(20);
+        jtextEditarNotaAluno.setRows(1);
+        jtextEditarNotaAluno.setText("");
+        jtextEditarNotaAluno.setEditable(false);
+        jtextEditarNotaAluno.setBackground( Color.WHITE );
+        jlabelInformaNumMaximo1.setBorder(null);
+        jlabelInformaNumMaximo1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jlabelInformaNumMaximo1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jlabelInformaNumMaximo1.setViewportView(jtextEditarNotaAluno);
+
+        jtextEditarNomeAluno.setColumns(20);
+        jtextEditarNomeAluno.setBackground( Color.WHITE );
+        jtextEditarNomeAluno.setRows(1);
+        jtextEditarNomeAluno.setBorder(null);
+        jtextEditarNomeAluno.setText("");
+        jtextEditarNomeAluno.setEditable(false);
+        jlabelInformaNumMaximo2.setViewportView(jtextEditarNomeAluno);
+        jlabelInformaNumMaximo2.setBorder(null);
+        jlabelInformaNumMaximo2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jlabelInformaNumMaximo2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+
+        jSliderConceitoAluno.setValue(0);
+        jSliderConceitoAluno.setEnabled(false);
+        jSliderConceitoAluno.setMaximum(3);
+
+        jlabelGrupoMediaDosAlunos.setText("Media dos Alunos");
+        jlabelGrupoMediaDosAlunos.setFont( Config.fonte.getFontTitulo() );
+
+        BotaoExcluir.setVisible(false);
+        BotaoExcluir.setBackground(new java.awt.Color(254, 1, 1));
+        BotaoExcluir.setPreferredSize(new java.awt.Dimension(80, 80));
+        BotaoExcluir.addMouseListener(
+    			new MouseListener()
+    			{
+    				@Override
+					public void mouseClicked(MouseEvent arg0) {
+						if(podeExcluir)
+						{
+							editandoAluno = false;
+							podeExcluir = false;
+							BotaoEditar.setIcon( Config.icones.salvado );
+							estadoBotaoEditarAluno = estadoDoBotao.SALVO;
+							ConfigCurso.removeAluno( jList1.getSelectedIndex() );
+							jList1.setListData( ConfigCurso.getTodosNomesDeAlunos() );
+							System.out.printf("\nFOI EXCLUIDO");
 							
-						}
-
-						@Override
-						public void mouseExited(MouseEvent arg0) {
-							// TODO Auto-generated method stub
+							BotaoExcluir.setVisible(false);
+							jtextEditarNomeAluno.setText("");
+							jtextEditarNomeAluno.setEditable(false);
+							jtextEditarNotaAluno.setText("");
+							jtextEditarNotaAluno.setEditable(false);
+							jSliderConceitoAluno.setValue(0);
+							jSliderConceitoAluno.setEnabled(false);
 							
+							jList1.validate();
 						}
+						painelAluno.validate();
+					}
 
-						@Override
-						public void mousePressed(MouseEvent arg0) {
-							// TODO Auto-generated method stub
-							
-						}
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
 
-						@Override
-						public void mouseReleased(MouseEvent arg0) {
-							// TODO Auto-generated method stub
-							
-						}
-        			}
-        		);
+					@Override
+					public void mouseExited(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
 
-	        javax.swing.GroupLayout BotaoEditarLayout = new javax.swing.GroupLayout(BotaoEditar);
-	        BotaoEditar.setLayout(BotaoEditarLayout);
-	        BotaoEditarLayout.setHorizontalGroup(
-	            BotaoEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	            .addGap(0, 80, Short.MAX_VALUE)
-	        );
-	        BotaoEditarLayout.setVerticalGroup(
-	            BotaoEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	            .addGap(0, 80, Short.MAX_VALUE)
-	        );
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
 
-	        jlabelInformaNumMaximo1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	        jlabelInformaNumMaximo1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+    			}
+    		);
 
-	        jtextEditarNotaAluno.setColumns(20);
-	        jtextEditarNotaAluno.setRows(1);
-	        jtextEditarNotaAluno.setText("");
-	        jtextEditarNotaAluno.setBackground( Color.WHITE );
-	        jtextEditarNotaAluno.setBorder(null);
-	        jlabelInformaNumMaximo1.setViewportView(jtextEditarNotaAluno);
-
-	        jlabelInformaNumMaximo2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	        jlabelInformaNumMaximo2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-	        jtextEditarNomeAluno.setColumns(20);
-	        jtextEditarNomeAluno.setBackground( Color.WHITE );
-	        jtextEditarNomeAluno.setRows(1);
-	        jtextEditarNomeAluno.setBorder(null);
-	        jtextEditarNomeAluno.setText("Glauco Munsberg dos Santos");
-	        jlabelInformaNumMaximo2.setViewportView(jtextEditarNomeAluno);
-
-	        jSliderConceitoAluno.setValue(0);
-	        jSliderConceitoAluno.setMaximum(3);
-
-	        jlabelGrupoMediaDosAlunos.setText("Media dos Alunos");
-	        jlabelGrupoMediaDosAlunos.setFont( Config.fonte.getFontTitulo() );
-
-	        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(painelAluno);
-	        painelAluno.setLayout(layout);
-	        layout.setHorizontalGroup(
-	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-	                .addGap(26, 26, 26)
-	                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-	                            .addComponent(jlabelGrupoConceito, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-	                            .addComponent(jlabelGrupoNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-	                        .addGap(258, 258, 258))
-	                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-	                            .addComponent(jlabelInformaNumMaximo2, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                            .addComponent(jSliderConceitoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                            .addComponent(jlabelInformaNumMaximo1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
-	                        .addGap(37, 37, 37))
-	                    .addGroup(layout.createSequentialGroup()
-	                        .addComponent(jlabelGrupoNota, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                        .addContainerGap())))
-	            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-	                        .addContainerGap()
-	                        .addComponent(jlabelGrupoAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                        .addGap(0, 512, Short.MAX_VALUE))
-	                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-	                        .addContainerGap()
-	                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	                            .addComponent(jlabelGrupoMediaDosAlunos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-	                                .addGap(9, 9, 9)
-	                                .addComponent(jProgressBarMediaAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                                .addGap(105, 105, 105)))
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-	                        .addComponent(BotaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-	                .addContainerGap())
-	        );
-	        layout.setVerticalGroup(
-	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	            .addGroup(layout.createSequentialGroup()
-	                .addContainerGap()
-	                .addComponent(jlabelGrupoAlunos)
-	                .addGap(18, 18, 18)
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	                    .addGroup(layout.createSequentialGroup()
-	                        .addComponent(jlabelGrupoNome)
-	                        .addGap(18, 18, 18)
-	                        .addComponent(jlabelInformaNumMaximo2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                        .addGap(35, 35, 35)
-	                        .addComponent(jlabelGrupoNota)
-	                        .addGap(18, 18, 18)
-	                        .addComponent(jlabelInformaNumMaximo1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                        .addGap(29, 29, 29)
-	                        .addComponent(jlabelGrupoConceito)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-	                        .addComponent(jSliderConceitoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE))
-	                    .addGroup(layout.createSequentialGroup()
-	                        .addComponent(jScrollPane1)
-	                        .addGap(42, 42, 42)))
-	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	                    .addComponent(BotaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                    .addGroup(layout.createSequentialGroup()
-	                        .addComponent(jlabelGrupoMediaDosAlunos)
-	                        .addGap(18, 18, 18)
-	                        .addComponent(jProgressBarMediaAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-	                .addContainerGap())
-	        );
-	        
+        javax.swing.GroupLayout BotaoExcluirLayout = new javax.swing.GroupLayout(BotaoExcluir);
+        BotaoExcluir.setLayout(BotaoExcluirLayout);
+        BotaoExcluirLayout.setHorizontalGroup(
+            BotaoExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+        BotaoExcluirLayout.setVerticalGroup(
+            BotaoExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+        
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(painelAluno);
+        painelAluno.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlabelGrupoConceito, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                            .addComponent(jlabelGrupoNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(258, 258, 258))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlabelInformaNumMaximo2, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSliderConceitoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlabelInformaNumMaximo1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlabelGrupoNota, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jlabelGrupoAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 512, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlabelGrupoMediaDosAlunos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jProgressBarMediaAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(105, 105, 105)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlabelGrupoAlunos)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlabelGrupoNome)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlabelInformaNumMaximo2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jlabelGrupoNota)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlabelInformaNumMaximo1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jlabelGrupoConceito)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSliderConceitoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(42, 42, 42)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BotaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlabelGrupoMediaDosAlunos)
+                        .addGap(18, 18, 18)
+                        .addComponent(jProgressBarMediaAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BotaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        
 	     painelAluno.setVisible(false);
 	     painelAluno.setBackground( Color.WHITE );
 		
@@ -916,8 +1119,6 @@ public class Paineis
 	 * 	COD_ID = 0010, habilita o frame CURSO
 	 *  COD_ID = 0011, habilita o frame ALUNO
 	 *  COD_ID = 0100, habilita o frame CONFIGURACAO
-	 *  COD_ID = 0101, habilita o frame CURSO - EDITAR
-	 *  COD_ID = 0110, habilita o frame ALUNO - EDITAR
 	 *  
 	 * 	
 	 * 	No controleDePaineis tem se então o controle
@@ -1038,10 +1239,14 @@ public class Paineis
 		
 	}
 	
+	
+	
 	public static boolean getHaDadosParaSerGravado()
 	{
 		return flagHaDadosParaGravar;
 	}
+	
+	
 	public static boolean gravarDados()
 	{
 		boolean temp;
@@ -1062,5 +1267,6 @@ public class Paineis
 	{
 		//System.out.println("Finalizando configs temporário");
 	}
+	
 
 }

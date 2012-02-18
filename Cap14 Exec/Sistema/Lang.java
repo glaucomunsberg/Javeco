@@ -15,10 +15,10 @@ import java.util.ResourceBundle;
 
 public  class Lang 
 {
-	public static Locale local;				//Contem a lingua como "pt_BR" ou "en_US"
+	protected static Locale local;				//Contem a lingua como "pt_BR" ou "en_US"
 	public static ResourceBundle palavras;	//Contém o local dos arquivos de linguagem
 	public static String[] tempString;
-	public static int temaLinguagem;
+	protected static int temaLinguagem;
 	/**
 	 * inicia o sistema com o idioma setada
 	 * @param idioma{ "pt_BR" || "en_US" }

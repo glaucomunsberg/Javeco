@@ -67,7 +67,7 @@ public class GerenciadorDoCurso extends CursoBase
 		
 	}
 	
-	protected boolean gravarArquivoSerializado()
+	public boolean gravarArquivoSerializado()
 	{
 		return true;
 	}

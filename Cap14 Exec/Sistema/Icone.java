@@ -20,6 +20,7 @@ public class Icone
 	public ImageIcon editando;
 	public ImageIcon salvado;
 	public ImageIcon adicionar;
+	public ImageIcon excluir;
 	
 	/**
 	 * Inicia o sistema escolhendo o tema
@@ -76,6 +77,7 @@ public class Icone
 		editando		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Editar.png");
 		salvado			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Salvar.png");
 		adicionar		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Adicionar.png");
+		excluir			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Excluir.png");
 		Log.addLog("Tema dos Icones: Carisma.");
 	}
 	
@@ -97,6 +99,7 @@ public class Icone
 		editando		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Editar");
 		salvado			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Salvar");
 		adicionar		= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Adicionar.png");
+		excluir			= new ImageIcon(Constantes.CONST_ICONS_URL+"T1Excluir.png");
 		Log.addLog("Tema dos Icones: Metalico.");
 	}
 
