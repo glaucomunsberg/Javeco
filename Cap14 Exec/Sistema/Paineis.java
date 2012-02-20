@@ -1,7 +1,30 @@
 /**
- * Aqui está a implementação de todos os Paineis
- * 	que iram constituir o SistemaDoCurso
+ * Paineis reuni todos os atributos e informações para juntos 
+ * 		contituirem o programa. O Paineis contém a implementação 
+ * 		dos seguintes paineis:
+ * 			- painelCabeca, esse painel é a cabeça do programa
+ * 				nele contém o ícone do painel ativo e a descrição 
+ * 				desse painel como informativo.
+ * 
+ * 			- painelHome, contém icones dos três paineis principais
+ * 				que levam a informação e edição de dados do sistema,
+ * 				curso e aluno.
+ * 
+ * 			- painelAluno, contendo as informações e capacidade
+ * 				de edição dos alunos do curso.
+ * 
+ * 			- painelConfiguracao, contém as configurações do sistema
+ * 				como o icone usado, o tema de fonte, se o log está
+ * 				ativo e etc.
+ * 			
+ * 			- painelCurso, contém as informações restritas ao curso
+ * 				em si bem como a capacidade de edição destas mesmas
+ * 				informações.
+ * 
+ * @author glaucoroberto@gmail.com
+ * @project SSH: git@github.com:glaucomunsberg/Javeco.git
  */
+
 package Sistema;								//Constitui parte do Sistema
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -22,11 +45,12 @@ import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;				//Trás algumas constantes usandas no alinhamento
+import javax.swing.SwingConstants;					//Trás algumas constantes usandas no alinhamento
 import javax.swing.JComboBox;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import Sistema.GerenciadorDoSistema;
 import Sistema.Lang;
 import Sistema.GerenciadorDoCurso;
@@ -47,65 +71,92 @@ public class Paineis
 	protected JLabel cabecaLabelTexto;
 	protected JLabel cabecaLabelImagem;
 	protected JLabel notificationTexto;
+	protected JLabel jlabelInformaNumDeAluno;
 	
 	protected static boolean flagHaDadosParaGravar = false;
 	protected boolean editandoAluno = false;
 	protected boolean podeExcluir = false;
+	protected boolean dadosConsistentes = false;
 	
 	protected estadoDoBotao estadoBotaoEditarCurso = estadoDoBotao.SALVO;
 	protected estadoDoBotao estadoBotaoEditarAluno = estadoDoBotao.ADICIONANDO;
 	
 	protected static GerenciadorDoSistema Config;
 	protected static GerenciadorDoCurso ConfigCurso;
-		
+	
+	/**
+	 * inicia todos os paineis do sistema através de
+	 * 		cada uma das suas implementações
+	 */
 	public Paineis()
 	{	
 		Log.addLog("Iniciando os paineis do sistema.");
-		
 	
 		Config = new GerenciadorDoSistema();
 		ConfigCurso = new GerenciadorDoCurso();
-		painelCabeca = implementacaoCabeca();
-		painelHome = implementacaoHome();
-		painelCurso = implementacaoCurso();
-		painelAluno = implementacaoAluno();
-		painelConfiguracao = implementacaoConfiguracoes();
 		
+		implementacaoCabeca();
+		implementacaoHome();
+		implementacaoCurso();
+		implementacaoAluno();
+		implementacaoConfiguracoes();
 		
 	}
 	
 	/**
 	 * retorna o painel da cabeça do sistema
-	 * 	ele está implementado em Cabeca
-	 * @param texto
-	 * @return
+	 * 	ele está implementado em implementacaoCabeca
+	 * @return jPanel painelCabeca
 	 */
 	public JPanel painelCabeca()
 	{
 		return painelCabeca;
 	}
 	
+	/**
+	 * retorna o painel home do sistema
+	 * 	ele está implementado em implementacaoHome
+	 * @return jPanel painelHome
+	 */
 	public JPanel painelHome()
 	{
 		return painelHome;
 	}
 	
+	/**
+	 * retorna o painel Configuracao do sistema
+	 * 	ele está implementado em implementacaoConfiguracao
+	 * @return jPanel painelConfiguracao
+	 */
 	public JPanel painelConfiguracao()
 	{
 		return painelConfiguracao;
 	}
 	
+	/**
+	 * retorna o painel Curso do sistema
+	 * 	ele está implementado em implementacaoCurso
+	 * @return jPanel painelCurso
+	 */
 	public JPanel painelCurso()
 	{
 		return painelCurso;
 	}
 	
+	/**
+	 * retorna o painel Aluno do sistema
+	 * 	ele está implementado em implementacaoAluno
+	 * @return jPanel painelAluno
+	 */
 	public JPanel painelAluno()
 	{
 		return painelAluno;
 	}
 	
-	protected JPanel implementacaoCabeca()
+	/**
+	 * Implementação do JPanel painelCabeca
+	 */
+	protected void implementacaoCabeca()
 	{
 		//		-----------------------------------------------------------------------
 		//      |            |                                                        |
@@ -122,7 +173,7 @@ public class Paineis
 		cabecaLabelImagem.addMouseListener(new MouseHandler(001) );
 		cabecaLabelImagem.setToolTipText( Lang.palavras.getString("cabecaDescricao"));
 		cabecaLabelTexto = new JLabel(Lang.palavras.getString("cabecaBemVindoEscolha"), JLabel.CENTER);
-		cabecaLabelTexto.setFont(Config.fonte.fontTitulo);
+		cabecaLabelTexto.setFont(Config.fonte.fonteTitulo);
 		
 		painelCabeca.setLayout(layout);					//Diz que o JPanel vai receber uma grid com valor variável
 		cons.fill = GridBagConstraints.BOTH;			
@@ -132,10 +183,12 @@ public class Paineis
 		painelCabeca.add( cabecaLabelImagem, cons);
 		cons.weightx = 0.90;							//a outra grid terá a porcentagem inserida
 		painelCabeca.add(cabecaLabelTexto, cons);
-		return painelCabeca;
 	}
 
-	protected JPanel implementacaoHome()
+	/**
+	 * Implementação do JPanel painelHome
+	 */
+	protected void implementacaoHome()
 	{
 		//		-----------------------------------------------------------------------
 		//      |                                                                     |
@@ -178,13 +231,15 @@ public class Paineis
 		labelConfiguracao.addMouseListener(new MouseHandler(0100));
 		painelHome.add(labelConfiguracao);
 		
-		return painelHome;
 	}
-	
-	protected JPanel implementacaoCurso()
+
+	/**
+	 * Implementação do JPanel painelCurso
+	 */
+	protected void implementacaoCurso()
 	{
 		painelCurso = new JPanel();
-		
+			jlabelInformaNumDeAluno = new javax.swing.JLabel();
 			JLabel jlabelObjetivo = new javax.swing.JLabel();
 	        JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 	        JScrollPane jlabelInformaNumMaximo1 = new javax.swing.JScrollPane();
@@ -197,7 +252,7 @@ public class Paineis
 	        JLabel jlabelDataFinal = new javax.swing.JLabel();
 	        JLabel jlabelInforma1 = new javax.swing.JLabel();
 	        JLabel jlabelInforma2 = new javax.swing.JLabel();
-	        JLabel jlabelInformaNumDeAluno = new javax.swing.JLabel();
+	        
 	        JLabel jlabelInforma3 = new javax.swing.JLabel();
 	        
 			final JFormattedTextField jFormattedDataInicio = new javax.swing.JFormattedTextField();
@@ -205,7 +260,7 @@ public class Paineis
 	        final JProgressBar jprogressBarra = new javax.swing.JProgressBar();
 	        final JLabel BotaoEditar = new JLabel(Config.icones.salvado, SwingConstants.CENTER);
 
-	        painelCurso.setMinimumSize(new java.awt.Dimension( Constantes.CONST_DEFAULT_LARGURA, Constantes.CONST_DEFAULT_ALTURA) );
+	        painelCurso.setMinimumSize(new java.awt.Dimension( Constantes.CONST_DEFAULT_LARGURA_MINIMA, Constantes.CONST_DEFAULT_ALTURA_DO_PROGRAMA) );
 
 	        jprogressBarra.setValue( ConfigCurso.getPorcentoDeAlunosNoCurso() );
 	        
@@ -463,32 +518,35 @@ public class Paineis
 		
 	        painelCurso.setBackground( Color.WHITE);
 	        painelCurso.setVisible(false);
-		return painelCurso;
 	}
-	
-	private JPanel implementacaoAluno()
+
+	/**
+	 * Implementação do JPanel painelAluno
+	 */	
+	private void implementacaoAluno()
 	{		
 		
 		painelAluno = new JPanel();
-		painelAluno.setMinimumSize(new java.awt.Dimension(Constantes.CONST_DEFAULT_LARGURA, Constantes.CONST_DEFAULT_ALTURA));
+		painelAluno.setMinimumSize(new java.awt.Dimension(Constantes.CONST_DEFAULT_LARGURA_MINIMA, Constantes.CONST_DEFAULT_ALTURA_DO_PROGRAMA));
 		
         final JTextArea jtextEditarNotaAluno = new javax.swing.JTextArea();
         final JTextArea jtextEditarNomeAluno = new javax.swing.JTextArea();
         final JSlider jSliderConceitoAluno = new javax.swing.JSlider();
         final JLabel BotaoEditar = new javax.swing.JLabel(Config.icones.adicionar, SwingConstants.CENTER);
         final JLabel BotaoExcluir = new javax.swing.JLabel(Config.icones.excluir, SwingConstants.CENTER);
-	    
+        final JProgressBar jProgressBarMediaAlunos = new javax.swing.JProgressBar();
+        final JList jList1 = new javax.swing.JList( new String[] {""} );
+        
         JScrollPane jlabelInformaNumMaximo1 = new javax.swing.JScrollPane();
         JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         JScrollPane jlabelInformaNumMaximo2 = new javax.swing.JScrollPane();
-        final JList jList1 = new javax.swing.JList( new String[] {""} );
         JLabel jlabelGrupoNome = new javax.swing.JLabel();
         JLabel jlabelGrupoNota = new javax.swing.JLabel();
         JLabel jlabelGrupoConceito = new javax.swing.JLabel();
         JLabel jlabelGrupoAlunos = new javax.swing.JLabel();
         JLabel jlabelGrupoMediaDosAlunos = new javax.swing.JLabel();
-        JProgressBar jProgressBarMediaAlunos = new javax.swing.JProgressBar();
-	    
+      
+        
         estadoBotaoEditarCurso = estadoDoBotao.SALVO;
         
         jlabelGrupoAlunos.setText(Lang.palavras.getString("alunoGrupoAlunos") );
@@ -497,27 +555,28 @@ public class Paineis
         jList1.setFont( Config.fonte.getFontTexto() );
         jList1.setVisibleRowCount( 10 );
         jList1.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-        //jList1.setListData(  );
-
-        //lista.setVisibleRowCount( 5 );														//Seta como 5 o número de itens a amostra
-		//lista.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );						//Diz que apenas um item será possível de selecionar
         jList1.addListSelectionListener(
 				new ListSelectionListener()
 				{
 					public void valueChanged( ListSelectionEvent event)
 					{
-						BotaoExcluir.setVisible( true);
-						podeExcluir = true;
-						editandoAluno = true;
-						BotaoEditar.setIcon(Config.icones.editando);
-						estadoBotaoEditarAluno = estadoDoBotao.SALVO;
-						
-						jtextEditarNomeAluno.setEditable(true);
-						jtextEditarNomeAluno.setText( ConfigCurso.getNomeAluno( jList1.getSelectedIndex() ) );
-						jtextEditarNotaAluno.setEditable(true);
-						jtextEditarNotaAluno.setText( String.format("%s", ConfigCurso.getNotaAluno( jList1.getSelectedIndex() ) ) );
-						jSliderConceitoAluno.setEnabled(true);
-						jSliderConceitoAluno.setValue( ConfigCurso.getConceitoAluno( jList1.getSelectedIndex() ) );
+						if( ConfigCurso.getNumeroDeAlunos() > 0)
+						{
+							BotaoExcluir.setVisible( true);
+							podeExcluir = true;
+							editandoAluno = true;
+							BotaoEditar.setIcon(Config.icones.editando);
+							estadoBotaoEditarAluno = estadoDoBotao.EDITANDO;
+							
+							jtextEditarNomeAluno.setEditable(true);
+							jtextEditarNomeAluno.setText( ConfigCurso.getNomeAluno( jList1.getSelectedIndex() ) );
+							jtextEditarNotaAluno.setEditable(true);
+							jtextEditarNotaAluno.setText( String.format("%s", ConfigCurso.getNotaAluno( jList1.getSelectedIndex() ) ) );
+							jSliderConceitoAluno.setEnabled(true);
+							jSliderConceitoAluno.setValue( ConfigCurso.getConceitoAluno( jList1.getSelectedIndex() ) );
+							jProgressBarMediaAlunos.setValue( ConfigCurso.getMediaDosAlunos() );
+							dadosConsistentes = true;
+						}
 					}
 			}
 				
@@ -535,6 +594,8 @@ public class Paineis
         
         jlabelGrupoConceito.setText(Lang.palavras.getString("alunoGrupoConceitoAluno"));
         jlabelGrupoConceito.setFont( Config.fonte.getFontTitulo() );
+        
+        jProgressBarMediaAlunos.setValue( ConfigCurso.getMediaDosAlunos() );
         
         BotaoEditar.setBackground(new java.awt.Color(254, 1, 1));
         BotaoEditar.setPreferredSize(new java.awt.Dimension(80, 80));
@@ -605,47 +666,90 @@ public class Paineis
     							 * se está editando então ele salva
     							 */
 
+    							
+    							/**
+    							 * essa parte do código fará a verificação do nota e nome
+    							 * 	assim evitando que não se possa fazer uma conversao
+    							 * indevida de String para char
+    							 */
+    							
+    							String nomeString = jtextEditarNomeAluno.getText();
+    							String notaString = jtextEditarNotaAluno.getText();
+    							int posicao = jList1.getSelectedIndex();
+    							int notaConvertida = 0;
+    							
+    							//Se o nome não está vazio
+    							if(nomeString != null )
+    							{
+    								dadosConsistentes = true;
+    								//Se a nota é vazia passa para 0 caso contrário
+    								//tenta converter
+    								if( notaString == null )
+        							{
+        								notaConvertida = 0;
+        								dadosConsistentes = true;
+        							}
+        							else
+        							{
+        								try
+            							{
+            								notaConvertida = Integer.parseInt(notaString);
+            								dadosConsistentes = true;
+            							}
+        	    						catch(NumberFormatException numerWrong)
+        	    						{
+        	    							System.err.printf("%s\n", numerWrong);
+        	    							Log.notificarUsuario(Lang.palavras.getString("erroStringNaoConvertidaParaInt"), "WARNING");
+        	    							Log.addLog("Atenção! Uma nota precisa ser do tipo Int, erro na atribuição. Novo aluno não atribuido");
+        	    							dadosConsistentes = false;
+        	    						}
+        							}
+    								
+    							}
+    							else
+    							{
+    								Log.notificarUsuario(Lang.palavras.getString("erroNomeNull"), "WARNING");
+    								dadosConsistentes = false;
+    							}
+    							
+    							//Se não tem problemas com os dados então estes são inseridos
+    							if( dadosConsistentes )
+    							{
+    								
+    								//Se está editando
+    								if(editandoAluno)
+    								{
+    									editandoAluno = false;
+    									podeExcluir = false;
+    									dadosConsistentes = false;
+    									ConfigCurso.setTodosDadosDeUmAluno(posicao, nomeString, notaConvertida, jSliderConceitoAluno.getValue());
+    									jList1.setListData( ConfigCurso.getTodosNomesDeAlunos());
+    								}
+    								//Se é novo aluno
+    								else
+    								{
+    									editandoAluno = false;
+    									podeExcluir = false;
+    									dadosConsistentes = false;
+    									ConfigCurso.setNovoAluno(nomeString, notaConvertida, jSliderConceitoAluno.getValue());
+    									jList1.setListData( ConfigCurso.getTodosNomesDeAlunos());
+    	    						}
+    							}
+    							else
+    							{
+    								Log.notificarUsuario(Lang.palavras.getString("erroDadosInconsistentes"), "WARNING");
+    							}
+    							
+								jtextEditarNomeAluno.setText("");
+								jtextEditarNotaAluno.setText("");
+								jSliderConceitoAluno.setValue(0);
+								jProgressBarMediaAlunos.setValue( ConfigCurso.getMediaDosAlunos() );
     							BotaoEditar.setIcon( Config.icones.salvado);
     							estadoBotaoEditarAluno = estadoDoBotao.SALVO;
     							jtextEditarNomeAluno.setBackground( Color.WHITE );
     							jtextEditarNotaAluno.setBackground( Color.WHITE );
     							jSliderConceitoAluno.setEnabled(false);
     							
-    							/**
-    							 * essa parte do código fará a verificação do nota
-    							 * 	assim evitando que não se possa fazer uma conversao
-    							 * indevida de String para char
-    							 */
-    							int notaConvertida = 0;
-    							int posicao = jList1.getSelectedIndex();
-    							String notaString = jtextEditarNotaAluno.getText();
-    							try
-    							{
-    								notaConvertida = Integer.parseInt(notaString);
-    							}
-	    						catch(NumberFormatException NumerHong)
-	    						{
-	    							notaConvertida = 0;
-	    							Log.addLog("Atenção! Uma nota precisa ser do tipo Int, nota atribuida é zero.");
-	    						}
-    							finally
-    							{
-    								//Não não está editando então salva como novo
-    								if(editandoAluno == false)
-    								{
-    									ConfigCurso.setNovoAluno(jtextEditarNomeAluno.getText(), notaConvertida, jSliderConceitoAluno.getValue());
-    									jList1.setListData( ConfigCurso.getTodosNomesDeAlunos());
-    									editandoAluno = false;
-    									podeExcluir = false;
-    								}
-    								//Salva a informação por cima da que está salva
-    								else
-    								{
-    									editandoAluno = false;
-    									podeExcluir = false;
-    									ConfigCurso.setTodosDadosDeUmAluno(posicao, jtextEditarNomeAluno.getText(), notaConvertida, jSliderConceitoAluno.getValue());
-    	    						}
-    							}//TRY_FIM
         					}//ELSE_FIM
 						}//IF_FIM	
 						BotaoEditar.validate();
@@ -715,6 +819,17 @@ public class Paineis
         jSliderConceitoAluno.setValue(0);
         jSliderConceitoAluno.setEnabled(false);
         jSliderConceitoAluno.setMaximum(3);
+        jSliderConceitoAluno.addChangeListener(new ChangeListener() {
+        	@Override
+            public void stateChanged(ChangeEvent ce) {
+                JSlider slider = (JSlider)ce.getSource();
+                if (!slider.getValueIsAdjusting()) {
+                    slider.setToolTipText( String.format("%s", jSliderConceitoAluno.getValue()));
+                }
+            }
+
+			
+        });
 
         jlabelGrupoMediaDosAlunos.setText("Media dos Alunos");
         jlabelGrupoMediaDosAlunos.setFont( Config.fonte.getFontTitulo() );
@@ -735,7 +850,6 @@ public class Paineis
 							estadoBotaoEditarAluno = estadoDoBotao.SALVO;
 							ConfigCurso.removeAluno( jList1.getSelectedIndex() );
 							jList1.setListData( ConfigCurso.getTodosNomesDeAlunos() );
-							System.out.printf("\nFOI EXCLUIDO");
 							
 							BotaoExcluir.setVisible(false);
 							jtextEditarNomeAluno.setText("");
@@ -863,12 +977,12 @@ public class Paineis
         
 	     painelAluno.setVisible(false);
 	     painelAluno.setBackground( Color.WHITE );
-		
-		return painelAluno;
 	}
 	
-	
-	protected JPanel implementacaoConfiguracoes()
+	/**
+	 * Implementação do JPanel painelConfigurao
+	 */	
+	protected void implementacaoConfiguracoes()
 	{
 		painelConfiguracao = new JPanel();
 		
@@ -901,7 +1015,7 @@ public class Paineis
 
 	        painelConfiguracao.setBackground(Color.white);
 	        painelConfiguracao.setBorder(null);
-	        painelConfiguracao.setMinimumSize(new java.awt.Dimension(Constantes.CONST_DEFAULT_LARGURA, Constantes.CONST_DEFAULT_ALTURA));
+	        painelConfiguracao.setMinimumSize(new java.awt.Dimension(Constantes.CONST_DEFAULT_LARGURA_MINIMA, Constantes.CONST_DEFAULT_ALTURA_DO_PROGRAMA));
 
 	     comboLinguagem.setModel(new javax.swing.DefaultComboBoxModel( Lang.getComboLinguagens()));
 	     comboLinguagem.setBackground(Color.WHITE);
@@ -1016,13 +1130,11 @@ public class Paineis
 	                {
 	                	Log.setLogAtivo(true);
 	                	setHaDadosParaSerGravados(true);
-	                	System.out.print("Você ativou!\n");
 	                }
 	                else
 	                {
 	                	Log.setLogAtivo(false);
 	                	setHaDadosParaSerGravados(true);
-	                	System.out.print("Você desativou!\n");
 	                }
 	            }
 	        });
@@ -1112,27 +1224,28 @@ public class Paineis
 	                .addComponent(labelNotificacao))
 	        );
 	     painelConfiguracao.setVisible(false);
-         return painelConfiguracao;
 	}
 	
-	/** COD_ID = 0001, habilita o frame HOME
-	 * 	COD_ID = 0010, habilita o frame CURSO
-	 *  COD_ID = 0011, habilita o frame ALUNO
-	 *  COD_ID = 0100, habilita o frame CONFIGURACAO
-	 *  
-	 * 	
+	/** 
 	 * 	No controleDePaineis tem se então o controle
 	 * 		de qual dos paineis que serão demonstrados
 	 * 		para o usuário segundo o código a cima.
-	 * 	@return imageIcon icone do frame habilitado
-	 * 	
+	 * 
+	 * 	@param int COD_ID 
+	 * 
+	 * 	COD_ID = 0001, habilita o jPanel HOME
+	 * 	COD_ID = 0010, habilita o jPanel CURSO
+	 *  COD_ID = 0011, habilita o jPanel ALUNO
+	 *  COD_ID = 0100, habilita o jPanel CONFIGURACAO
+	 *  	e desabilita todos os demais menos o
+	 *  	jPanel Cabeca
 	 */
 	private void controleDePaineis(int COD_ID)
 	{
 		switch(COD_ID)
 		{
 		
-			case 0001:
+			case 0001:	//Habilita painelHome
 				cabecaLabelImagem.setIcon( Config.icones.goHome );
 				cabecaLabelTexto.setText(Lang.palavras.getString("cabecaEscolhaModulo"));
 				painelHome.setVisible(true);
@@ -1140,7 +1253,9 @@ public class Paineis
 				painelAluno.setVisible(false);
 				painelConfiguracao.setVisible(false);
 				break;
-			case 0010:
+			case 0010:	//Habilita painelCurso
+				
+				jlabelInformaNumDeAluno.setText( String.format("%s", ConfigCurso.getNumeroDeAlunos() ));
 				cabecaLabelImagem.setIcon( Config.icones.curso );
 				cabecaLabelTexto.setText( Lang.palavras.getString("cabecaCurso"));
 				painelHome.setVisible(false);
@@ -1148,7 +1263,7 @@ public class Paineis
 				painelAluno.setVisible(false);
 				painelConfiguracao.setVisible(false);
 				break;
-			case 0011:
+			case 0011:	//Habilita painelAluno
 				cabecaLabelImagem.setIcon( Config.icones.aluno );
 				cabecaLabelTexto.setText( Lang.palavras.getString("cabecaAluno"));
 				painelHome.setVisible(false);
@@ -1156,7 +1271,7 @@ public class Paineis
 				painelAluno.setVisible(true);
 				painelConfiguracao.setVisible(false);
 				break;
-			case 0100:
+			case 0100: //Habilita painelConfiguracao
 				cabecaLabelImagem.setIcon( Config.icones.configuracao );
 				cabecaLabelTexto.setText( Lang.palavras.getString("cabecaConfi"));
 				painelHome.setVisible(false);
@@ -1165,23 +1280,23 @@ public class Paineis
 				painelConfiguracao.setVisible(true);
 				
 				break;
-			default:
+			default:	//Apenas troca o icone e a label da cabeça para o estado desconhecido
 				cabecaLabelImagem.setIcon( Config.icones.erro);
 				cabecaLabelTexto.setText( Lang.palavras.getString("erroNaCabeca"));
 		}
 	}
-	
+
+	 /**
+	  * Quando um evendo de click acontece, passa-se
+	  * 	para o controle de paineis o cod para o
+	  * 	evento ser entendido e gerar as ações do
+	  * 	comando de click.
+	  * @param COD_ID - do evento
+	  */
 	protected class MouseHandler implements MouseListener
 	 {
 		 public int COD_ID;	//armazena o codigo de qual frame será ativado
 		 
-		 /**
-		  * Quando um evendo de click acontece, passa-se
-		  * 	para o controle de paineis o cod para o
-		  * 	evento ser entendido e gerar as ações do
-		  * 	comando de click.
-		  * @param cod - do evento
-		  */
 		 public MouseHandler(int cod)
 		 {
 			 COD_ID = cod;
@@ -1207,7 +1322,6 @@ public class Paineis
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			controleDePaineis(COD_ID);
-			System.out.printf("Próximo painel: %d\n", COD_ID);
 			
 		}
 
@@ -1215,40 +1329,50 @@ public class Paineis
 		public void mouseReleased(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 			
-		}
-
-		 
+		} 
 	 }
 	
 	/**
-	 * flag de que há dados para ser gravados
+	 * Seta se há dados para serem gravados pelo sistema
+	 * 		nesse caso não dados da Configuração e do curso
 	 */
 	public static void setHaDadosParaSerGravados(boolean novoEstado)
 	{
 		if(novoEstado == true)
 		{
 			flagHaDadosParaGravar = true;
-			System.out.printf("Há dados para ser gravados");
+			Log.addLog("O sistema notifica que há dados para serem gravados");
 		}
 		else
 		{
 			flagHaDadosParaGravar = false;
-			System.out.printf("Não há dados para ser gravados");
+			Log.addLog("O sistema notifica que não há dados para serem gravados");
 		}
-		
-		
+
 	}
 	
-	
-	
+	/**
+	 * Retorna se há ou não dados para serem gravados
+	 * 	esse método é utilizado pelo sistemaDoCurso para
+	 * 	fazer essa verificação quando o usuário tenta
+	 * 	fechar a janela
+	 * @return boolean
+	 */
 	public static boolean getHaDadosParaSerGravado()
 	{
 		return flagHaDadosParaGravar;
 	}
 	
-	
+	/**
+	 * Responsável por gravar os dados do sistema e do curso
+	 * 		retornando true se travou corretamente ambos os tipos
+	 * 		de informação corretamente ou false se algo aconteceu
+	 * 		de errado em ambos ou algum dos dois tipos de dados	
+	 * @return boolean
+	 */
 	public static boolean gravarDados()
 	{
+		
 		boolean temp;
 		temp = (Config.gravarArquivoSerializado() && ConfigCurso.gravarArquivoSerializado());
 		if( temp == true)
@@ -1263,9 +1387,13 @@ public class Paineis
 		}
 	}
 	
+	/**
+	 * Metodo de coleta de lixo ou finalização
+	 * 		dos paineis
+	 */
 	public void finalize()
 	{
-		//System.out.println("Finalizando configs temporário");
+		//
 	}
 	
 

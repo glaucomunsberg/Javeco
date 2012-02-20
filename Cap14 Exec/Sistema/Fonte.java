@@ -1,18 +1,22 @@
 /**
- * Classe responsável pela fonte do sistema inteiro
- * usado pelas JFrames e seus filhos
- * Possui a classe duas fontes
- * 		Ubuntu
- * 		Serif
+ * Fonte responsável pela fonte do sistema inteiro,
+ * 		usado pelas nos JFrames. Possui a classe duas
+ * 		fontes:
+ * 			Ubuntu
+ * 			Serif
+ * 
+ * @author glaucoroberto@gmail.com
+ * @project SSH: git@github.com:glaucomunsberg/Javeco.git
+ * 
  */
+
 package Sistema;
 import java.awt.Font;
-
 public class Fonte 
 {
-	protected Font fontTitulo;
-	protected Font fontTexto;
-	protected Font fontTextoBold;
+	protected Font fonteTitulo;
+	protected Font fonteTexto;
+	protected Font fonteTextoBold;
 	protected int temaDaFonte;
 	protected String[] tempString;
 	
@@ -42,9 +46,9 @@ public class Fonte
 	 */
 	public void setFontUbuntu()
 	{
-		fontTitulo = new Font("Ubuntu", Font.BOLD, 18);
-		fontTexto = new Font("Ubuntu", Font.PLAIN, 14);
-		fontTextoBold = new Font("Ubuntu", Font.BOLD, 14);
+		fonteTitulo = new Font("Ubuntu", Font.BOLD, 18);
+		fonteTexto = new Font("Ubuntu", Font.PLAIN, 14);
+		fonteTextoBold = new Font("Ubuntu", Font.BOLD, 14);
 		Log.addLog("Tema da Fonte: Ubuntu.");
 	}
 	
@@ -54,9 +58,9 @@ public class Fonte
 	 */
 	public void setFontSerif()
 	{
-		fontTitulo = new Font("serif", Font.BOLD, 18);
-		fontTexto = new Font("serif", Font.PLAIN, 14);
-		fontTextoBold = new Font("serif", Font.BOLD, 14);
+		fonteTitulo = new Font("serif", Font.BOLD, 18);
+		fonteTexto = new Font("serif", Font.PLAIN, 14);
+		fonteTextoBold = new Font("serif", Font.BOLD, 14);
 		Log.addLog("Tema da Fonte: Serif.");
 	}
 	
@@ -64,7 +68,7 @@ public class Fonte
 	 * retorna qual das duas fontes é
 	 * 1 - para Ubuntu
 	 * 2 - para serif
-	 * @return
+	 * @return int TemaDaFonte
 	 */
 	public int getTemaFonte()
 	{
@@ -74,7 +78,7 @@ public class Fonte
 	/**
 	 * permite reiniciar a fonte
 	 * do sistema
-	 * @param fonte
+	 * @param int {0 - Ubuntu || 1 - Serif }
 	 */
 	public void setTemaFonte(int fonte)
 	{
@@ -95,7 +99,7 @@ public class Fonte
 	 */
 	public Font getFontTexto()
 	{
-		return fontTexto;
+		return fonteTexto;
 	}
 	
 	/**
@@ -104,19 +108,24 @@ public class Fonte
 	 */
 	public Font getFontTitulo()
 	{
-		return fontTitulo;
+		return fonteTitulo;
 	}
 	
 	/**
 	 * retorna a fonte para o texto, porém
 	 * 	com um "resalto" possibilitado pelo bold
-	 * @return
+	 * @return font
 	 */
 	public Font getFontTextoBold()
 	{
-		return fontTextoBold;
+		return fonteTextoBold;
 	}
 	
+	/**
+	 * Retorna para a combo os valores de fontes que
+	 *  estao disponíveis para serem usados no sistema
+	 *  @return String{ "Ubuntu","Serif" }
+	 */
 	public String[] getComboFontes()
 	{
 		tempString = new String[2];

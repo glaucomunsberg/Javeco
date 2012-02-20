@@ -1,82 +1,91 @@
-
 /**
- * Responsável pelo gravação de logs gerados pelo sistema
- * 	do curso
+ * Log é responsável pelos logs gerados pelo sistema.
+ * 		ele cria um arquivo que contém a data do dia
+ * 		da criação do log. Se já houver então ele
+ * 		continuará a escrever nele na parte final.
+ * 		Os arquivos de log são gerados na pasta
+ * 		/Sistema/Logs/
+ * Obs.: O log também está responsável em caso de erro
+ * 		notificar alguns desses para o usuário pelo
+ * 		metodo notificarUsuario.		
+ * @author glaucoroberto@gmail.com
+ * @project SSH: git@github.com:glaucomunsberg/Javeco.git
  */
 
 package Sistema;
-
-import com.glaucoroberto.time.*;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.SecurityException;					//Trata não poder abrir o arquivo
+import java.lang.SecurityException;					//Trata não poder abrir o arquivo por falta de permissão
 import java.util.FormatterClosedException;			//Trata eventos de fechamento de formato
 import java.util.NoSuchElementException;			//Trata a exceção do dado errado
 
+import javax.swing.JOptionPane;
 public class Log 
 {
-	protected static boolean tentouRecuperarAntes = false;
-	private static String inderecoDoArquivo;
+	protected static boolean jaInicializou = false;
 	private static Time hora = new Time();								//Vai trazer a hora atual para inserir no sistema
 	private static BufferedWriter saida;								//Formatter terá o trabalho de criar o arquivo e
 	protected static boolean logAtivo = true;
+	protected String inderecoDoArquivo;
 	
 	/**
-	 * abre o sistema para escrever logs. Pode
-	 * 		se receber um parametro que é o caminho
-	 * 		para o local onde será gravado as inf de
-	 * 		log.
-	 * @param String arg - URL para o local de se gravar as informações
-	 * 				não é necessário o nome do arquivo pois esse é gerado pelo
-	 * 				sistema
-	 * @throws IOException 
+	 * Construtor do log com o estado default
 	 */
-	public static void openFile(String arg)
+	public Log()
 	{
-		try
-		{
-			
-			logAtivo = Constantes.CONST_DEFAULT_INICLOG;
-			if( arg == null)
-			{
-				inderecoDoArquivo = String.format("Cap14 Exec/Sistema/Logs/Log_%s-%s-%s.log", hora.getDiaAtual(), hora.getMesAtual(),hora.getAnoAtual());
-				saida = new BufferedWriter(new FileWriter(inderecoDoArquivo, true));  
-			}
-			else
-			{
-				inderecoDoArquivo = String.format("%sLog_%s-%s-%s_.log", hora.getDiaAtual(), hora.getMesAtual(),hora.getAnoAtual());
-				saida = new BufferedWriter( new FileWriter(inderecoDoArquivo, true));
-			}
+		logAtivo = Constantes.CONST_DEFAULT_INICLOG;
 		
-		}
-		catch(IOException io)
-		{
-			System.err.printf("Atenção! Erro ao abrir o arquivo %s!",inderecoDoArquivo);
-			if(tentouRecuperarAntes == false)
-			{
-				tentarRecuperar();
-			}
-		}
-		catch( SecurityException securityException)
-		{
-			System.err.println("Atenção! Você não tem permissão para abrir o arquivo!");
-		}
-		addLog("--------------------------------------------------------");
 	}
 	
 	/**
-	 * Tenta forçar a abertura de um novo arquivo
-	 * agora no log do local padrão do sistema
+	 * Contrutor do log com o estado ativou ou não
+	 * 		dependendo do que o usuário passou
+	 * @param ativo
+	 */
+	public Log(boolean ativo)
+	{
+		logAtivo = ativo;
+	}
+	
+	/**
+	 * openFile abrirá o arquivou ou o criará
+	 * 	para conter os logs do sistem
 	 * @throws IOException 
 	 */
-	protected static void tentarRecuperar()
+	public void openFile()
 	{
-		tentouRecuperarAntes = true;
-		closeFile();
-		openFile("Cap14 Exec/Sistema/Logs/");
-		addLog("Atenção! O arquivo de log anterior não ser escrito.");
+		if(jaInicializou)
+		{
+			Log.addLog("Atenção! O log já foi inicializado.");
+		}
+		else
+		{
+			
+			try
+			{
+				/**
+				 * inicia o log
+				 * 		se JAR então vai criar apenas o log no diretório de execução
+				 * 		se for class então criará o log na pasta /Sistema/Logs
+				 */
+				inderecoDoArquivo = String.format("%sLog_%s-%s-%s.log", ((getClass().getResource( Constantes.CONST_LOG_URL ) == null )? System.getProperty("user.dir")+ "/Cap14 Exec/Sistema/Logs/" : (getClass().getResource( Constantes.CONST_LOG_URL ) )), hora.getDiaAtual(), hora.getMesAtual(),hora.getAnoAtual());
+				saida = new BufferedWriter(new FileWriter(inderecoDoArquivo, true));
+				jaInicializou = true;
+				
+			}
+			catch(IOException io)
+			{
+				System.err.printf("Atenção! Erro ao abrir o arquivo %s!",inderecoDoArquivo);
+				System.err.printf("%s\n", io);
+			}
+			catch( SecurityException securityException)
+			{
+				System.err.println("Atenção! Você não tem permissão para abrir o arquivo de log!");
+				System.err.printf("%s\n", securityException);
+			}
+			addLog("--------------------------------------------------------");
+		}
 
 	}
 	
@@ -84,7 +93,7 @@ public class Log
 	 * Adiciona uma linha ao arquivo de log
 	 * 		essa linha é constituída de:
 	 * 		HH:MM:SS - "mensagem"
-	 * @param String novaLinha - mensagem que será gravada no log
+	 * @param String novaLinha - mensagem que será gravada no log sem "\n"
 	 * @throws IOException 
 	 */
 	public static void addLog(String novaLinha)
@@ -107,10 +116,37 @@ public class Log
 			{
 				System.err.println("Ooops! Ou não! Você mandou o tipo errado e ele não pode ser escrito. Lamentamos u.u");
 				addLog("Ooops! Ou não! Você mandou o tipo errado e ele não pode ser escrito. Lamentamos u.u");
+				System.err.printf("%s\n", element);
 			}
 			catch( IOException io)
 			{
-				System.err.printf("Atenção! Erro ao tentar escrever: '%s' no arquivo %s!", novaLinha, inderecoDoArquivo);
+				System.err.printf("Atenção! Erro ao tentar escrever: '%s'.", novaLinha);
+				System.err.printf("%s\n", io);
+			}
+		}
+	}
+	
+	/**
+	 * Esse método será usado para o usuário saber
+	 * 	que um erro ocorreu no programa dele.
+	 * @param String notificao
+	 * @param String tipo { "ERRO", "WARNING", null }
+	 */
+	public static void notificarUsuario(String notificao, String tipo)
+	{
+		if( tipo == "ERRO" )
+		{
+			JOptionPane.showMessageDialog(null, notificao, Lang.palavras.getString("erroEncontrado"), JOptionPane.ERROR_MESSAGE);
+		}
+		else
+		{
+			if(tipo == "WARNING")
+			{
+				JOptionPane.showMessageDialog(null, notificao, Lang.palavras.getString("erroNotificao"), JOptionPane.WARNING_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, notificao, Lang.palavras.getString("erroSimples"), JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 	}
@@ -125,7 +161,6 @@ public class Log
 		try
 		{
 			addLog("Fechando o sistema de log");
-			System.out.println("Fechando o sistema de log");
 			if(saida != null)
 			{
 				saida.close();
@@ -133,7 +168,8 @@ public class Log
 		}
 		catch( IOException io)
 		{
-			
+			addLog("Atenção! Não pode ser fechado o sistema de log do sistema.");
+			System.err.println("Atenção! Não pode ser fechado o sistema de log do sistema.");
 		}
 
 	}
@@ -150,13 +186,11 @@ public class Log
 	/**
 	 * modifica a situacao de se o log está
 	 * 	sendo gravado ou não
-	 * @param novo
-	 * @return 
-	 * @return Boolean 
+	 * @param novoEstado
 	 */
-	public static void setLogAtivo(boolean novo)
+	public static void setLogAtivo(boolean novoEstado)
 	{
-		if(novo == false)
+		if(novoEstado == false)
 		{
 			addLog( Lang.palavras.getString("logDesabilitado"));
 		}
@@ -164,7 +198,7 @@ public class Log
 		{
 			addLog(Lang.palavras.getString("logHabilitado"));
 		}
-		logAtivo = novo;
+		logAtivo = novoEstado;
 	}
 
 }

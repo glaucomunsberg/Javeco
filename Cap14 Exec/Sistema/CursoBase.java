@@ -1,14 +1,14 @@
-package Sistema;
-import com.glaucoroberto.time.Time;
-/** Livro
- * 		Classe que possui estrutura para um curso que está sendo
+/** CursoBase
+ * 		Classe que possui estrutura para as informações que está sendo
  * 			montado. Possui todas as informações necessárias do 
- * 			curso, do instrutor, alunos e ainda permite que seja gravado
- * 			em um documento o histórico de ações da classe...
- * @author glaucoroberto
- *
+ * 			curso, do instrutor, dos alunos e ainda permite que seja gravado
+ * 			log as ações feitas nesse nivel.
+ * 
+ * @author glaucoroberto@gmail.com
+ * @project SSH: git@github.com:glaucomunsberg/Javeco.git
  */
 
+package Sistema;
 public class CursoBase 
 {
 	protected boolean chkMaximoDeAlunos = false;				//Faz com que apenas uma vez seja fixado o tamanho máximo do curso
@@ -97,7 +97,7 @@ public class CursoBase
 
 	/**
 	 * retorna o nome do curso
-	 * @return String
+	 * @return String nomeCurso
 	 */
 	public String getNomeCurso()
 	{
@@ -115,8 +115,8 @@ public class CursoBase
 
 	/**
 	 * retorna a nota do aluno segundo a posicao
-	 * @param nota
 	 * @param posicao
+	 * @return notaAluno
 	 */
 	public int getNotaAluno(int posicao) 
 	{
@@ -135,7 +135,7 @@ public class CursoBase
 	/**
 	 * retorna o nome do aluno segundo a posicao
 	 * @param posicao
-	 * @return String
+	 * @return String nomeDoAluno
 	 */
 	public String getNomeAluno( int posicao)
 	{
@@ -153,7 +153,7 @@ public class CursoBase
 	/**
 	 * retorna o número máximo de alunos que pode
 	 * 		haver no curso.
-	 * @return
+	 * @return numMaxDeAluno
 	 */
 	public int getNumeroMaximoDeAluno()
 	{
@@ -163,7 +163,7 @@ public class CursoBase
 	/**
 	 * retorna o conceito da posicao que recebe
 	 * @param posicao
-	 * @return conceito
+	 * @return conceitoDoAluno
 	 */
 	public int getConceitoAluno(int posicao)
 	{
@@ -198,14 +198,13 @@ public class CursoBase
 		String[] todosNomes = new String[this.getNumeroDeAlunos()];
 		for(int a=0; a < numAlunos; a++)
 		{
-			System.out.printf("\nAdicionou a lista %s", gradeNomes[a]);
 			todosNomes[a] = gradeNomes[a];
 		}
 		return todosNomes;
 	}
 	
 	/**
-	 * Retorna uma int[] de notas
+	 * Retorna um array int[] de notas
 	 * @return int[] gradenotas
 	 */
 	public int[] getTodasNotasDeAlunos()
@@ -222,7 +221,32 @@ public class CursoBase
 		return gradeConceitos;
 	}
 	
+	/**
+	 * Retorna a média dos alunos
+	 * @return Media
+	 */
+	public int getMediaDosAlunos()
+	{
+		double media = 0;
+		
+		if( this.numAlunos > 0)
+		{
+			for(int a = 0; a < numAlunos; a++)
+			{
+				media += gradeNotas[a];
+			}
+			media /= numAlunos;
+		}
+		
+		return (int) Math.round(media);
+	}
 	
+	/**
+	 * retorna quantos porcentos
+	 * de alunos há no curso comparado
+	 * com sua capacidade máxima
+	 * @return porcentoDePreenchimento
+	 */
 	public int getPorcentoDeAlunosNoCurso()
 	{
 		double valor = 0;
@@ -236,8 +260,9 @@ public class CursoBase
 			valor = 0;
 		}
 		
-		return (int) Math.round(valor);
+		return (int) (Math.round(valor) * 10);
 	}
+	
 	/**
 	 * de uso protegido para que seja criado apenas uma vez as constantes
 	 */
@@ -249,6 +274,7 @@ public class CursoBase
 		gradeConceitos 	= new int[ this.getNumeroMaximoDeAluno() ];
 		
 	}
+	
 	/**
 	 * Insere o nome do curso
 	 * @param String nome
@@ -328,10 +354,10 @@ public class CursoBase
 	{
 		if( nomes.length > 0 && notas.length > 0)
 		{
-			for(int a=0; a < nomes.length || a < numMaxDeAluno; a++)
+			for(int a=0; a < numAlunos; a++)
 			{
 				setNomeAluno(nomes[a], a);
-				setNotaAluno(notas[0], a);
+				setNotaAluno(notas[a], a);
 				setConceitoAluno(conceitos[a], a);
 			}
 		}
@@ -491,19 +517,12 @@ public class CursoBase
 	{
 		if( posicao >= 0 && posicao <= numAlunos )
 		{
-			//if( posicao >= 0)	//Caso seja unico aluno, então não se copia
-								//apenas ignora
-			//{
-				System.out.printf("NumeroDeAlunos: %s", numAlunos );
 				for( int a = posicao; a < numAlunos; a++)
 				{
 					gradeNomes[ a ] = gradeNomes[ a+1 ];
-					System.out.printf("\n%s por %s", gradeNomes[ a ],gradeNomes[ a+1 ]);
 					gradeNotas[ a ] = gradeNotas[ a+1 ];
 					gradeConceitos[ a ] = gradeConceitos[ a+1 ];
 				}
-			//}
-			System.out.printf("NumeroDeAlunos: %s", numAlunos-1 );
 			setNumeroDeAlunos( numAlunos-1);
 			Log.addLog("Aluno foi removido.");
 		}
@@ -512,5 +531,4 @@ public class CursoBase
 			Log.addLog("Atenção! Não pode se remover o aluno, pois ele está fora da faixa");
 		}
 	}
-	
 }

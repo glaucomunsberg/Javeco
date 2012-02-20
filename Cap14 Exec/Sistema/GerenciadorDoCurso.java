@@ -1,10 +1,13 @@
 /**
- * Gerencia as informações do curso sendo esta uma extenção do curso
- * com ele é possível obter as informações relativas ao curso
- * bem como recuperá-la de um arquivo .ser ou salvar em um arquivo .ser
+ * Gerencia as informações do curso sendo esta uma extenção do BaseCurso
+ * 		com ele é possível obter as informações relativas ao curso bem 
+ * 		como recuperá-la do banco de dados ou salvar em um arquivo.
+ * 
+ * @author glaucoroberto@gmail.com
+ * @project SSH: git@github.com:glaucomunsberg/Javeco.git
  */
-package Sistema;
 
+package Sistema;
 public class GerenciadorDoCurso extends CursoBase
 {
 	protected boolean gravouComSucesso = false;
@@ -13,14 +16,6 @@ public class GerenciadorDoCurso extends CursoBase
 	{
 		Log.addLog("Inicilizando as configurações do curso");
 		this.getDefaultCurso();
-		//if(comoIniciar == HowStart.RECUPERAR)
-		//{
-		//	this.getDataCurso();
-		//}
-		//else
-		//{
-		//	this.getDefaultCurso();
-		//}
 	}
 	
 	/**
@@ -29,7 +24,7 @@ public class GerenciadorDoCurso extends CursoBase
 	 */
 	protected void getDataCurso()
 	{
-		
+		//Pega os dados do banco de Dados
 	}
 	
 	/**
@@ -40,7 +35,8 @@ public class GerenciadorDoCurso extends CursoBase
 	 */
 	protected void getDefaultCurso()
 	{
-		int numMaxDeAluno = 100;
+		Log.addLog("O Gerenciador do Curso iniciará com dados 'default'.");
+		int numMaxDeAluno = 50;
 		int numAluno = 0;
 		int[] gradeNotas = new int[numMaxDeAluno];
 		int[] Conceitos = new int[numMaxDeAluno];
@@ -59,14 +55,19 @@ public class GerenciadorDoCurso extends CursoBase
 	
 	
 	/**
-	 * responsável pela gravação de dados do curso dentro do 
-	 * 		arquivo configs.dat
+	 * Responsável pela gravação de dados do curso dentro do 
+	 * 	arquivo configs.dat
 	 */
 	protected void setDataCurso()
 	{
-		
+		Log.addLog("O Gerenciador do Curso iniciará com dados salvos.");
 	}
 	
+	/**
+	 * Responsável pela gravação das informações
+	 * 	se conseguir gravar retornará true
+	 * @return{ true || false }
+	 */
 	public boolean gravarArquivoSerializado()
 	{
 		return true;
