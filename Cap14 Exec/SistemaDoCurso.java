@@ -37,7 +37,7 @@ public class SistemaDoCurso extends JFrame
 		log.openFile();
 		Sistema.Log.addLog("Sistema iniciado");
 		SistemaDoCurso frame = new SistemaDoCurso();
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  
 		frame.setVisible(true);
 		frame.setSize(1024,726);
 	}
@@ -77,48 +77,56 @@ public class SistemaDoCurso extends JFrame
 		
 		super.setTitle(Lang.palavras.getString("programaNome"));		//Insere o nome do programa apos iniciar o GerenciadorDoSistema em Paineis
 		this.setMinimumSize(dimensaoMinima);
-		this.addWindowListener(new WindowAdapter() 						//Escurá se for pedido para fechar a janela
+		this.addWindowListener(new WindowAdapter()
 		{  
-		    public void windowClosing(WindowEvent evt)
-		    {
-		    	/**
-		    	 * Antes de fechar a janela vai tentar salvar as informações
-		    	 * 	que estão foram modificadas no sistema, caso não
-		    	 * 	ele simplesmente fecha a janela sem nenhum alerta
-		    	 */
-		    	boolean continuar = true;
-		    	int codigo = 0;
-		    	do
-		    	{
-		    		if( Paineis.getHaDadosParaSerGravado())
-		    		{
-		    			codigo = JOptionPane.showConfirmDialog(null, Lang.palavras.getString("sysDesejaGravar"), Lang.palavras.getString("sysHaDadosParaGrava"), JOptionPane.INFORMATION_MESSAGE);
-		    			if(codigo == 0)
-		    			{
-		    				boolean gravouComSucesso;
+	    	/**
+	    	 * Antes de fechar a janela vai tentar salvar as informações
+	    	 * 	que estão foram modificadas no sistema, caso não
+	    	 * 	ele simplesmente fecha a janela sem nenhum alerta
+	    	 */
+    	    public void windowClosing(WindowEvent e) 
+    	    {  
+    	    	int codigo;
+    	    	if(Paineis.getHaDadosParaSerGravado())
+    	    	{
+    	    		 codigo  =JOptionPane.showConfirmDialog(null, Lang.palavras.getString("sysDesejaGravar"), Lang.palavras.getString("sysHaDadosParaGrava"), JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE );
+    	    		 switch(codigo)
+    	    		 {  
+    	    	        case 0:  
+    	    	        	boolean gravouComSucesso;
 		    				gravouComSucesso = Paineis.gravarDados();
 		    				if( gravouComSucesso == false)
 		    				{
 		    					JOptionPane.showMessageDialog(null, "Atenção não pode ser gravado seus dados");
-		    					continuar = false;
 		    				}
+				    		Log.closeFile();
+				    		paineis.finalize();
+				    		System.exit(0); 
+    	    	            break;  
+    	    	        case 1: 
+				    		Log.closeFile();
+				    		paineis.finalize();
+				    		System.exit(0);
+    	    	            break;  
+    	    	        case 2:  
+    	    	            break;  
+    	    	        }
+    	    	}
+    	    	else
+    	    	{
+    	    		codigo = JOptionPane.showConfirmDialog(null, Lang.palavras.getString("sysSairDoSistema"), Lang.palavras.getString("sysDesejaSair"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE );
+    	    		switch(codigo)
+    	    		{
+    	    			case 0:
+    	    				System.exit(NORMAL);
+    	    				break;
+    	    			case 1:
+    	    				break;
+    	    		}
+    	    	}    	          
+    	    }  
+    	}); 
 
-		    			}
-		    		}
-		    		
-		    		/*
-		    		 * se for fechar realmente então fecha o log
-		    		 * 	e os paineis do coletor de lixo
-		    		 */
-		    		Log.closeFile();
-		    		paineis.finalize();
-		    		continuar = false;
-
-		    	}while(continuar);
-
-		    }  
-		}); 
-        
 	}
 
 }
