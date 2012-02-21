@@ -208,6 +208,7 @@ public class Paineis
 		
 		
 		labelCurso = new JLabel( Config.icones.curso, SwingConstants.CENTER);
+		labelCurso.setToolTipText( Lang.palavras.getString("cabecaCursoDescricao") );
 		labelCurso.setText( Lang.palavras.getString("homeGerenciarCurso"));
 		labelCurso.setHorizontalTextPosition( SwingConstants.CENTER);	//manipula o texto centralizando no horizonte
 		labelCurso.setVerticalTextPosition( SwingConstants.BOTTOM);		//manipula o texto colocando na parte de baixo do rotulo
@@ -216,6 +217,7 @@ public class Paineis
 		painelHome.add(labelCurso);
 		
 		labelAluno = new JLabel( Config.icones.aluno, SwingConstants.CENTER);
+		labelAluno.setToolTipText( Lang.palavras.getString("cobecaAlunoDescricao") );
 		labelAluno.setText( Lang.palavras.getString("homeGerenciarAluno"));
 		labelAluno.setHorizontalTextPosition( SwingConstants.CENTER);	//manipula o texto centralizando no horizonte
 		labelAluno.setVerticalTextPosition( SwingConstants.BOTTOM);		//manipula o texto colocando na parte de baixo do rotulo
@@ -224,6 +226,7 @@ public class Paineis
 		painelHome.add(labelAluno);
 		
 		labelConfiguracao = new JLabel( Config.icones.configuracao, SwingConstants.CENTER);
+		labelConfiguracao.setToolTipText( Lang.palavras.getString("cabecaConfiDescricao") );
 		labelConfiguracao.setText( Lang.palavras.getString("homeGerenciarConfi"));
 		labelConfiguracao.setHorizontalTextPosition( SwingConstants.CENTER);	//manipula o texto centralizando no horizonte
 		labelConfiguracao.setVerticalTextPosition( SwingConstants.BOTTOM);		//manipula o texto colocando na parte de baixo do rotulo
