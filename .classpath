@@ -11,6 +11,7 @@
 	<classpathentry kind="src" path="Cap14"/>
 	<classpathentry kind="src" path="Cap15"/>
 	<classpathentry kind="src" path="Cap14 Exec"/>
+	<classpathentry kind="src" path="Cap18"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
