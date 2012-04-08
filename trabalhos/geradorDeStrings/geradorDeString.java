@@ -8,8 +8,9 @@ public class geradorDeString
 	Random random;						//Responsável pela aleatoriedade
 	ArrayList<String> listDePalavras;	//ArrayList que conterá as palavras
 	int numeroDePalavras;				//O número de palavras que gerará
-	int maiorNumeroDeLetras;			//A maior palavra terá de até esse numero
-	int tipodeOperacao;					// Inteiro que representa um tipo de operacao			
+	int maiorNumeroDeLetras;			//A maior palavra terá de até 
+	int tipodeOperacao;
+	char charPalavra[];
 	
 	public static void main(String args[])
 	{
@@ -25,6 +26,15 @@ public class geradorDeString
 		geradorDeTiposDeAcoes();
 	}
 	
+	/**
+	 * Gerador de tipos de ações dos tipos:
+	 * 	I = Inserir
+	 * 	B = Busca
+	 * 	R = Remove
+	 * O método gera aleatóriamente estas ações
+	 * 	e chama o método geradorDePalavras para
+	 * 	gerar uma a palavra e então uni-las em uma ação
+	 */
 	public void geradorDeTiposDeAcoes()
 	{
 		String palavra;
@@ -50,22 +60,41 @@ public class geradorDeString
 		}
 	}
 	
+	/**
+	 * Gerador de Palavras aleatórias e tamanho
+	 * 	que varia de 1 até o tamanho indicado pelo
+	 * 	usuário. Recebe como parametro a primeira
+	 * 	parte da string que compoem o comando
+	 * @param String palavra
+	 */
 	public void gerarDePalavras(String palavra)
 	{
-		StringBuilder stringTemp = new StringBuilder();
-		int valor;
-		int tamanhoDaPalavraAtual = 0;
+		
+		StringBuilder stringTemp = new StringBuilder(); 				//String temporárioa
+		int valor;														//valor em int de um char que gerará
+		int tamanhoDaPalavraAtual = 0;									//Tamanho de palavra
+		
+		/**
+		 * Diz qual será o tamanho da palavra
+		 */
 		while(tamanhoDaPalavraAtual == 0)
 		{
 			tamanhoDaPalavraAtual = random.nextInt(maiorNumeroDeLetras+1);
 		}
 		
+		/**
+		 * segundo o tamanho da palavra ele gerará cada
+		 * 	um dos caractéres para formá-la
+		 */
 		for(int a=0; a < tamanhoDaPalavraAtual; a++)
 		{
 			valor = 65 + random.nextInt(90 - 65);
 			stringTemp.append( (char)valor);
 		}
-		System.out.printf("%s%s\n", palavra, stringTemp.toString() );
+		
+		/**
+		 *  Soma o comando mais a palavra gerada
+		 */
 		listDePalavras.add( palavra+stringTemp.toString() );
 		
 	}
