@@ -1,4 +1,3 @@
-package geradorDeStrings;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,6 +15,7 @@ public class geradorDeString
 	{
 		geradorDeString gerador = new geradorDeString();
 	}
+	
 	public geradorDeString()
 	{
 		random = new Random();
@@ -92,6 +92,7 @@ public class geradorDeString
 			stringTemp.append( (char)valor);
 		}
 		
+		System.out.printf("%s%s\n", palavra,stringTemp.toString());
 		/**
 		 *  Soma o comando mais a palavra gerada
 		 */
