@@ -39,9 +39,11 @@ public class geradorDeString
 		maiorNumeroDeLetras = Integer.parseInt( JOptionPane.showInputDialog(null, "O programa gerará \'palavras\' aleatórioas de 1 até quantas letras?!","Gerador Random", JOptionPane.PLAIN_MESSAGE));
 		saida = new geradorDeArquivo("saida.txt");
 		entrada = new geradorDeArquivo("entrada.txt");
+		System.out.printf("\nTecnologia: Processador Recursivo Corp.\nAguarde enquanto nossos melhores macacos sorteiam as letras...\n");
 		geradorDeTiposDeAcoes();
 		entrada.closeFile();
 		saida.closeFile();
+		JOptionPane.showMessageDialog(null, String.format("Foram gerado os arquivos entrada.txt e saida.txt\n Tendo %d palavras e %d repetições mesmo com a aleatoriedade.", numeroDePalavras,numeroDeRepeticoes),"Aleatoriedade não aleatória assim", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
