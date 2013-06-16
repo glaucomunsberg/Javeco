@@ -69,7 +69,7 @@ public class Log
 				 * 		se JAR então vai criar apenas o log no diretório de execução
 				 * 		se for class então criará o log na pasta /Sistema/Logs
 				 */
-				inderecoDoArquivo = String.format("%sLog_%s-%s-%s.log", ((getClass().getResource( Constantes.CONST_LOG_URL ) == null )? System.getProperty("user.dir")+ "/Cap14 Exec/Sistema/Logs/" : (getClass().getResource( Constantes.CONST_LOG_URL ) )), hora.getDiaAtual(), hora.getMesAtual(),hora.getAnoAtual());
+				inderecoDoArquivo = String.format("%sLog_%s-%s-%s.log", ((getClass().getResource( Constantes.CONST_LOG_URL ) == null )? System.getProperty("user.dir")+ "/Sistema/Logs/" : (getClass().getResource( Constantes.CONST_LOG_URL ) )), hora.getDiaAtual(), hora.getMesAtual(),hora.getAnoAtual());
 				saida = new BufferedWriter(new FileWriter(inderecoDoArquivo, true));
 				jaInicializou = true;
 				

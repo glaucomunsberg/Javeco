@@ -31,7 +31,7 @@ public class SistemaDoCurso extends JFrame
 	/**
 	 * main do projeto Javeco - O Programa
 	 */
-	public static void main( String arhaiugs[])
+	public static void main( String args[])
 	{
 		Log log = new Log();
 		log.openFile();
